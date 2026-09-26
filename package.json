@@ -1,0 +1,40 @@
+{
+	"name": "adsmart",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Gerencie suas campanhas do Google Ads conversando com o Claude Desktop. Local, open-source e sem custo.",
+	"license": "MIT",
+	"author": "Eduardo Rodrigues",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ZenniTTy/adsmart-app.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ZenniTTy/adsmart-app/issues"
+	},
+	"homepage": "https://github.com/ZenniTTy/adsmart-app#readme",
+	"keywords": [
+		"google-ads",
+		"mcp",
+		"model-context-protocol",
+		"claude",
+		"claude-desktop",
+		"mcpb"
+	],
+	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"typecheck": "tsc --noEmit",
+		"test": "bun test",
+		"check": "bun run lint && bun run typecheck && bun run test"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.14",
+		"@types/node": "^26.6.3",
+		"typescript": "^7.0.2"
+	}
+}
