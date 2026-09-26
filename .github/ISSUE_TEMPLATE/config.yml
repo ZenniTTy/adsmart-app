@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Vulnerabilidade de segurança
+    url: https://github.com/ZenniTTy/adsmart-app/security/advisories/new
+    about: Reporte vulnerabilidades de forma privada, nunca em issues públicas.
+  - name: Guia de solução de problemas
+    url: https://github.com/ZenniTTy/adsmart-app/blob/main/docs/solucao-de-problemas.md
+    about: Consulte os erros mais comuns antes de abrir uma issue.

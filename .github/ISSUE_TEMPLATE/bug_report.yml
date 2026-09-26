@@ -1,0 +1,51 @@
+name: Reportar bug
+description: Algo não funciona como esperado
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar. **Nunca inclua seu arquivo de chave, tokens ou dados das suas contas.**
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu
+      description: Descreva o problema e o que você esperava que acontecesse.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      description: O que você pediu ao Claude e o que aconteceu em seguida.
+      placeholder: |
+        1. Pedi "..."
+        2. O Claude respondeu "..."
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostico
+    attributes:
+      label: Resultado do diagnóstico
+      description: Peça "Rode o diagnóstico do AdSmart" e cole o resultado, removendo IDs de conta se preferir.
+      render: text
+  - type: input
+    id: versao
+    attributes:
+      label: Versão do AdSmart
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: sistema
+    attributes:
+      label: Sistema operacional
+      options:
+        - macOS
+        - Windows
+    validations:
+      required: true
+  - type: input
+    id: claude
+    attributes:
+      label: Versão do Claude Desktop

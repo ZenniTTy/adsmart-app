@@ -1,0 +1,22 @@
+name: Sugerir melhoria
+description: Proponha uma nova funcionalidade ou melhoria
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve
+      description: Descreva a situação do dia a dia na gestão de campanhas.
+    validations:
+      required: true
+  - type: textarea
+    id: solucao
+    attributes:
+      label: Como você imagina a solução
+      description: Exemplos do que você pediria ao Claude ajudam muito.
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
