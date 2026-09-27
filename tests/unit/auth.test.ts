@@ -1,5 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { ADWORDS_SCOPE, createServiceAccountTokenProvider } from "../../src/google/auth.js";
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { JWT } from "google-auth-library";
+import {
+	ADWORDS_SCOPE,
+	createServiceAccountTokenProvider,
+	defaultAuthDeps,
+} from "../../src/google/auth.js";
 
 const FAKE_EMAIL = "teste@projeto-ficticio.iam.gserviceaccount.com";
 const FAKE_KEY = "chave-ficticia-de-teste";
@@ -82,6 +90,18 @@ describe("AUTH-01 token da conta de serviço", () => {
 		expect(message).not.toContain(FAKE_KEY);
 		expect(message).not.toContain(FAKE_EMAIL);
 		expect(message).not.toContain("invalid_grant");
+	});
+
+	test("dependências padrão leem o arquivo e criam o cliente JWT sem pedir token", async () => {
+		const path = join(mkdtempSync(join(tmpdir(), "adsmart-auth-")), "chave.json");
+		writeFileSync(path, validKeyJson);
+		expect(await defaultAuthDeps.readKeyFile(path)).toBe(validKeyJson);
+		const created = defaultAuthDeps.createClient({
+			email: FAKE_EMAIL,
+			key: FAKE_KEY,
+			scopes: [ADWORDS_SCOPE],
+		});
+		expect(created).toBeInstanceOf(JWT);
 	});
 
 	test("token vazio é tratado como falha", async () => {

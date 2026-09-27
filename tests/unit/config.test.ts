@@ -34,6 +34,11 @@ describe("CFG-01 configuração por variáveis de ambiente", () => {
 		}
 	});
 
+	test("caminho da chave só com espaços é recusado", () => {
+		const result = loadConfig({ [KEY_FILE_ENV]: "   " });
+		expect(result.ok).toBe(false);
+	});
+
 	test("MCC com traços é normalizada", () => {
 		expect(
 			loadConfig({ [KEY_FILE_ENV]: "/tmp/chave.json", [LOGIN_CUSTOMER_ID_ENV]: "123-456-7890" }),

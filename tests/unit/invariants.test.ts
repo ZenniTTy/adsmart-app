@@ -25,15 +25,16 @@ describe("API-01 versão da API isolada", () => {
 });
 
 describe("API-02 hosts permitidos", () => {
-	test("src/ só cita googleads e oauth2", () => {
+	test("src/ só cita googleads e oauth2, além do identificador de escopo OAuth", () => {
+		const scopeIdentifier = "https://www.googleapis.com/auth/adwords";
 		const hosts = filesUnder(join(ROOT, "src")).flatMap((file) =>
-			[...readFileSync(file, "utf8").matchAll(/https?:\/\/([a-z0-9.-]+)/gi)].map((m) => m[1]),
+			[
+				...readFileSync(file, "utf8")
+					.replaceAll(scopeIdentifier, "")
+					.matchAll(/https?:\/\/([a-z0-9.-]+)/gi),
+			].map((m) => m[1]),
 		);
-		const allowed = new Set([
-			"googleads.googleapis.com",
-			"oauth2.googleapis.com",
-			"www.googleapis.com",
-		]);
+		const allowed = new Set(["googleads.googleapis.com", "oauth2.googleapis.com"]);
 		expect(hosts.filter((host) => !allowed.has(host ?? ""))).toEqual([]);
 	});
 });

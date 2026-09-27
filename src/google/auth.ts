@@ -14,7 +14,7 @@ export type AuthDeps = {
 	createClient: (options: { email: string; key: string; scopes: string[] }) => AccessTokenClient;
 };
 
-const defaultDeps: AuthDeps = {
+export const defaultAuthDeps: AuthDeps = {
 	readKeyFile: (path) => readFile(path, "utf8"),
 	createClient: (options) => new JWT(options),
 };
@@ -57,7 +57,7 @@ async function loadClient(keyFile: string, deps: AuthDeps): Promise<AccessTokenC
 
 export function createServiceAccountTokenProvider(
 	keyFile: string,
-	deps: AuthDeps = defaultDeps,
+	deps: AuthDeps = defaultAuthDeps,
 ): TokenProvider {
 	let client: Promise<AccessTokenClient> | undefined;
 	return async () => {

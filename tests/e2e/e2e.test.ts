@@ -210,6 +210,31 @@ describe("TOOL-04 consultar", () => {
 	});
 
 	test.each([
+		[5, true],
+		[3, false],
+	])("LIMIT 5 com %p linhas: pode_haver_mais = %p", async (rowCount, expectMore) => {
+		google.setHandler((request) =>
+			request.path.includes("googleAds:search")
+				? {
+						status: 200,
+						body: {
+							results: Array.from({ length: rowCount }, (_, i) => ({
+								campaign: { id: String(i) },
+							})),
+						},
+					}
+				: happyPath(request),
+		);
+		const { client } = await connect(withMcc());
+		const result = await call(client, "consultar", {
+			conta: DIRECT,
+			gaql: "SELECT campaign.id FROM campaign LIMIT 5",
+		});
+		expect(result.structuredContent?.quantidade).toBe(rowCount);
+		expect(result.structuredContent?.pode_haver_mais).toBe(expectMore);
+	});
+
+	test.each([
 		["SELECT campaign.id FROM campaign LIMIT 5000", "entre 1 e 1000"],
 		["DELETE FROM campaign", "começar com SELECT"],
 		["SELECT campaign.id FROM campaign; SELECT customer.id FROM customer", "única consulta"],
