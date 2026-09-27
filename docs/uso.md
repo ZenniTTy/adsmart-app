@@ -17,7 +17,7 @@ Consultas nunca alteram nada na sua conta. Cada consulta devolve até 100 linhas
 
 Toda alteração segue três etapas:
 
-1. **Prévia.** O Claude prepara a alteração e o Google a valida sem aplicar nada. Você vê o antes e depois, por exemplo *orçamento diário: R$ 50,00 → R$ 80,00*. Aumentos acima de 50%, orçamentos compartilhados, remoções e anúncios que voltam para revisão aparecem em destaque. A prévia também avisa se a campanha está em fase de aprendizado ou foi alterada nos últimos 14 dias.
+1. **Prévia.** O Claude prepara a alteração e o Google a valida sem aplicar nada. Você vê o antes e depois, com o nome e o ID de cada campanha, grupo ou palavra-chave, por exemplo *orçamento diário da campanha "Black Friday" (1234567890): R$ 50,00 → R$ 80,00*. Aumentos acima de 50%, orçamentos compartilhados, remoções e anúncios que voltam para revisão aparecem em destaque. A prévia também avisa se a campanha está em fase de aprendizado ou foi alterada nos últimos 14 dias.
 2. **Confirmação.** Você confirma no chat, por exemplo *"pode aplicar"*.
 3. **Aplicação.** A alteração é aplicada de uma vez só (ou tudo, ou nada) e registrada no seu computador.
 
