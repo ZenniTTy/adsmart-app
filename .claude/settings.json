@@ -1,0 +1,72 @@
+{
+	"$schema": "https://json.schemastore.org/claude-code-settings.json",
+	"permissions": {
+		"allow": [
+			"Bash(bun install)",
+			"Bash(bun run lint)",
+			"Bash(bun run format)",
+			"Bash(bun run typecheck)",
+			"Bash(bun run test)",
+			"Bash(bun run check)",
+			"Bash(bun test:*)",
+			"Bash(git status)",
+			"Bash(git diff:*)",
+			"Bash(git log:*)"
+		],
+		"ask": ["Bash(git push:*)", "Bash(bun add:*)", "Bash(bun remove:*)"],
+		"deny": [
+			"Read(./.env)",
+			"Read(./.env.*)",
+			"Read(**/*credentials*.json)",
+			"Read(**/*service-account*.json)",
+			"Read(**/*-key.json)",
+			"Read(~/.adsmart/**)"
+		]
+	},
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Read|Edit|Write|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-env.sh",
+						"timeout": 5
+					}
+				]
+			},
+			{
+				"matcher": "Edit|Write|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-secrets.sh",
+						"timeout": 5
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-lethal.sh",
+						"timeout": 5
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format-ts.sh",
+						"timeout": 15
+					}
+				]
+			}
+		]
+	}
+}

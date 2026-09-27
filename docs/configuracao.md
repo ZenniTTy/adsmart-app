@@ -3,7 +3,7 @@
 Este guia conecta o AdSmart à sua conta do Google Ads. Leva cerca de 15 minutos e é feito uma única vez.
 
 > [!TIP]
-> Você não precisa seguir este guia manualmente. No Claude Desktop, peça: **"Configure o AdSmart para mim"**. O Claude executa os passos no seu navegador e avisa sempre que precisar de você, por exemplo para digitar sua senha ou aceitar um termo.
+> Em uma próxima versão, o próprio Claude poderá executar este guia no seu navegador, avisando sempre que precisar de você. Por enquanto, siga os passos abaixo.
 
 ## Antes de começar
 
