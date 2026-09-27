@@ -23,21 +23,30 @@
 	],
 	"type": "module",
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"lint": "biome check .",
 		"format": "biome check --write .",
 		"typecheck": "tsc --noEmit",
-		"test": "bun test",
-		"check": "bun run lint && bun run typecheck && bun run test"
+		"test": "bun test tests/unit --coverage",
+		"build": "bun build src/main.ts --target=node --format=esm --outfile=dist/main.js",
+		"e2e": "bun run build && bun build tests/e2e/server-entry.ts --target=node --format=esm --outfile=dist/e2e-server.js && bun test tests/e2e",
+		"check": "bun run lint && bun run typecheck && bun run test && bun run e2e"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.14",
 		"@commitlint/cli": "^21.2.3",
 		"@commitlint/config-conventional": "^21.2.3",
+		"@modelcontextprotocol/client": "2.1.0",
+		"@types/bun": "1.3.13",
 		"@types/node": "^26.6.3",
 		"lefthook": "^2.1.14",
 		"typescript": "^7.0.2"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/server": "2.1.0",
+		"google-auth-library": "11.1.0",
+		"zod": "4.6.5"
 	}
 }

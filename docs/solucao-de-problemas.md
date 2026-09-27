@@ -25,9 +25,25 @@ A conta de serviço não tem acesso à conta consultada. Verifique:
 
 A conta de serviço não está vinculada a nenhuma conta do Google Ads. Refaça o [passo 5](configuracao.md#5-dar-acesso-à-conta-do-google-ads).
 
-## `INVALID_CUSTOMER_ID`
+## "ID de conta inválido"
 
-IDs de conta devem ser informados sem traços: `1234567890`, não `123-456-7890`.
+O ID da conta tem 10 dígitos e pode ser informado com ou sem traços: `123-456-7890` ou `1234567890`.
+
+## "O limite diário de operações da API do Google Ads foi atingido"
+
+O projeto do Google Cloud usou toda a cota do dia. Espere a cota renovar ou veja os níveis de acesso em [limites](limites.md#cota-diária-da-api).
+
+## "Esta conta do Google Ads está desativada ou cancelada"
+
+Contas canceladas continuam aparecendo na lista, mas não aceitam consultas. Reative a conta no Google Ads ou escolha outra.
+
+## "O Google Ads teve uma falha temporária"
+
+Falha do lado do Google. Tente novamente em alguns instantes. Se persistir, abra uma issue informando o código da requisição exibido na mensagem.
+
+## "O arquivo selecionado não é uma chave JSON de conta de serviço"
+
+O arquivo escolhido nas configurações da extensão não é a chave baixada no [passo 4](configuracao.md#4-criar-a-conta-de-serviço). Selecione o arquivo `.json` correto.
 
 ## `CUSTOMER_NOT_FOUND`
 

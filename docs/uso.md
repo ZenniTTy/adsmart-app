@@ -4,7 +4,7 @@ Depois de [configurado](configuracao.md), basta conversar com o Claude no Claude
 
 ## Consultas e análises
 
-Consultas nunca alteram nada na sua conta.
+Consultas nunca alteram nada na sua conta. Cada consulta devolve até 100 linhas por padrão e no máximo 1.000; para ver mais, peça um recorte menor, por exemplo por período ou por campanha.
 
 - *"Quais contas eu tenho acesso?"*
 - *"Resumo de custo, cliques e conversões por campanha nos últimos 30 dias."*
