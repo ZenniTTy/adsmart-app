@@ -29,7 +29,7 @@
 		"lint": "biome check .",
 		"format": "biome check --write .",
 		"typecheck": "tsc --noEmit",
-		"test": "bun test tests/unit",
+		"test": "bun test tests/unit --coverage",
 		"build": "bun build src/main.ts --target=node --format=esm --outfile=dist/main.js",
 		"e2e": "bun run build && bun build tests/e2e/server-entry.ts --target=node --format=esm --outfile=dist/e2e-server.js && bun test tests/e2e",
 		"check": "bun run lint && bun run typecheck && bun run test && bun run e2e"
