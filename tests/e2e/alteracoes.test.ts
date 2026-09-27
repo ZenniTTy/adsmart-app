@@ -254,7 +254,7 @@ describe("TOOL-06 annotations", () => {
 });
 
 describe("PRV prévia", () => {
-	test("PRV-01/02/03/04: antes → depois em reais, validateOnly, destaques e avisos", async () => {
+	test("PRV-01, PRV-02, PRV-03, PRV-04: antes → depois em reais, validateOnly, destaques e avisos", async () => {
 		const { client } = await connect();
 		const result = await prepare(client, [budgetTo(151)]);
 		expect(result.isError).toBeFalsy();
