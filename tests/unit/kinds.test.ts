@@ -7,7 +7,7 @@ const CID = "1234567890";
 const base = `customers/${CID}`;
 
 function current(value: string | null, extra: Record<string, unknown> = {}) {
-	return { value, campaignId: "111", ...extra };
+	return { value, campaignId: "111", names: {}, ...extra };
 }
 
 describe("CHG-01 operação por tipo no formato validado na V6", () => {
@@ -346,6 +346,7 @@ describe("leitura do valor atual", () => {
 			campaignId: "111",
 			budgetResource: "b",
 			sharedBudget: true,
+			names: {},
 		});
 	});
 
@@ -433,25 +434,25 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 	const cases: Array<[Item, string, Record<string, unknown>[], string | null]> = [
 		[
 			{ tipo: "status_campanha", campanha_id: "111", novo_status: "ATIVO" },
-			"SELECT campaign.id, campaign.status FROM campaign WHERE campaign.id = 111",
+			"SELECT campaign.id, campaign.name, campaign.status FROM campaign WHERE campaign.id = 111",
 			[{ campaign: { id: "111", status: "PAUSED" } }],
 			"PAUSED",
 		],
 		[
 			{ tipo: "lance_grupo", grupo_id: "222", valor: 1 },
-			"SELECT campaign.id, ad_group.status, ad_group.cpc_bid_micros FROM ad_group WHERE ad_group.id = 222",
+			"SELECT campaign.id, campaign.name, ad_group.name, ad_group.status, ad_group.cpc_bid_micros FROM ad_group WHERE ad_group.id = 222",
 			[{ campaign: { id: "111" }, adGroup: { status: "ENABLED", cpcBidMicros: "900000" } }],
 			"900000",
 		],
 		[
 			{ tipo: "status_anuncio", grupo_id: "222", anuncio_id: "333", novo_status: "PAUSADO" },
-			"SELECT campaign.id, ad_group_ad.status, ad_group_ad.ad.responsive_search_ad.headlines, ad_group_ad.ad.responsive_search_ad.descriptions FROM ad_group_ad WHERE ad_group.id = 222 AND ad_group_ad.ad.id = 333",
+			"SELECT campaign.id, campaign.name, ad_group.name, ad_group_ad.status, ad_group_ad.ad.responsive_search_ad.headlines, ad_group_ad.ad.responsive_search_ad.descriptions FROM ad_group_ad WHERE ad_group.id = 222 AND ad_group_ad.ad.id = 333",
 			[{ campaign: { id: "111" }, adGroupAd: { status: "ENABLED" } }],
 			"ENABLED",
 		],
 		[
 			{ tipo: "lance_palavra_chave", grupo_id: "222", criterio_id: "444", valor: 1 },
-			"SELECT campaign.id, ad_group_criterion.status, ad_group_criterion.cpc_bid_micros FROM ad_group_criterion WHERE ad_group.id = 222 AND ad_group_criterion.criterion_id = 444",
+			"SELECT campaign.id, campaign.name, ad_group.name, ad_group_criterion.keyword.text, ad_group_criterion.keyword.match_type, ad_group_criterion.status, ad_group_criterion.cpc_bid_micros FROM ad_group_criterion WHERE ad_group.id = 222 AND ad_group_criterion.criterion_id = 444",
 			[
 				{
 					campaign: { id: "111" },
@@ -462,7 +463,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 		],
 		[
 			{ tipo: "remover_negativa_campanha", campanha_id: "111", criterio_id: "555" },
-			"SELECT campaign.id, campaign_criterion.status FROM campaign_criterion WHERE campaign.id = 111 AND campaign_criterion.criterion_id = 555",
+			"SELECT campaign.id, campaign.name, campaign_criterion.keyword.text, campaign_criterion.keyword.match_type, campaign_criterion.status FROM campaign_criterion WHERE campaign.id = 111 AND campaign_criterion.criterion_id = 555",
 			[{ campaign: { id: "111" }, campaignCriterion: {} }],
 			"ENABLED",
 		],
@@ -497,7 +498,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 		expect(queries[1]).toContain("ad_group_criterion.keyword.text = 'faxina'");
 		expect(queries[1]).toContain("ad_group_criterion.keyword.match_type = 'PHRASE'");
 		expect(queries[1]).toContain("ad_group_criterion.negative = FALSE");
-		expect(result).toEqual({ value: null, campaignId: "111" });
+		expect(result).toEqual({ value: null, campaignId: "111", names: { adGroup: undefined } });
 	});
 
 	test("negativa de grupo procura duplicata negativa", async () => {
@@ -535,7 +536,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 			},
 		);
 		expect(queries[1]).toContain("campaign_criterion.keyword.match_type = 'EXACT'");
-		expect(result).toEqual({ value: null, campaignId: "111" });
+		expect(result).toEqual({ value: null, campaignId: "111", names: {} });
 	});
 
 	test("anúncio que não é RSA gera erro pt-BR", async () => {

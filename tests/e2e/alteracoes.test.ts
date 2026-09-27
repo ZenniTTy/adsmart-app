@@ -14,6 +14,9 @@ const VIA_MCC = "2345678901";
 const MCC = "9876543210";
 const CAMPAIGN = "111";
 const GROUP = "222";
+const CAMPAIGN_NAME = "Black Friday";
+const GROUP_NAME = "Faxina residencial";
+const SEARCHES_FOR_BUDGET_AND_GROUP = 5;
 const work = createWorkDir();
 
 type Keyword = { text: string; match: string; status: string; negative: boolean };
@@ -61,7 +64,7 @@ function search(query: string): FakeResponse {
 	if (query.includes("campaign_budget.resource_name")) {
 		return rows([
 			{
-				campaign: { id: CAMPAIGN },
+				campaign: { id: CAMPAIGN, name: CAMPAIGN_NAME },
 				campaignBudget: {
 					resourceName: `customers/${DIRECT}/campaignBudgets/555`,
 					amountMicros: state.budget,
@@ -79,8 +82,8 @@ function search(query: string): FakeResponse {
 	if (query.includes(`FROM ad_group WHERE ad_group.id = ${GROUP}`)) {
 		return rows([
 			{
-				campaign: { id: CAMPAIGN },
-				adGroup: { status: state.groupStatus, cpcBidMicros: "1000000" },
+				campaign: { id: CAMPAIGN, name: CAMPAIGN_NAME },
+				adGroup: { name: GROUP_NAME, status: state.groupStatus, cpcBidMicros: "1000000" },
 			},
 		]);
 	}
@@ -445,5 +448,68 @@ describe("UND desfazer e HIS histórico", () => {
 				(a) => a.id_alteracao,
 			),
 		).toEqual([second, first]);
+	});
+});
+
+describe("NOM nomes na prévia", () => {
+	const searches = () => google.requests.filter((r) => r.path.endsWith("/googleAds:search"));
+
+	test("NOM-04: a prévia não faz consultas a mais para buscar nomes", async () => {
+		const { client } = await connect();
+		await prepare(client, [
+			budgetTo(90),
+			{ tipo: "status_grupo", grupo_id: GROUP, novo_status: "PAUSADO" },
+		]);
+		expect(searches()).toHaveLength(SEARCHES_FOR_BUDGET_AND_GROUP);
+	});
+
+	test("NOM-07: prévia, histórico e desfazer mostram os nomes; registro antigo continua legível", async () => {
+		const { client } = await connect();
+		writeFileSync(
+			work.historyFile,
+			`${JSON.stringify({
+				id_alteracao: "antiga",
+				data: "2026-09-01T00:00:00.000Z",
+				conta: DIRECT,
+				itens: [
+					{
+						descricao: `Orçamento diário da campanha ${CAMPAIGN}`,
+						antes: "R$ 10,00",
+						depois: "R$ 20,00",
+						item: budgetTo(20),
+						after: "20000000",
+						kind: "update",
+						desfazer: null,
+					},
+				],
+			})}\n`,
+		);
+		const prepared = await prepare(client, [
+			budgetTo(90),
+			{ tipo: "status_grupo", grupo_id: GROUP, novo_status: "PAUSADO" },
+		]);
+		const descriptions = (
+			prepared.structuredContent as { itens: Array<{ descricao: string }> }
+		).itens.map((i) => i.descricao);
+		expect(descriptions).toEqual([
+			`Orçamento diário da campanha "${CAMPAIGN_NAME}" (${CAMPAIGN})`,
+			`Status do grupo "${GROUP_NAME}" (${GROUP})`,
+		]);
+		const applied = await call(client, "aplicar", {
+			id_plano: (prepared.structuredContent as { id_plano: string }).id_plano,
+		});
+		const changeId = (applied.structuredContent as { id_alteracao: string }).id_alteracao;
+		const history = (await call(client, "historico", {})).structuredContent as {
+			alteracoes: Array<{ id_alteracao: string; itens: string[] }>;
+		};
+		expect(history.alteracoes.map((a) => a.id_alteracao)).toEqual([changeId, "antiga"]);
+		expect(history.alteracoes[0]?.itens.join(" ")).toContain(`"${GROUP_NAME}" (${GROUP})`);
+		expect(history.alteracoes[1]?.itens[0]).toContain(`campanha ${CAMPAIGN}:`);
+		const undo = (await call(client, "desfazer", { id_alteracao: changeId })).structuredContent as {
+			itens: Array<{ descricao: string }>;
+		};
+		expect(undo.itens.map((i) => i.descricao)).toContain(
+			`Orçamento diário da campanha "${CAMPAIGN_NAME}" (${CAMPAIGN})`,
+		);
 	});
 });

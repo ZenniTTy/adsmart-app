@@ -6,11 +6,18 @@ import { formatMoney, increaseAboveHalf, toMicros } from "./money.js";
 
 export type Reader = (query: string) => Promise<GaqlRow[]>;
 
+export type Names = {
+	campaign?: string | undefined;
+	adGroup?: string | undefined;
+	keyword?: { text: string; matchType: string } | undefined;
+};
+
 export type Current = {
 	value: string | null;
 	campaignId: string | undefined;
 	budgetResource?: string;
 	sharedBudget?: boolean;
+	names: Names;
 };
 
 export type Change = {
@@ -27,6 +34,11 @@ export type Change = {
 const STATUS_TO_API = { ATIVO: "ENABLED", PAUSADO: "PAUSED" } as const;
 const MATCH_TO_API = { AMPLA: "BROAD", FRASE: "PHRASE", EXATA: "EXACT" } as const;
 const MATCH_LABEL = { AMPLA: "ampla", FRASE: "de frase", EXATA: "exata" } as const;
+const API_MATCH_LABEL: Record<string, string> = {
+	BROAD: "ampla",
+	PHRASE: "de frase",
+	EXACT: "exata",
+};
 const STATUS_LABEL: Record<string, string> = {
 	ENABLED: "ativo",
 	PAUSED: "pausado",
@@ -36,7 +48,9 @@ const STATUS_LABEL: Record<string, string> = {
 const HEADLINE_PINS = ["HEADLINE_1", "HEADLINE_2", "HEADLINE_3"];
 const DESCRIPTION_PINS = ["DESCRIPTION_1", "DESCRIPTION_2"];
 
-const campaignPart = z.object({ id: z.string() });
+const campaignPart = z.object({ id: z.string(), name: z.string().optional() });
+const adGroupPart = z.object({ name: z.string().optional() });
+const keywordPart = z.object({ text: z.string(), matchType: z.string() });
 const withCampaign = <T extends z.ZodRawShape>(shape: T) =>
 	z.object({ campaign: campaignPart.optional(), ...shape });
 
@@ -48,13 +62,22 @@ const budgetRow = withCampaign({
 	}),
 });
 const campaignRow = z.object({
-	campaign: z.object({ id: z.string(), status: z.string().optional() }),
+	campaign: z.object({
+		id: z.string(),
+		name: z.string().optional(),
+		status: z.string().optional(),
+	}),
 });
 const adGroupRow = withCampaign({
-	adGroup: z.object({ status: z.string().optional(), cpcBidMicros: z.string().optional() }),
+	adGroup: z.object({
+		name: z.string().optional(),
+		status: z.string().optional(),
+		cpcBidMicros: z.string().optional(),
+	}),
 });
 const assetRow = z.object({ text: z.string(), pinnedField: z.string().optional() });
 const adGroupAdRow = withCampaign({
+	adGroup: adGroupPart.optional(),
 	adGroupAd: z.object({
 		status: z.string().optional(),
 		ad: z
@@ -70,21 +93,43 @@ const adGroupAdRow = withCampaign({
 	}),
 });
 const criterionRow = withCampaign({
+	adGroup: adGroupPart.optional(),
 	adGroupCriterion: z.object({
 		resourceName: z.string().optional(),
 		status: z.string().optional(),
 		cpcBidMicros: z.string().optional(),
+		keyword: keywordPart.optional(),
 	}),
 });
 const campaignCriterionRow = withCampaign({
 	campaignCriterion: z.object({
 		resourceName: z.string().optional(),
 		status: z.string().optional(),
+		keyword: keywordPart.optional(),
 	}),
 });
 
 function notFound(label: string): AdsError {
 	return new AdsError("ITEM_NOT_FOUND", `${label} não foi encontrado nesta conta. Confira o ID.`);
+}
+
+function named(noun: string, id: string, name: string | undefined): string {
+	return name ? `${noun} "${name}" (${id})` : `${noun} ${id}`;
+}
+
+function keywordNamed(noun: string, id: string, names: Names): string {
+	const keyword = names.keyword;
+	if (!keyword?.text) {
+		return `${noun} ${id}`;
+	}
+	const match = API_MATCH_LABEL[keyword.matchType];
+	return match
+		? `${noun} "${keyword.text}" (${id}, correspondência ${match})`
+		: `${noun} "${keyword.text}" (${id})`;
+}
+
+function adNamed(item: { anuncio_id: string; grupo_id: string }, names: Names): string {
+	return `anúncio ${item.anuncio_id} do ${named("grupo", item.grupo_id, names.adGroup)}`;
 }
 
 async function one<T>(
@@ -119,29 +164,29 @@ type StatusItem = Extract<
 	{ tipo: "status_campanha" | "status_grupo" | "status_anuncio" | "status_palavra_chave" }
 >;
 
-function statusTarget(item: StatusItem, base: string) {
+function statusTarget(item: StatusItem, base: string, names: Names) {
 	switch (item.tipo) {
 		case "status_campanha":
 			return {
-				label: `Status da campanha ${item.campanha_id}`,
+				label: `Status da ${named("campanha", item.campanha_id, names.campaign)}`,
 				key: "campaignOperation",
 				resource: `${base}/campaigns/${item.campanha_id}`,
 			};
 		case "status_grupo":
 			return {
-				label: `Status do grupo ${item.grupo_id}`,
+				label: `Status do ${named("grupo", item.grupo_id, names.adGroup)}`,
 				key: "adGroupOperation",
 				resource: `${base}/adGroups/${item.grupo_id}`,
 			};
 		case "status_anuncio":
 			return {
-				label: `Status do anúncio ${item.anuncio_id}`,
+				label: `Status do ${adNamed(item, names)}`,
 				key: "adGroupAdOperation",
 				resource: `${base}/adGroupAds/${item.grupo_id}~${item.anuncio_id}`,
 			};
 		case "status_palavra_chave":
 			return {
-				label: `Status da palavra-chave ${item.criterio_id}`,
+				label: `Status da ${keywordNamed("palavra-chave", item.criterio_id, names)}`,
 				key: "adGroupCriterionOperation",
 				resource: `${base}/adGroupCriteria/${item.grupo_id}~${item.criterio_id}`,
 			};
@@ -190,7 +235,7 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 		case "orcamento": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, campaign_budget.resource_name, campaign_budget.amount_micros, campaign_budget.reference_count FROM campaign WHERE campaign.id = ${item.campanha_id}`,
+				`SELECT campaign.id, campaign.name, campaign_budget.resource_name, campaign_budget.amount_micros, campaign_budget.reference_count FROM campaign WHERE campaign.id = ${item.campanha_id}`,
 				budgetRow,
 				`A campanha ${item.campanha_id}`,
 			);
@@ -199,22 +244,27 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 				campaignId: row.campaign?.id,
 				budgetResource: row.campaignBudget.resourceName,
 				sharedBudget: Number(row.campaignBudget.referenceCount ?? "1") > 1,
+				names: { campaign: row.campaign?.name },
 			};
 		}
 		case "status_campanha": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, campaign.status FROM campaign WHERE campaign.id = ${item.campanha_id}`,
+				`SELECT campaign.id, campaign.name, campaign.status FROM campaign WHERE campaign.id = ${item.campanha_id}`,
 				campaignRow,
 				`A campanha ${item.campanha_id}`,
 			);
-			return { value: row.campaign.status ?? null, campaignId: row.campaign.id };
+			return {
+				value: row.campaign.status ?? null,
+				campaignId: row.campaign.id,
+				names: { campaign: row.campaign.name },
+			};
 		}
 		case "status_grupo":
 		case "lance_grupo": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, ad_group.status, ad_group.cpc_bid_micros FROM ad_group WHERE ad_group.id = ${item.grupo_id}`,
+				`SELECT campaign.id, campaign.name, ad_group.name, ad_group.status, ad_group.cpc_bid_micros FROM ad_group WHERE ad_group.id = ${item.grupo_id}`,
 				adGroupRow,
 				`O grupo ${item.grupo_id}`,
 			);
@@ -224,18 +274,20 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 						? (row.adGroup.status ?? null)
 						: (row.adGroup.cpcBidMicros ?? null),
 				campaignId: row.campaign?.id,
+				names: { campaign: row.campaign?.name, adGroup: row.adGroup.name },
 			};
 		}
 		case "status_anuncio":
 		case "editar_rsa": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, ad_group_ad.status, ad_group_ad.ad.responsive_search_ad.headlines, ad_group_ad.ad.responsive_search_ad.descriptions FROM ad_group_ad WHERE ad_group.id = ${item.grupo_id} AND ad_group_ad.ad.id = ${item.anuncio_id}`,
+				`SELECT campaign.id, campaign.name, ad_group.name, ad_group_ad.status, ad_group_ad.ad.responsive_search_ad.headlines, ad_group_ad.ad.responsive_search_ad.descriptions FROM ad_group_ad WHERE ad_group.id = ${item.grupo_id} AND ad_group_ad.ad.id = ${item.anuncio_id}`,
 				adGroupAdRow,
 				`O anúncio ${item.anuncio_id}`,
 			);
+			const names = { campaign: row.campaign?.name, adGroup: row.adGroup?.name };
 			if (item.tipo === "status_anuncio") {
-				return { value: row.adGroupAd.status ?? null, campaignId: row.campaign?.id };
+				return { value: row.adGroupAd.status ?? null, campaignId: row.campaign?.id, names };
 			}
 			const rsa = row.adGroupAd.ad?.responsiveSearchAd;
 			if (!rsa) {
@@ -250,6 +302,7 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 					descricoes: fromApiAssets(rsa.descriptions ?? [], DESCRIPTION_PINS),
 				}),
 				campaignId: row.campaign?.id,
+				names,
 			};
 		}
 		case "status_palavra_chave":
@@ -258,7 +311,7 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 		case "remover_negativa_grupo": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, ad_group_criterion.status, ad_group_criterion.cpc_bid_micros FROM ad_group_criterion WHERE ad_group.id = ${item.grupo_id} AND ad_group_criterion.criterion_id = ${item.criterio_id}`,
+				`SELECT campaign.id, campaign.name, ad_group.name, ad_group_criterion.keyword.text, ad_group_criterion.keyword.match_type, ad_group_criterion.status, ad_group_criterion.cpc_bid_micros FROM ad_group_criterion WHERE ad_group.id = ${item.grupo_id} AND ad_group_criterion.criterion_id = ${item.criterio_id}`,
 				criterionRow,
 				`O critério ${item.criterio_id}`,
 			);
@@ -266,22 +319,34 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 				item.tipo === "lance_palavra_chave"
 					? (row.adGroupCriterion.cpcBidMicros ?? null)
 					: (row.adGroupCriterion.status ?? null);
-			return { value, campaignId: row.campaign?.id };
+			return {
+				value,
+				campaignId: row.campaign?.id,
+				names: {
+					campaign: row.campaign?.name,
+					adGroup: row.adGroup?.name,
+					keyword: row.adGroupCriterion.keyword,
+				},
+			};
 		}
 		case "remover_negativa_campanha": {
 			const row = await one(
 				read,
-				`SELECT campaign.id, campaign_criterion.status FROM campaign_criterion WHERE campaign.id = ${item.campanha_id} AND campaign_criterion.criterion_id = ${item.criterio_id}`,
+				`SELECT campaign.id, campaign.name, campaign_criterion.keyword.text, campaign_criterion.keyword.match_type, campaign_criterion.status FROM campaign_criterion WHERE campaign.id = ${item.campanha_id} AND campaign_criterion.criterion_id = ${item.criterio_id}`,
 				campaignCriterionRow,
 				`A negativa ${item.criterio_id}`,
 			);
-			return { value: row.campaignCriterion.status ?? "ENABLED", campaignId: row.campaign?.id };
+			return {
+				value: row.campaignCriterion.status ?? "ENABLED",
+				campaignId: row.campaign?.id,
+				names: { campaign: row.campaign?.name, keyword: row.campaignCriterion.keyword },
+			};
 		}
 		case "adicionar_palavra_chave":
 		case "adicionar_negativa_grupo": {
 			const group = await one(
 				read,
-				`SELECT campaign.id, ad_group.status FROM ad_group WHERE ad_group.id = ${item.grupo_id}`,
+				`SELECT campaign.id, campaign.name, ad_group.name, ad_group.status FROM ad_group WHERE ad_group.id = ${item.grupo_id}`,
 				adGroupRow,
 				`O grupo ${item.grupo_id}`,
 			);
@@ -294,12 +359,13 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 			return {
 				value: existing?.adGroupCriterion.resourceName ?? null,
 				campaignId: group.campaign?.id,
+				names: { campaign: group.campaign?.name, adGroup: group.adGroup.name },
 			};
 		}
 		case "adicionar_negativa_campanha": {
-			await one(
+			const campaign = await one(
 				read,
-				`SELECT campaign.id, campaign.status FROM campaign WHERE campaign.id = ${item.campanha_id}`,
+				`SELECT campaign.id, campaign.name, campaign.status FROM campaign WHERE campaign.id = ${item.campanha_id}`,
 				campaignRow,
 				`A campanha ${item.campanha_id}`,
 			);
@@ -311,6 +377,7 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 			return {
 				value: existing?.campaignCriterion.resourceName ?? null,
 				campaignId: item.campanha_id,
+				names: { campaign: campaign.campaign.name },
 			};
 		}
 	}
@@ -349,7 +416,7 @@ export function buildChange(
 				);
 			}
 			return {
-				descricao: `Orçamento diário da campanha ${item.campanha_id}`,
+				descricao: `Orçamento diário da ${named("campanha", item.campanha_id, current.names.campaign)}`,
 				antes: formatMoney(current.value, currency),
 				depois: formatMoney(after, currency),
 				destaques,
@@ -372,7 +439,7 @@ export function buildChange(
 		case "status_anuncio":
 		case "status_palavra_chave": {
 			const after = STATUS_TO_API[item.novo_status];
-			const target = statusTarget(item, base);
+			const target = statusTarget(item, base, current.names);
 			return {
 				descricao: target.label,
 				antes: statusLabel(current.value),
@@ -398,8 +465,8 @@ export function buildChange(
 			return {
 				descricao:
 					item.tipo === "lance_grupo"
-						? `Lance máximo de CPC do grupo ${item.grupo_id}`
-						: `Lance máximo de CPC da palavra-chave ${item.criterio_id}`,
+						? `Lance máximo de CPC do ${named("grupo", item.grupo_id, current.names.adGroup)}`
+						: `Lance máximo de CPC da ${keywordNamed("palavra-chave", item.criterio_id, current.names)}`,
 				antes: formatMoney(current.value, currency),
 				depois: formatMoney(after, currency),
 				destaques: increaseAboveHalf(current.value, after)
@@ -446,10 +513,10 @@ export function buildChange(
 			return {
 				descricao:
 					item.tipo === "adicionar_palavra_chave"
-						? `Nova palavra-chave ${label} no grupo ${item.grupo_id}`
+						? `Nova palavra-chave ${label} no ${named("grupo", item.grupo_id, current.names.adGroup)}`
 						: item.tipo === "adicionar_negativa_grupo"
-							? `Nova negativa ${label} no grupo ${item.grupo_id}`
-							: `Nova negativa ${label} na campanha ${item.campanha_id}`,
+							? `Nova negativa ${label} no ${named("grupo", item.grupo_id, current.names.adGroup)}`
+							: `Nova negativa ${label} na ${named("campanha", item.campanha_id, current.names.campaign)}`,
 				antes: current.value ? "já existe" : "não existe",
 				depois: "criada",
 				destaques:
@@ -478,8 +545,8 @@ export function buildChange(
 			return {
 				descricao:
 					item.tipo === "remover_palavra_chave"
-						? `Remover a palavra-chave ${item.criterio_id}`
-						: `Remover a negativa ${item.criterio_id}`,
+						? `Remover a ${keywordNamed("palavra-chave", item.criterio_id, current.names)}`
+						: `Remover a ${keywordNamed("negativa", item.criterio_id, current.names)}`,
 				antes: statusLabel(current.value),
 				depois: "removido",
 				destaques: ["Remoção é irreversível: não pode ser desfeita."],
@@ -493,7 +560,7 @@ export function buildChange(
 			const content: RsaContent = { titulos: item.titulos, descricoes: item.descricoes };
 			const after = rsaKey(content);
 			return {
-				descricao: `Títulos e descrições do anúncio ${item.anuncio_id}`,
+				descricao: `Títulos e descrições do ${adNamed(item, current.names)}`,
 				antes: rsaDisplay(current.value),
 				depois: rsaDisplay(after),
 				destaques: ["O anúncio volta para a revisão de políticas do Google."],
