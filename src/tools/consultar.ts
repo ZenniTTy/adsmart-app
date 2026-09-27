@@ -39,7 +39,7 @@ export function registerConsultar(server: McpServer, context: ToolContext): void
 			if (!ready.ok) {
 				return failure(ready.message);
 			}
-			const { google, config } = ready;
+			const { google } = ready;
 			const customerId = normalizeCustomerId(conta);
 			if (!customerId) {
 				return failure(
@@ -51,9 +51,7 @@ export function registerConsultar(server: McpServer, context: ToolContext): void
 				return failure(prepared.message);
 			}
 			try {
-				const mcc = config.loginCustomerId;
-				const direct = await context.directCustomerIds();
-				const loginCustomerId = mcc && !direct.includes(customerId) ? mcc : undefined;
+				const loginCustomerId = await context.loginCustomerIdFor(customerId);
 				const { rows, nextPageToken } = await google.ads.search(
 					customerId,
 					prepared.query,
