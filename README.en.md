@@ -1,6 +1,6 @@
-# AdSmart
+# AdSmart: manage Google Ads by chatting with Claude
 
-**Manage your Google Ads campaigns by chatting with Claude.**
+**Open-source Claude Desktop extension that connects Claude to your Google Ads accounts.** Query metrics, analyze campaigns and make changes with preview, approval and undo, all running on your own computer.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![CI](https://github.com/ZenniTTy/adsmart-app/actions/workflows/ci.yml/badge.svg)](https://github.com/ZenniTTy/adsmart-app/actions/workflows/ci.yml)
@@ -8,41 +8,97 @@
 English · [Português](README.md)
 
 > [!NOTE]
-> Under active development. The first public version has not been released yet. Follow the [releases](https://github.com/ZenniTTy/adsmart-app/releases).
+> Under active development. The first public version (v0.1.0) has not been released yet. Follow the [releases](https://github.com/ZenniTTy/adsmart-app/releases).
 
-AdSmart is an open-source extension for **Claude Desktop** that connects Claude to your Google Ads accounts. Ask, analyze and change campaigns in plain language, right in the chat:
+## What is AdSmart
+
+AdSmart is an [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server packaged as a Claude Desktop extension (`.mcpb`). It gives Claude safe access to the **Google Ads API** through your own Google Cloud service account, so you can manage Google Ads campaigns in plain language:
 
 - *"How did my campaigns perform over the last 7 days?"*
-- *"Which search terms are spending without converting?"*
+- *"Which search terms spent more than $50 without converting this month?"*
+- *"How much impression share am I losing to budget?"*
 - *"Pause the Black Friday campaign and raise the Brand budget to $80/day."*
+- *"Add 'free' and 'online course' as negative keywords to the Search campaign."*
 - *"Undo the last change."*
+
+It is a local, free alternative to cloud-based Google Ads automation tools: no middleman server, no subscription, no data collection. The extension's replies and messages are in Brazilian Portuguese.
 
 ## Why AdSmart
 
-- **Fully local.** Runs on your computer. Your credentials never leave your machine and nothing goes through third-party servers.
-- **Free.** The Google Ads API is free and AdSmart is open-source. You use your own Claude account.
-- **Safe by default.** Every change is validated by Google and shown to you before it is applied. Nothing changes without your approval, and everything can be undone.
-- **All your accounts.** Connect a manager account (MCC) and manage every linked account.
+- **Fully local.** Runs on your computer. The service account key never leaves your machine and nothing goes through third-party servers. The extension only talks to `googleads.googleapis.com` and `oauth2.googleapis.com`.
+- **Free.** The Google Ads API is free at the Explorer access level, AdSmart is open-source (MIT) and you use your own Claude account.
+- **Safe by default.** Every change is validated by Google and shown with before and after values. Nothing changes without your confirmation in the chat, and everything is logged and can be undone (except removals, which are always flagged as irreversible).
+- **All your accounts.** Works with individual accounts and manager accounts (MCC), including their linked accounts.
+
+## Features
+
+### Queries and reports (read-only)
+
+| Tool | What it does |
+|---|---|
+| `diagnostico` | Checks configuration, key file, authentication, reachable accounts and MCC, and says what to fix |
+| `listar_contas` | Lists the Google Ads accounts the service account can reach, including through an MCC |
+| `consultar` | Runs read-only GAQL (Google Ads Query Language) queries: metrics, search terms, disapproved ads, change history and more |
+
+### Safe changes
+
+| Tool | What it does |
+|---|---|
+| `preparar_alteracao` | Builds the preview: reads current values, validates with Google (`validateOnly`) and shows before and after, with learning-phase and recent-change warnings |
+| `aplicar` | Applies the confirmed preview atomically (all or nothing) and records it in the local history |
+| `desfazer` | Prepares the reversal of a change, which also goes through preview and confirmation |
+| `historico` | Shows the changes AdSmart made on this computer |
+
+Supported changes: daily budget, status of campaigns, ad groups, ads and keywords (enable or pause), ad group and keyword bids, adding or removing keywords, campaign and ad group negative keywords, and responsive search ad (RSA) text. Up to 100 items per batch, in one account.
+
+## How it works
+
+1. You ask something in the Claude Desktop chat.
+2. Claude reads your data through the Google Ads REST API using your service account.
+3. For changes, AdSmart builds a preview validated by Google, with before and after values and highlights such as increases above 50% and removals.
+4. You confirm in the chat. AdSmart checks that nothing changed in the account since the preview, applies the change and records it on your computer.
+
+A preview is valid for 15 minutes. If someone changes the item in the meantime, including in the Google Ads interface, AdSmart does not apply and asks for a new preview.
 
 ## Requirements
 
-- [Claude Desktop](https://claude.ai/download) (macOS or Windows)
-- A Google account with **admin** access to the Google Ads account (or MCC)
-- A Google Cloud project (free, no credit card required)
+- [Claude Desktop](https://claude.ai/download) (macOS or Windows). AdSmart does not run on claude.ai in the browser or on mobile apps, because it runs on your computer.
+- A Google account with **admin** access to the Google Ads account (or MCC).
+- A Google Cloud project with the Google Ads API enabled at the Explorer access level (free, no credit card required).
 
 ## Installation
 
+Once the first version is released:
+
 1. Download `adsmart.mcpb` from the [latest release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
 2. In Claude Desktop, open **Settings > Extensions** and drag the file into the window.
-3. Follow the [setup guide](docs/configuracao.md) (Portuguese) to connect your Google Ads account. Claude can run the guide for you and will tell you when your action is needed, such as typing your password.
+3. Follow the [setup guide](docs/configuracao.md) (Portuguese) to create the service account and connect your accounts.
 
 ## Documentation
 
 Guides are written in Portuguese: [setup](docs/configuracao.md), [usage](docs/uso.md), [limits](docs/limites.md) and [troubleshooting](docs/solucao-de-problemas.md).
 
+## FAQ
+
+**Do I need a Google Ads developer token?**
+No. Access is granted through your Google Cloud project's access level (Explorer). The [setup guide](docs/configuracao.md) shows how to request it.
+
+**Can Claude change my account without me knowing?**
+No. No tool changes the account in a single step: there is always a preview and your confirmation in the chat. If you choose "Always allow" for the `aplicar` tool in Claude Desktop, the extra permission window no longer appears, but the chat confirmation is still required.
+
+**Does my data go to any server?**
+No. AdSmart runs locally and only talks to the Google Ads API. The change history is a file on your computer.
+
+**Does it work with an MCC (manager account)?**
+Yes. Link the service account to the MCC and AdSmart reaches every linked account.
+
+## Security
+
+AdSmart handles credentials that can change ad spend. Read the [security policy](SECURITY.md) to learn how your data is protected and how to report vulnerabilities privately.
+
 ## Contributing
 
-Contributions are welcome. See the [contributing guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md). Please report vulnerabilities as described in [SECURITY.md](SECURITY.md).
+Contributions are welcome, including with AI coding agents: agent instructions live in [AGENTS.md](AGENTS.md). See the [contributing guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
