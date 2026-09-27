@@ -50,7 +50,7 @@ A conta de serviço é a identidade que o AdSmart usa para acessar o Google Ads.
 3. Clique em **+** na aba **Usuários**, cole o e-mail da conta de serviço e escolha o nível **Padrão**.
 4. Clique em **Adicionar conta**.
 
-Este passo é sempre feito por você: por segurança, o Claude não concede acesso a contas em seu nome.
+Este passo é sempre feito por você: por segurança, o Claude não concede acesso a contas em seu nome. A partir de 15 de outubro de 2026, o Google Ads exige uma chave de acesso (passkey) para adicionar usuários; se o Google pedir, crie a sua quando solicitado.
 
 Anote o **ID da conta**: o número de 10 dígitos exibido no canto superior do Google Ads, ao lado do nome da conta. O número que aparece na barra de endereço não é o ID da conta.
 
