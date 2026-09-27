@@ -1,31 +1,28 @@
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "bun:test";
-import { mkdtempSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { Client } from "@modelcontextprotocol/client";
-import { getDefaultEnvironment, StdioClientTransport } from "@modelcontextprotocol/client/stdio";
 import {
 	type FakeGoogle,
 	type FakeHandler,
 	googleFailure,
 	startFakeGoogle,
 } from "./fake-google.js";
+import {
+	call,
+	createSessions,
+	createWorkDir,
+	FAKE_EMAIL,
+	FAKE_KEY,
+	PRODUCTION_SERVER,
+	text,
+} from "./harness.js";
 
-const ROOT = join(import.meta.dir, "..", "..");
-const E2E_SERVER = join(ROOT, "dist", "e2e-server.js");
-const PRODUCTION_SERVER = join(ROOT, "dist", "main.js");
 const DIRECT = "1234567890";
 const VIA_MCC = "2345678901";
 const MCC = "9876543210";
-const FAKE_EMAIL = "teste@projeto-ficticio.iam.gserviceaccount.com";
-const FAKE_KEY = "chave-ficticia-de-teste";
 
-const keyDir = mkdtempSync(join(tmpdir(), "adsmart-e2e-"));
-const keyFile = join(keyDir, "chave.json");
-writeFileSync(
-	keyFile,
-	JSON.stringify({ type: "service_account", client_email: FAKE_EMAIL, private_key: FAKE_KEY }),
-);
+const work = createWorkDir();
+const keyDir = work.dir;
+const keyFile = work.keyFile;
 
 function customer(id: string, manager = false, level?: string) {
 	const fields = {
@@ -61,14 +58,8 @@ const happyPath: FakeHandler = (request) => {
 	return { status: 200, body: { results: [customer(target ?? "", target === MCC)] } };
 };
 
-type ToolResult = {
-	isError?: boolean;
-	content: Array<{ type: string; text?: string }>;
-	structuredContent?: Record<string, unknown>;
-};
-
 let google: FakeGoogle;
-let open: Array<{ client: Client; stderr: () => string }> = [];
+const sessions = createSessions();
 
 beforeAll(async () => {
 	google = await startFakeGoogle(happyPath);
@@ -79,52 +70,37 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-	for (const { client } of open) {
-		await client.close();
-	}
-	open = [];
+	await sessions.closeAll();
 	google.setHandler(happyPath);
 	google.requests.length = 0;
 });
 
-async function connect(env: Record<string, string>, entry = E2E_SERVER) {
-	const transport = new StdioClientTransport({
-		command: "node",
-		args: [entry],
-		env: { ...getDefaultEnvironment(), ADSMART_TEST_FAKE_URL: google.baseUrl, ...env },
-		stderr: "pipe",
-	});
-	let stderrText = "";
-	transport.stderr?.on("data", (chunk: Buffer) => {
-		stderrText += chunk.toString("utf8");
-	});
-	const client = new Client({ name: "adsmart-e2e", version: "0.0.0" });
-	await client.connect(transport);
-	const session = { client, stderr: () => stderrText };
-	open.push(session);
-	return session;
-}
-
-async function call(
-	client: Client,
-	name: string,
-	args: Record<string, unknown> = {},
-): Promise<ToolResult> {
-	return (await client.callTool({ name, arguments: args })) as ToolResult;
-}
-
-function text(result: ToolResult): string {
-	return result.content.map((c) => c.text ?? "").join("\n");
+function connect(env: Record<string, string>, entry?: string) {
+	return sessions.connect(
+		{ ADSMART_TEST_FAKE_URL: google.baseUrl, ADSMART_TEST_HISTORY_FILE: work.historyFile, ...env },
+		entry,
+	);
 }
 
 const withMcc = () => ({ ADSMART_KEY_FILE: keyFile, ADSMART_LOGIN_CUSTOMER_ID: "987-654-3210" });
 
 describe("E2E-01 / TOOL-01 servidor real via stdio com node", () => {
-	test("lista as 3 tools com schemas e annotations de leitura", async () => {
+	test("lista as tools; as 3 de consulta com schemas e annotations de leitura", async () => {
 		const { client } = await connect(withMcc());
 		const { tools } = await client.listTools();
-		expect(tools.map((t) => t.name).sort()).toEqual(["consultar", "diagnostico", "listar_contas"]);
-		for (const tool of tools) {
+		expect(tools.map((t) => t.name).sort()).toEqual([
+			"aplicar",
+			"consultar",
+			"desfazer",
+			"diagnostico",
+			"historico",
+			"listar_contas",
+			"preparar_alteracao",
+		]);
+		const readTools = tools.filter((t) =>
+			["consultar", "diagnostico", "listar_contas"].includes(t.name),
+		);
+		for (const tool of readTools) {
 			expect(tool.annotations?.readOnlyHint).toBe(true);
 			expect(tool.annotations?.openWorldHint).toBe(true);
 			expect(tool.outputSchema).toBeDefined();
@@ -316,6 +292,6 @@ describe("E2E-02 entrypoint de produção", () => {
 	test("sobe com node e responde tools/list sem rede", async () => {
 		const { client } = await connect({}, PRODUCTION_SERVER);
 		const { tools } = await client.listTools();
-		expect(tools).toHaveLength(3);
+		expect(tools).toHaveLength(7);
 	});
 });

@@ -6,6 +6,7 @@ export type RecordedRequest = {
 	path: string;
 	loginCustomerId: string | undefined;
 	query: string | undefined;
+	body: unknown;
 };
 
 export type FakeResponse = { status: number; body: unknown };
@@ -27,20 +28,16 @@ async function readBody(request: IncomingMessage): Promise<string> {
 	return Buffer.concat(chunks).toString("utf8");
 }
 
-function parseQuery(body: string): string | undefined {
-	if (!body) {
-		return undefined;
+function parseBody(raw: string): { query: string | undefined; body: unknown } {
+	if (!raw) {
+		return { query: undefined, body: undefined };
 	}
-	const parsed: unknown = JSON.parse(body);
-	if (
-		parsed &&
-		typeof parsed === "object" &&
-		"query" in parsed &&
-		typeof parsed.query === "string"
-	) {
-		return parsed.query;
-	}
-	return undefined;
+	const body: unknown = JSON.parse(raw);
+	const query =
+		body && typeof body === "object" && "query" in body && typeof body.query === "string"
+			? body.query
+			: undefined;
+	return { query, body };
 }
 
 export async function startFakeGoogle(initial: FakeHandler): Promise<FakeGoogle> {
@@ -52,7 +49,7 @@ export async function startFakeGoogle(initial: FakeHandler): Promise<FakeGoogle>
 			method: request.method ?? "",
 			path: (request.url ?? "").replace(/^\/v0/, ""),
 			loginCustomerId: typeof header === "string" ? header : undefined,
-			query: parseQuery(await readBody(request)),
+			...parseBody(await readBody(request)),
 		};
 		requests.push(recorded);
 		const { status, body } = handler(recorded);
