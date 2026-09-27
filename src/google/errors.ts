@@ -26,6 +26,8 @@ const MESSAGES_BY_CODE: Record<string, string> = {
 		"O limite diário de operações da API do Google Ads foi atingido. Tente novamente mais tarde.",
 	CLOUD_PROJECT_NOT_APPROVED_FOR_PRODUCTION:
 		"O projeto do Google Cloud ainda está no nível Teste. Solicite o nível Exploração (passo 3 do guia de configuração).",
+	CONCURRENT_MODIFICATION:
+		"Outra alteração estava sendo feita no mesmo item ao mesmo tempo. Nada foi aplicado. Gere uma nova prévia.",
 	TRANSIENT_ERROR: "O Google Ads teve uma falha temporária. Tente novamente em alguns instantes.",
 	INTERNAL_ERROR: "O Google Ads teve uma falha temporária. Tente novamente em alguns instantes.",
 };

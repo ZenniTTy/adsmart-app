@@ -17,6 +17,7 @@ Como a cota é contada:
 
 - Cada consulta ou relatório conta como **1 operação**, independentemente do número de linhas.
 - Em alterações, **cada item alterado** conta como 1 operação. Alterar 200 palavras-chave consome 200 operações.
+- A prévia e a conferência antes de aplicar também fazem consultas: conte com algumas operações a mais por lote, além dos itens alterados.
 
 Para o uso diário de gestão e análise, o nível Explorer costuma ser suficiente.
 

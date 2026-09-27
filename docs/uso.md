@@ -17,9 +17,15 @@ Consultas nunca alteram nada na sua conta. Cada consulta devolve até 100 linhas
 
 Toda alteração segue três etapas:
 
-1. **Prévia.** O Claude prepara a alteração e o Google a valida sem aplicar nada. Você vê o antes e depois, por exemplo *orçamento diário: R$ 50,00 → R$ 80,00 (+60%)*.
-2. **Aprovação.** O Claude Desktop pede sua permissão antes de aplicar.
-3. **Aplicação.** A alteração é aplicada e registrada no seu computador.
+1. **Prévia.** O Claude prepara a alteração e o Google a valida sem aplicar nada. Você vê o antes e depois, por exemplo *orçamento diário: R$ 50,00 → R$ 80,00*. Aumentos acima de 50%, orçamentos compartilhados, remoções e anúncios que voltam para revisão aparecem em destaque. A prévia também avisa se a campanha está em fase de aprendizado ou foi alterada nos últimos 14 dias.
+2. **Confirmação.** Você confirma no chat, por exemplo *"pode aplicar"*.
+3. **Aplicação.** A alteração é aplicada de uma vez só (ou tudo, ou nada) e registrada no seu computador.
+
+Você pode pedir várias alterações juntas (até 100 por vez, na mesma conta): uma prévia e uma confirmação valem para o lote. A prévia vale por 15 minutos; se algo mudar na conta nesse meio tempo, o AdSmart não aplica e pede uma nova prévia.
+
+Se você escolher **Sempre permitir** para a ferramenta *aplicar* no Claude Desktop, o Claude aplica as alterações assim que você confirmar no chat, sem abrir outra janela. Tudo fica no histórico e pode ser desfeito.
+
+Palavras-chave novas nascem ativas: começam a rodar se o grupo e a campanha estiverem ativos.
 
 Exemplos:
 
@@ -37,12 +43,10 @@ Alterações podem ser revertidas pelo chat:
 - *"Desfaz a última alteração."*
 - *"Mostra as alterações feitas hoje e desfaz a do orçamento."*
 
-Remoções definitivas não podem ser desfeitas. Por isso, o AdSmart prefere pausar em vez de remover.
+Desfazer também mostra uma prévia e espera sua confirmação. Se alguém mudou o item depois do AdSmart (por exemplo, na interface do Google Ads), o AdSmart não desfaz automaticamente, para não apagar a decisão de outra pessoa.
 
-## Controlar permissões
-
-O Claude Desktop pede sua permissão antes de o Claude usar uma ferramenta da extensão. Recomendamos permitir sempre as ferramentas de consulta e aprovar individualmente cada uso da ferramenta **aplicar**.
+Remoções definitivas não podem ser desfeitas. Por isso, o AdSmart prefere pausar em vez de remover. Uma palavra-chave adicionada pelo AdSmart é desfeita por remoção; se você quiser recriá-la depois, ela ganha um novo ID e começa sem histórico.
 
 ## Histórico
 
-Cada alteração aplicada fica registrada no seu computador com data, conta, valores anteriores e novos. As alterações também aparecem no **Histórico de alterações** do Google Ads.
+Cada alteração aplicada fica registrada no seu computador, no arquivo `historico.jsonl` da pasta `.adsmart` da sua pasta pessoal, com data, conta, valores anteriores e novos. Peça *"mostra o histórico de alterações"* para ver as últimas. As alterações também aparecem no **Histórico de alterações** do Google Ads.

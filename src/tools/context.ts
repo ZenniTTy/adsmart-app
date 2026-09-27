@@ -12,6 +12,7 @@ export type Ready =
 export type ToolContext = {
 	ready(): Ready;
 	directCustomerIds(): Promise<string[]>;
+	loginCustomerIdFor(customerId: string): Promise<string | undefined>;
 };
 
 export type TextResult = {
@@ -32,18 +33,27 @@ export function createToolContext(
 		services ??= connect(config.config);
 		return { ok: true, config: config.config, google: services };
 	};
+	const directCustomerIds = () => {
+		const current = ready();
+		if (!current.ok) {
+			return Promise.resolve([]);
+		}
+		directIds ??= current.google.ads.listAccessibleCustomerIds().catch((error: unknown) => {
+			directIds = undefined;
+			throw error;
+		});
+		return directIds;
+	};
 	return {
 		ready,
-		directCustomerIds() {
+		directCustomerIds,
+		async loginCustomerIdFor(customerId) {
 			const current = ready();
-			if (!current.ok) {
-				return Promise.resolve([]);
+			const mcc = current.ok ? current.config.loginCustomerId : undefined;
+			if (!mcc) {
+				return undefined;
 			}
-			directIds ??= current.google.ads.listAccessibleCustomerIds().catch((error: unknown) => {
-				directIds = undefined;
-				throw error;
-			});
-			return directIds;
+			return (await directCustomerIds()).includes(customerId) ? undefined : mcc;
 		},
 	};
 }

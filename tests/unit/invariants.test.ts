@@ -39,9 +39,24 @@ describe("API-02 hosts permitidos", () => {
 	});
 });
 
-describe("SEC-02 sem mutação nesta fase", () => {
-	test("src/ não usa :mutate", () => {
-		expect(scan("src", /:mutate/)).toEqual([]);
+describe("SEC-05 escrita concentrada", () => {
+	test(":mutate só existe no cliente da API", () => {
+		expect(scan("src", /:mutate/)).toEqual(["src/google/ads-client.ts"]);
+	});
+
+	test("só o serviço de alterações envia escrita sem validateOnly", () => {
+		expect(scan("src", /validateOnly:\s*false/)).toEqual(["src/changes/service.ts"]);
+	});
+});
+
+describe("SEC-06 sem criação de campanha, grupo, anúncio ou orçamento", () => {
+	test("nenhuma operação de criação desses recursos", () => {
+		expect(
+			scan(
+				"src",
+				/(campaignOperation|adGroupOperation|adGroupAdOperation|campaignBudgetOperation)\s*:\s*\{\s*create/,
+			),
+		).toEqual([]);
 	});
 });
 

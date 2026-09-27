@@ -117,3 +117,52 @@ describe("API-04 login-customer-id", () => {
 		expect(calls[0]?.init.body).toBe(JSON.stringify({ query: "SELECT customer.id FROM customer" }));
 	});
 });
+
+describe("mutate", () => {
+	test("prévia envia validateOnly e aplicação não", async () => {
+		const calls: Call[] = [];
+		const ads = client(fakeFetch(200, {}, calls));
+		const op = {
+			campaignOperation: { update: { resourceName: "r", status: "PAUSED" }, updateMask: "status" },
+		};
+		await ads.mutate("1234567890", [op], { validateOnly: true });
+		await ads.mutate("1234567890", [op], { validateOnly: false, loginCustomerId: "9876543210" });
+		expect(calls[0]?.url).toBe("http://base.teste/v0/customers/1234567890/googleAds:mutate");
+		expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+			mutateOperations: [op],
+			validateOnly: true,
+		});
+		expect(JSON.parse(String(calls[1]?.init.body))).toEqual({ mutateOperations: [op] });
+		const applyHeaders = (calls[1]?.init.headers ?? {}) as Record<string, string>;
+		expect(applyHeaders["login-customer-id"]).toBe("9876543210");
+	});
+
+	test("devolve os resourceNames na ordem das operações", async () => {
+		const body = {
+			mutateOperationResponses: [
+				{ campaignResult: { resourceName: "customers/1/campaigns/2" } },
+				{ adGroupCriterionResult: { resourceName: "customers/1/adGroupCriteria/3~4" } },
+				{},
+			],
+		};
+		expect(
+			await client(fakeFetch(200, body)).mutate("1234567890", [], { validateOnly: false }),
+		).toEqual(["customers/1/campaigns/2", "customers/1/adGroupCriteria/3~4", ""]);
+	});
+
+	test("resposta fora do formato vira erro pt-BR", async () => {
+		const message = await captureMessage(() =>
+			client(fakeFetch(200, { mutateOperationResponses: "x" })).mutate("1234567890", [], {
+				validateOnly: true,
+			}),
+		);
+		expect(message).toContain("formato inesperado");
+	});
+
+	test("corpo vazio com status de erro usa o parser", async () => {
+		const message = await captureMessage(() =>
+			client(fakeFetch(500, "")).listAccessibleCustomerIds(),
+		);
+		expect(message).toContain("motivo não reconhecido");
+	});
+});

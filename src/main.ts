@@ -1,3 +1,6 @@
+import { randomUUID } from "node:crypto";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { loadConfig } from "./config.js";
 import { createAdsClient, GOOGLE_ADS_BASE_URL } from "./google/ads-client.js";
@@ -15,6 +18,11 @@ serveStdio(() =>
 				getToken,
 				ads: createAdsClient({ baseUrl: GOOGLE_ADS_BASE_URL, fetch: globalThis.fetch, getToken }),
 			};
+		},
+		changes: {
+			historyFile: join(homedir(), ".adsmart", "historico.jsonl"),
+			now: Date.now,
+			newId: randomUUID,
 		},
 	}),
 );
