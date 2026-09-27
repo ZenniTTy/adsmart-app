@@ -29,9 +29,13 @@ A conta de serviço não está vinculada a nenhuma conta do Google Ads. Refaça 
 
 IDs de conta devem ser informados sem traços: `1234567890`, não `123-456-7890`.
 
+## `CUSTOMER_NOT_FOUND`
+
+O ID informado não é o da conta. O número que aparece na barra de endereço do Google Ads (por exemplo, depois de `ocid=`) não é o ID da conta. Use o número de 10 dígitos exibido no canto superior da interface do Google Ads, ao lado do nome da conta, sem traços.
+
 ## Não consigo criar a chave da conta de serviço
 
-Contas Google Workspace de empresas podem bloquear a criação de chaves por política da organização. Peça ao administrador de TI para liberar a criação de chaves no projeto.
+Contas Google Workspace de empresas podem bloquear a criação de chaves por política da organização. Organizações criadas a partir de maio de 2024 vêm com esse bloqueio ativado por padrão. Peça ao administrador de TI para liberar a criação de chaves no projeto.
 
 ## A extensão não aparece no Claude
 

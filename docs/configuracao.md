@@ -40,7 +40,7 @@ A conta de serviço é a identidade que o AdSmart usa para acessar o Google Ads.
 1. Acesse [Contas de serviço](https://console.cloud.google.com/iam-admin/serviceaccounts) e clique em **Criar conta de serviço**.
 2. Dê o nome `adsmart` e conclua. Não é necessário atribuir papéis.
 3. Abra a conta criada e copie o **e-mail** dela (termina em `.iam.gserviceaccount.com`).
-4. Na aba **Chaves**, clique em **Adicionar chave > Criar nova chave > JSON**. O arquivo será baixado.
+4. Na aba **Chaves**, clique em **Adicionar chave > Criar nova chave > JSON**. O arquivo será baixado com um nome parecido com `adsmart-123456-a1b2c3d4e5f6.json`.
 5. Mova o arquivo para uma pasta segura, por exemplo `~/.adsmart/`. **Não compartilhe este arquivo** com ninguém.
 
 ## 5. Dar acesso à conta do Google Ads
@@ -49,6 +49,10 @@ A conta de serviço é a identidade que o AdSmart usa para acessar o Google Ads.
 2. Vá em **Administrador > Acesso e segurança**.
 3. Clique em **+** na aba **Usuários**, cole o e-mail da conta de serviço e escolha o nível **Padrão**.
 4. Clique em **Adicionar conta**.
+
+Este passo é sempre feito por você: por segurança, o Claude não concede acesso a contas em seu nome. A partir de 15 de outubro de 2026, o Google Ads exige uma chave de acesso (passkey) para adicionar usuários; se o Google pedir, crie a sua quando solicitado.
+
+Anote o **ID da conta**: o número de 10 dígitos exibido no canto superior do Google Ads, ao lado do nome da conta. O número que aparece na barra de endereço não é o ID da conta.
 
 ## 6. Configurar a extensão
 
