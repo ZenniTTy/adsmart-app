@@ -15,6 +15,7 @@ export type SetupStep = {
 	numero: number;
 	chave: StepKey;
 	titulo: string;
+	onde: "navegador" | "chat";
 	link: string | null;
 	acoes: SetupAction[];
 	como_saber: string;
@@ -31,7 +32,9 @@ export type SetupGuide = {
 };
 
 export const USER_ACTION_LABEL = "Eu faço (pare e espere eu avisar que concluí):";
-const CLAUDE_ACTION_LABEL = "Você faz:";
+export const CLAUDE_ACTION_LABEL = "Você faz:";
+export const CHAT_STEP_NOTE =
+	"Este passo acontece depois, no chat do AdSmart, e não é tarefa sua. Só me lembre dele no fim:";
 
 const NUMERO: Record<StepKey, number> = {
 	projeto: 1,
@@ -48,6 +51,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.projeto,
 		chave: "projeto",
 		titulo: "Criar um projeto no Google Cloud",
+		onde: "navegador",
 		link: "https://console.cloud.google.com/projectcreate",
 		acoes: [
 			{ quem: "claude", texto: "Abrir a página de criação de projeto e sugerir o nome `adsmart`." },
@@ -66,6 +70,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.api,
 		chave: "api",
 		titulo: "Ativar a Google Ads API",
+		onde: "navegador",
 		link: "https://console.cloud.google.com/flows/enableapi?apiid=googleads.googleapis.com",
 		acoes: [
 			{
@@ -82,6 +87,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.explorer,
 		chave: "explorer",
 		titulo: "Solicitar acesso às contas reais (Explorer)",
+		onde: "navegador",
 		link: "https://console.cloud.google.com/google/ads-apis/overview",
 		acoes: [
 			{
@@ -104,6 +110,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.conta_servico,
 		chave: "conta_servico",
 		titulo: "Criar a conta de serviço",
+		onde: "navegador",
 		link: "https://console.cloud.google.com/iam-admin/serviceaccounts",
 		acoes: [
 			{
@@ -133,6 +140,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.acesso,
 		chave: "acesso",
 		titulo: "Dar acesso à conta do Google Ads",
+		onde: "navegador",
 		link: "https://ads.google.com",
 		acoes: [
 			{
@@ -159,6 +167,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.extensao,
 		chave: "extensao",
 		titulo: "Configurar a extensão",
+		onde: "chat",
 		link: null,
 		acoes: [
 			{ quem: "voce", texto: "Abrir Configurações > Extensões > AdSmart no Claude Desktop." },
@@ -175,6 +184,7 @@ const PASSOS: SetupStep[] = [
 		numero: NUMERO.teste,
 		chave: "teste",
 		titulo: "Testar",
+		onde: "chat",
 		link: null,
 		acoes: [
 			{
@@ -236,6 +246,13 @@ function bulletList(lines: string[]): string {
 }
 
 function promptStep(passo: SetupStep): string {
+	if (passo.onde === "chat") {
+		return [
+			`Passo ${passo.numero} — ${passo.titulo}`,
+			CHAT_STEP_NOTE,
+			...passo.acoes.map((acao) => `- ${acao.texto}`),
+		].join("\n");
+	}
 	const actions = passo.acoes.map(
 		(acao) => `- ${acao.quem === "voce" ? USER_ACTION_LABEL : CLAUDE_ACTION_LABEL} ${acao.texto}`,
 	);

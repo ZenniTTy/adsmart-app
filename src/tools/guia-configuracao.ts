@@ -12,6 +12,7 @@ const outputSchema = z.object({
 			numero: z.number(),
 			chave: z.string(),
 			titulo: z.string(),
+			onde: z.enum(["navegador", "chat"]),
 			link: z.string().nullable(),
 			acoes: z.array(actionSchema),
 			como_saber: z.string(),

@@ -3,6 +3,8 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { loadConfig } from "../../src/config.js";
 import {
+	CHAT_STEP_NOTE,
+	CLAUDE_ACTION_LABEL,
 	coworkPrompt,
 	guideStep,
 	SETUP_GUIDE,
@@ -180,12 +182,25 @@ describe("GUI-09 prompt do Cowork gerado do roteiro", () => {
 		}
 	});
 
-	test("toda ação da pessoa manda parar e esperar", () => {
-		const userActions = SETUP_GUIDE.passos.flatMap((passo) =>
-			passo.acoes.filter((acao) => acao.quem === "voce"),
-		);
+	test("toda ação da pessoa no navegador manda parar e esperar", () => {
+		const userActions = SETUP_GUIDE.passos
+			.filter((passo) => passo.onde === "navegador")
+			.flatMap((passo) => passo.acoes.filter((acao) => acao.quem === "voce"));
 		for (const acao of userActions) {
 			expect(prompt).toContain(`${USER_ACTION_LABEL} ${acao.texto}`);
+		}
+	});
+
+	test("passos que acontecem no chat não viram tarefa do Cowork", () => {
+		const chatSteps = SETUP_GUIDE.passos.filter((passo) => passo.onde === "chat");
+		expect(chatSteps.map((passo) => passo.chave)).toEqual(["extensao", "teste"]);
+		for (const passo of chatSteps) {
+			const block = prompt
+				.split("\n\n")
+				.find((part) => part.startsWith(`Passo ${passo.numero} — `));
+			expect(block).toContain(CHAT_STEP_NOTE);
+			expect(block).not.toContain(CLAUDE_ACTION_LABEL);
+			expect(block).not.toContain(USER_ACTION_LABEL);
 		}
 	});
 
