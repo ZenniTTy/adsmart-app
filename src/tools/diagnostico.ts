@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import { AdsError, toUserMessage } from "../google/errors.js";
+import { guideStep } from "../setup/roteiro.js";
 import { success, type ToolContext } from "./context.js";
 
 const statusSchema = z.enum(["OK", "FALHA", "NÃO VERIFICADO", "NÃO SE APLICA"]);
@@ -64,8 +65,7 @@ async function runSteps(context: ToolContext): Promise<Step[]> {
 				{
 					etapa: accountsStep,
 					status: "FALHA",
-					detalhe:
-						"Nenhuma conta do Google Ads deu acesso à conta de serviço. Refaça o passo 5 do guia de configuração.",
+					detalhe: `Nenhuma conta do Google Ads deu acesso à conta de serviço. Refaça o ${guideStep("acesso")}.`,
 				},
 				...pending(4),
 			];

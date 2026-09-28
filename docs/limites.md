@@ -10,7 +10,7 @@ O nível de acesso do seu projeto no Google Cloud define quanto você pode usar 
 
 | Nível | Operações por dia | Como obter |
 |---|---|---|
-| Explorer | 2.880 | Solicitação automática ([configuração](configuracao.md#3-solicitar-acesso-às-contas-reais-explorer)) |
+| Explorer | 2.880 | Pedido no console; a aprovação pode ser automática ([configuração](configuracao.md#3-solicitar-acesso-às-contas-reais-explorer)) |
 | Basic | 15.000 | Requer verificação de marca do projeto no Google Cloud |
 
 Como a cota é contada:

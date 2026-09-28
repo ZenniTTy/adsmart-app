@@ -3,6 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const ROOT = join(import.meta.dir, "..", "..");
+const SETUP_GUIDE_FILE = join(ROOT, "src", "setup", "roteiro.ts");
 const SYNTHETIC_IDS = new Set(["1234567890", "2345678901", "3456789012", "9876543210"]);
 
 function filesUnder(dir: string): string[] {
@@ -27,15 +28,26 @@ describe("API-01 versão da API isolada", () => {
 describe("API-02 hosts permitidos", () => {
 	test("src/ só cita googleads e oauth2, além do identificador de escopo OAuth", () => {
 		const scopeIdentifier = "https://www.googleapis.com/auth/adwords";
-		const hosts = filesUnder(join(ROOT, "src")).flatMap((file) =>
-			[
-				...readFileSync(file, "utf8")
-					.replaceAll(scopeIdentifier, "")
-					.matchAll(/https?:\/\/([a-z0-9.-]+)/gi),
-			].map((m) => m[1]),
-		);
+		const hosts = filesUnder(join(ROOT, "src"))
+			.filter((file) => file !== SETUP_GUIDE_FILE)
+			.flatMap((file) =>
+				[
+					...readFileSync(file, "utf8")
+						.replaceAll(scopeIdentifier, "")
+						.matchAll(/https?:\/\/([a-z0-9.-]+)/gi),
+				].map((m) => m[1]),
+			);
 		const allowed = new Set(["googleads.googleapis.com", "oauth2.googleapis.com"]);
 		expect(hosts.filter((host) => !allowed.has(host ?? ""))).toEqual([]);
+	});
+
+	test("GUI-01: o roteiro só cita os links de configuração e não importa nada, então não faz chamada de rede", () => {
+		const source = readFileSync(SETUP_GUIDE_FILE, "utf8");
+		const hosts = [...source.matchAll(/https?:\/\/([a-z0-9.-]+)/gi)].map((m) => m[1]);
+		const displayOnly = new Set(["console.cloud.google.com", "ads.google.com"]);
+		expect(hosts.filter((host) => !displayOnly.has(host ?? ""))).toEqual([]);
+		expect(source).not.toMatch(/^\s*import\s/m);
+		expect(source).not.toMatch(/\bfetch\b|\brequire\(|\bimport\(/);
 	});
 });
 

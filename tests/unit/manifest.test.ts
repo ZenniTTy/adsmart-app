@@ -66,8 +66,8 @@ describe("PKG-01 manifest no formato 0.3", () => {
 });
 
 describe("PKG-03 user_config entregue por variável de ambiente", () => {
-	test("arquivo de chave obrigatório e MCC opcional, nunca em args", () => {
-		expect(manifest.user_config.arquivo_chave).toMatchObject({ type: "file", required: true });
+	test("GUI-07: arquivo de chave e MCC opcionais, para a extensão ligar antes da chave existir; nunca em args", () => {
+		expect(manifest.user_config.arquivo_chave).toMatchObject({ type: "file", required: false });
 		expect(manifest.user_config.mcc).toMatchObject({ type: "string", required: false });
 		expect(manifest.server.mcp_config.env).toEqual({
 			ADSMART_KEY_FILE: "${user_config.arquivo_chave}",

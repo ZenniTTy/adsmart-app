@@ -4,7 +4,7 @@ Comece sempre pedindo ao Claude: **"Rode o diagnóstico do AdSmart"**. Ele ident
 
 ## `CLOUD_PROJECT_NOT_APPROVED_FOR_PRODUCTION`
 
-O projeto do Google Cloud ainda está no nível **Test** e só acessa contas de teste. Solicite o nível Explorer ([passo 3](configuracao.md#3-solicitar-acesso-às-contas-reais-explorer)).
+O projeto do Google Cloud ainda está no nível **Teste** (*Test*, na interface em inglês) e só acessa contas de teste. Solicite o nível Explorer ([passo 3](configuracao.md#3-solicitar-acesso-às-contas-reais-explorer)).
 
 ## Pedido de Explorer ou Basic recusado
 

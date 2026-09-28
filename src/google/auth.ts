@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { JWT } from "google-auth-library";
 import * as z from "zod/v4";
+import { guideStep } from "../setup/roteiro.js";
 import { AdsError } from "./errors.js";
 
 export const ADWORDS_SCOPE = "https://www.googleapis.com/auth/adwords";
@@ -45,7 +46,7 @@ async function loadClient(keyFile: string, deps: AuthDeps): Promise<AccessTokenC
 	if (!key.success) {
 		throw new AdsError(
 			"KEY_FILE_INVALID",
-			"O arquivo selecionado não é uma chave JSON de conta de serviço. Baixe a chave no passo 4 do guia de configuração.",
+			`O arquivo selecionado não é uma chave JSON de conta de serviço. Baixe a chave no ${guideStep("conta_servico")}.`,
 		);
 	}
 	return deps.createClient({

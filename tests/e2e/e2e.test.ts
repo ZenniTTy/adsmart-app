@@ -93,6 +93,7 @@ describe("E2E-01 / TOOL-01 servidor real via stdio com node", () => {
 			"consultar",
 			"desfazer",
 			"diagnostico",
+			"guia_configuracao",
 			"historico",
 			"listar_contas",
 			"preparar_alteracao",
@@ -292,6 +293,33 @@ describe("E2E-02 entrypoint de produção", () => {
 	test("sobe com node e responde tools/list sem rede", async () => {
 		const { client } = await connect({}, PRODUCTION_SERVER);
 		const { tools } = await client.listTools();
-		expect(tools).toHaveLength(7);
+		expect(tools).toHaveLength(8);
+	});
+});
+
+describe("GUI guia_configuracao", () => {
+	test("GUI-01 e GUI-03: responde sem nenhuma configuração, sem rede, com os 7 passos", async () => {
+		const { client } = await connect({});
+		const { tools } = await client.listTools();
+		const tool = tools.find((t) => t.name === "guia_configuracao");
+		expect(tool?.annotations?.readOnlyHint).toBe(true);
+		const result = await call(client, "guia_configuracao");
+		expect(result.isError).toBeFalsy();
+		const out = result.structuredContent as {
+			antes_de_comecar: Array<{ quem: string }>;
+			passos: Array<{ numero: number; acoes: Array<{ quem: string }> }>;
+			regras: string[];
+			modos: { navegador: string; manual: string };
+		};
+		expect(out.passos.map((passo) => passo.numero)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+		expect(out.antes_de_comecar.length).toBeGreaterThan(0);
+		expect(out.regras.join(" ")).toContain("A chave nunca passa pelo Claude");
+		expect(out.modos.manual.length).toBeGreaterThan(0);
+		expect(google.requests).toHaveLength(0);
+	});
+
+	test("GUI-03: o diagnóstico sem chave indica o guia_configuracao", async () => {
+		const { client } = await connect({});
+		expect(text(await call(client, "diagnostico"))).toContain("guia_configuracao");
 	});
 });

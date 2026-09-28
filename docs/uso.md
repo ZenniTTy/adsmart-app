@@ -2,6 +2,8 @@
 
 Depois de [configurado](configuracao.md), basta conversar com o Claude no Claude Desktop.
 
+Ainda não configurou? Peça **"Me ajude a configurar o AdSmart"**: o Claude usa o guia de configuração da extensão e conduz os passos com você, um por vez.
+
 ## Consultas e análises
 
 Consultas nunca alteram nada na sua conta. Cada consulta devolve até 100 linhas por padrão e no máximo 1.000; para ver mais, peça um recorte menor, por exemplo por período ou por campanha.
