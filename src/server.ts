@@ -5,6 +5,7 @@ import { type ChangeToolsDeps, registerAlteracoes } from "./tools/alteracoes.js"
 import { registerConsultar } from "./tools/consultar.js";
 import { createToolContext, type GoogleServices } from "./tools/context.js";
 import { registerDiagnostico } from "./tools/diagnostico.js";
+import { registerGuiaConfiguracao } from "./tools/guia-configuracao.js";
 import { registerListarContas } from "./tools/listar-contas.js";
 
 export type ServerDeps = {
@@ -16,6 +17,7 @@ export type ServerDeps = {
 export function createServer(deps: ServerDeps): McpServer {
 	const server = new McpServer({ name: "adsmart", version: packageJson.version });
 	const context = createToolContext(deps.config, deps.connect);
+	registerGuiaConfiguracao(server);
 	registerDiagnostico(server, context);
 	registerListarContas(server, context);
 	registerConsultar(server, context);

@@ -46,7 +46,7 @@ Depois de instalar, abra **Configurações > Extensões > AdSmart** e preencha:
 - **Arquivo de chave da conta de serviço:** o arquivo JSON baixado no Google Cloud.
 - **ID da conta de administrador (MCC):** só se você acessa as contas por uma MCC.
 
-Se você ainda não tem a conta de serviço, siga o [guia de configuração](configuracao.md).
+Se você ainda não tem a conta de serviço, instale a extensão assim mesmo e peça no chat: **"Me ajude a configurar o AdSmart"**. O Claude conduz o [guia de configuração](configuracao.md) com você, passo a passo.
 
 ## Testar
 

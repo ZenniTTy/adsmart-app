@@ -31,6 +31,10 @@
 	},
 	"tools": [
 		{
+			"name": "guia_configuracao",
+			"description": "Mostra o roteiro para configurar o AdSmart do zero, com quem faz cada passo."
+		},
+		{
 			"name": "diagnostico",
 			"description": "Confere a configuração e o acesso à conta, passo a passo."
 		},
@@ -70,8 +74,8 @@
 		"arquivo_chave": {
 			"type": "file",
 			"title": "Arquivo de chave da conta de serviço",
-			"description": "O arquivo JSON baixado no Google Cloud (passo 6 do guia de configuração).",
-			"required": true
+			"description": "O arquivo JSON baixado no Google Cloud. Ainda não tem? Instale assim mesmo e peça ao Claude: \"Me ajude a configurar o AdSmart\".",
+			"required": false
 		},
 		"mcc": {
 			"type": "string",

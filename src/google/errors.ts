@@ -1,4 +1,5 @@
 import * as z from "zod/v4";
+import { guideStep } from "../setup/roteiro.js";
 
 export class AdsError extends Error {
 	readonly code: string;
@@ -15,17 +16,14 @@ export class AdsError extends Error {
 const MESSAGES_BY_CODE: Record<string, string> = {
 	CUSTOMER_NOT_FOUND:
 		"A conta informada não foi encontrada. Use o ID de 10 dígitos exibido no topo do Google Ads, não o número da barra de endereço.",
-	USER_PERMISSION_DENIED:
-		"A conta de serviço não tem acesso a esta conta. Adicione o e-mail dela em Administrador > Acesso e segurança (passo 5 do guia) ou, se a conta é gerenciada por uma MCC, informe o ID da MCC nas configurações.",
+	USER_PERMISSION_DENIED: `A conta de serviço não tem acesso a esta conta. Adicione o e-mail dela em Administrador > Acesso e segurança (${guideStep("acesso")}) ou, se a conta é gerenciada por uma MCC, informe o ID da MCC nas configurações.`,
 	CUSTOMER_NOT_ENABLED: "Esta conta do Google Ads está desativada ou cancelada.",
-	NOT_ADS_USER:
-		"A conta de serviço não está vinculada a nenhuma conta do Google Ads. Refaça o passo 5 do guia de configuração.",
+	NOT_ADS_USER: `A conta de serviço não está vinculada a nenhuma conta do Google Ads. Refaça o ${guideStep("acesso")}.`,
 	OAUTH_TOKEN_INVALID:
 		"A autenticação com o Google falhou. Verifique se o arquivo de chave selecionado é o da conta de serviço correta.",
 	RESOURCE_EXHAUSTED:
 		"O limite diário de operações da API do Google Ads foi atingido. Tente novamente mais tarde.",
-	CLOUD_PROJECT_NOT_APPROVED_FOR_PRODUCTION:
-		"O projeto do Google Cloud ainda está no nível Teste. Solicite o nível Exploração (passo 3 do guia de configuração).",
+	CLOUD_PROJECT_NOT_APPROVED_FOR_PRODUCTION: `O projeto do Google Cloud ainda está no nível Teste. Solicite o nível Explorer (${guideStep("explorer")}).`,
 	CONCURRENT_MODIFICATION:
 		"Outra alteração estava sendo feita no mesmo item ao mesmo tempo. Nada foi aplicado. Gere uma nova prévia.",
 	TRANSIENT_ERROR: "O Google Ads teve uma falha temporária. Tente novamente em alguns instantes.",
