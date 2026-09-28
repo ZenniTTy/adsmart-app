@@ -60,5 +60,5 @@ A extensão não se atualiza sozinha: extensões instaladas por arquivo precisam
 ## Problemas na instalação
 
 - **Nada acontece ao abrir o arquivo:** tente o caminho pelo menu de extensões descrito em [Instalar](#instalar) e reinicie o Claude Desktop depois de instalar.
-- **A extensão aparece, mas não responde:** feche o Claude Desktop por completo e abra de novo. Se continuar, veja o status e o registro da extensão no painel de extensões e nas configurações de desenvolvedor do Claude Desktop (no macOS, os registros também ficam em `~/Library/Logs/Claude/`, num arquivo com o nome da extensão, como `mcp-server-AdSmart.log`), e abra um [issue](https://github.com/ZenniTTy/adsmart-app/issues) contando o que aparece. Não cole o conteúdo do arquivo de chave.
+- **A extensão aparece, mas não responde:** feche o Claude Desktop por completo e abra de novo. Se continuar, veja o status e o registro da extensão no painel de extensões e nas configurações de desenvolvedor do Claude Desktop (no macOS, os registros também ficam em `~/Library/Logs/Claude/`, no arquivo `mcp-server-AdSmart.log`), e abra um [issue](https://github.com/ZenniTTy/adsmart-app/issues) contando o que aparece. Não cole o conteúdo do arquivo de chave.
 - Veja também a [solução de problemas](solucao-de-problemas.md).
