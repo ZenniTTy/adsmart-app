@@ -220,8 +220,9 @@ describe("GUI-10 regras próprias do Cowork", () => {
 	const rules = SETUP_GUIDE.regras_cowork.join(" ");
 
 	test.each([
-		"Manually approve",
+		"Automatically approve",
 		"Skip all approvals",
+		"logado na minha conta Google",
 		"pasta de downloads",
 		"não mova",
 		"Criar",

@@ -93,7 +93,7 @@ const PASSOS: SetupStep[] = [
 			{
 				quem: "claude",
 				texto:
-					"Abrir a visão geral da Google Ads API, conferir que o nível atual é Teste e abrir a seção de upgrade do nível de acesso.",
+					"Abrir a visão geral da Google Ads API, conferir que o nível atual é Teste e abrir a seção Fazer upgrade do nível de acesso.",
 			},
 			{
 				quem: "voce",
@@ -102,7 +102,7 @@ const PASSOS: SetupStep[] = [
 			},
 		],
 		como_saber:
-			"A visão geral passa a mostrar o nível Explorer, com limite de 2.880 operações por dia.",
+			"A visão geral passa a mostrar o nível Explorer (Exploração, no console em português), com limite de 2.880 operações por dia.",
 		retomada:
 			"Abra a visão geral de novo. O Google pode aprovar na hora ou depois. Se recusar, o único caminho oficial é passar o projeto para o nível pago do Google Cloud, que exige cartão.",
 	},
@@ -116,7 +116,7 @@ const PASSOS: SetupStep[] = [
 			{
 				quem: "claude",
 				texto:
-					"Criar a conta de serviço com o nome `adsmart`, sem atribuir papéis, e mostrar o e-mail dela (termina em `.iam.gserviceaccount.com`).",
+					"Escolher o projeto `adsmart` quando o console pedir, criar a conta de serviço com o nome `adsmart`, sem atribuir papéis, e mostrar o e-mail dela (termina em `.iam.gserviceaccount.com`).",
 			},
 			{
 				quem: "claude",
@@ -141,12 +141,12 @@ const PASSOS: SetupStep[] = [
 		chave: "acesso",
 		titulo: "Dar acesso à conta do Google Ads",
 		onde: "navegador",
-		link: "https://ads.google.com",
+		link: "https://ads.google.com/nav/selectaccount",
 		acoes: [
 			{
 				quem: "voce",
 				texto:
-					"Abrir a conta do Google Ads (ou a MCC, para dar acesso a todas as contas vinculadas) e ir em Administrador > Acesso e segurança.",
+					"Escolher a conta do Google Ads (ou a MCC, para dar acesso a todas as contas vinculadas) e ir em Administrador > Acesso e segurança. Se cair na página de divulgação do Google Ads, clicar em Acesse sua conta.",
 			},
 			{
 				quem: "voce",
@@ -218,7 +218,8 @@ export const SETUP_GUIDE: SetupGuide = {
 		"Nas ações da pessoa, o Claude para, explica o que fazer e espera a pessoa avisar que concluiu.",
 	],
 	regras_cowork: [
-		'Antes de começar, confirme que o Cowork está no modo "Manually approve" (aprovar cada ação manualmente). Se estiver em "Skip all approvals", pare e me peça para trocar.',
+		'Antes de começar, confirme que o Cowork está no modo "Automatically approve" (você revisa cada ação e bloqueia o que parecer inseguro). Se estiver em "Skip all approvals", pare e me peça para trocar.',
+		"Use um navegador logado na minha conta Google: com o Claude in Chrome ligado, use o meu Chrome; no navegador do próprio Cowork, abra a página de login do Google e pare para eu entrar.",
 		"Não me peça para conectar a pasta onde a chave vai ficar nem a pasta de downloads, e não trabalhe em nenhuma das duas.",
 		"Não abra, não leia, não mova, não copie e não liste o arquivo de chave JSON.",
 		"Na criação da chave, pare antes do botão Criar: eu clico, baixo e guardo o arquivo.",
@@ -227,7 +228,7 @@ export const SETUP_GUIDE: SetupGuide = {
 	],
 	modos: {
 		cowork:
-			'Com o Claude Cowork (planos pagos), a pessoa copia o prompt pronto (prompt_cowork) e cola numa tarefa do Cowork no modo "Manually approve": o Cowork conduz o navegador e para em toda ação da pessoa. Depois ela volta a este chat para escolher o arquivo de chave e rodar o diagnóstico.',
+			'Com o Claude Cowork (planos pagos), a pessoa copia o prompt pronto (prompt_cowork) e cola numa tarefa do Cowork no modo "Automatically approve", com o navegador logado na conta Google: o Cowork conduz o navegador e para em toda ação da pessoa. Depois ela volta a este chat para escolher o arquivo de chave e rodar o diagnóstico.',
 		navegador:
 			"Com o Claude in Chrome ligado nesta conversa (planos pagos, no navegador Chrome), o Claude abre os links e faz as ações marcadas como dele, parando sempre que chegar uma ação da pessoa.",
 		manual:
