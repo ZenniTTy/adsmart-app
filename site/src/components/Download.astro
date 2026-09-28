@@ -1,0 +1,62 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import lancamento from "../gerado/lancamento.json";
+
+const versao: string | null = lancamento.versao;
+const comando = `curl -fL -o ~/Downloads/adsmart.mcpb ${DOWNLOAD_URL} && open ~/Downloads/adsmart.mcpb`;
+const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasum -a 256 -c adsmart.mcpb.sha256`;
+---
+
+<section class="download" id="baixar">
+	{
+		versao ? (
+			<>
+				<a class="botao" href={DOWNLOAD_URL} data-download>
+					Baixar para macOS · v{versao}
+				</a>
+				<p>Ou pelo Terminal: o comando baixa o arquivo e abre o instalador do Claude Desktop.</p>
+				<Code code={comando} lang="sh" />
+				<details>
+					<summary>Conferir a impressão digital (opcional)</summary>
+					<Code code={conferencia} lang="sh" />
+				</details>
+			</>
+		) : (
+			<>
+				<p class="em-breve" data-em-breve>
+					Lançamento em breve. Acompanhe no GitHub.
+				</p>
+				<a class="botao" href={REPOSITORIO}>
+					Ver no GitHub
+				</a>
+			</>
+		)
+	}
+</section>
+
+<style>
+	.download {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		text-align: center;
+	}
+	.botao {
+		display: inline-block;
+		padding: 0.8rem 1.6rem;
+		border-radius: 999px;
+		background: var(--sl-color-white);
+		color: var(--sl-color-black);
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.em-breve {
+		font-size: var(--sl-text-lg);
+	}
+	details {
+		width: 100%;
+		text-align: left;
+	}
+</style>

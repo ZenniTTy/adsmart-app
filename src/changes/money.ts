@@ -13,10 +13,12 @@ export function formatMoney(micros: string | null, currency: string): string {
 	);
 }
 
+export const HIGHLIGHT_INCREASE_RATIO = 1.5;
+
 export function increaseAboveHalf(before: string | null, after: string): boolean {
 	const current = before === null ? 0 : Number(before);
 	if (current <= 0) {
 		return true;
 	}
-	return Number(after) > current * 1.5;
+	return Number(after) > current * HIGHLIGHT_INCREASE_RATIO;
 }

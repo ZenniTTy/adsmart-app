@@ -24,6 +24,6 @@ Queremos que a participação na comunidade da AdSmart seja livre de assédio pa
 
 ## Aplicação
 
-Casos de comportamento abusivo podem ser reportados de forma privada a Eduardo Rodrigues pelo [perfil do GitHub](https://github.com/ZenniTTy). Todas as denúncias serão analisadas com confidencialidade, e os mantenedores podem remover, editar ou rejeitar contribuições que violem este código.
+Casos de comportamento abusivo podem ser reportados de forma privada a Eduardo Rodrigues pelo e-mail [contact@elovisiondigital.com](mailto:contact@elovisiondigital.com). Todas as denúncias serão analisadas com confidencialidade, e os mantenedores podem remover, editar ou rejeitar contribuições que violem este código.
 
 Para as diretrizes completas de aplicação, consulte o [Contributor Covenant 2.1](https://www.contributor-covenant.org/pt-br/version/2/1/code_of_conduct/).

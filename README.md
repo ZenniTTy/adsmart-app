@@ -37,6 +37,7 @@ A AdSmart é um servidor [MCP (Model Context Protocol)](https://modelcontextprot
 
 | Ferramenta | O que faz |
 |---|---|
+| `guia_configuracao` | Conduz a configuração do zero, passo a passo, indicando o que é seu e o que o Claude faz; oferece um texto pronto para o Claude Cowork |
 | `diagnostico` | Confere configuração, arquivo de chave, autenticação, contas acessíveis e MCC, dizendo o que corrigir |
 | `listar_contas` | Lista as contas do Google Ads que a conta de serviço acessa, inclusive via MCC |
 | `consultar` | Executa consultas GAQL (Google Ads Query Language) somente leitura: métricas, termos de pesquisa, anúncios reprovados, histórico de mudanças e mais |
@@ -78,6 +79,8 @@ Quando a primeira versão for lançada:
 A extensão não se atualiza sozinha: para uma versão nova, baixe e instale o arquivo do release mais recente.
 
 ## Documentação
+
+A documentação também está no site [adsmart.digital](https://adsmart.digital), com busca.
 
 | Guia | Conteúdo |
 |---|---|

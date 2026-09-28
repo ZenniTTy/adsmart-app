@@ -1,0 +1,60 @@
+---
+title: AdSmart
+description: Gerencie suas campanhas do Google Ads conversando com o Claude. Extensão open source para o Claude Desktop, 100% local.
+template: splash
+hero:
+  title: Google Ads pelo chat do Claude
+  tagline: A AdSmart é uma extensão open source para o Claude Desktop. Consulte resultados e altere campanhas conversando, com prévia, confirmação e desfazer. Roda no seu computador e fala só com o Google.
+  image:
+    file: ../../gerado/logo.png
+    alt: Logo da AdSmart
+  actions:
+    - text: Baixar
+      link: "#baixar"
+      icon: right-arrow
+    - text: Documentação
+      link: /docs/instalacao/
+      variant: minimal
+    - text: GitHub
+      link: https://github.com/ZenniTTy/adsmart-app
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, Steps } from "@astrojs/starlight/components";
+import Download from "../../components/Download.astro";
+
+## O que a AdSmart faz
+
+<CardGrid>
+	<Card title="Consultas" icon="magnifier">
+		Pergunte sobre campanhas, gastos e resultados. O Claude busca os dados na sua conta do Google Ads e responde no chat.
+	</Card>
+	<Card title="Alterações seguras" icon="pencil">
+		Orçamentos, status, lances, palavras-chave e anúncios. Toda alteração mostra uma prévia validada pelo Google antes de ser aplicada.
+	</Card>
+	<Card title="Desfazer e histórico" icon="document">
+		Cada alteração fica registrada no seu computador e pode ser desfeita, também com prévia.
+	</Card>
+	<Card title="Local e sem custo" icon="laptop">
+		Usa a sua própria conta de serviço do Google Cloud. Nada passa por servidores do projeto.
+	</Card>
+</CardGrid>
+
+## Como funciona
+
+<Steps>
+
+1. **Instale** o arquivo `.mcpb` no Claude Desktop com dois cliques.
+2. **Configure** pedindo no chat: "Me ajude a configurar a AdSmart". O Claude conduz os passos no Google Cloud e no Google Ads com você.
+3. **Converse.** Peça relatórios ou alterações. Para mudar algo, o Claude mostra a prévia e só aplica depois que você confirma.
+
+</Steps>
+
+## Baixar
+
+Disponível para o Claude Desktop no macOS. O suporte a Windows virá numa versão futura.
+
+<Download />
+
+Ao instalar, o Claude Desktop avisa que a extensão não foi verificada pela Anthropic. É esperado: veja o [guia de instalação](/docs/instalacao/).
