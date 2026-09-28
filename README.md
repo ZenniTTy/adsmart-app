@@ -71,14 +71,17 @@ A prévia vale por 15 minutos. Se alguém alterar o item nesse meio tempo, inclu
 
 Quando a primeira versão for lançada:
 
-1. Baixe o arquivo `adsmart.mcpb` do [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
-2. No Claude Desktop, abra **Configurações > Extensões** e arraste o arquivo para a janela.
+1. Baixe o arquivo `adsmart-<versão>.mcpb` do [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
+2. Dê dois cliques no arquivo ou arraste-o para a janela do Claude Desktop. O Claude Desktop avisa que a extensão não foi verificada pela Anthropic: é esperado, veja o [guia de instalação](docs/instalacao.md).
 3. Siga o [guia de configuração](docs/configuracao.md) para criar a conta de serviço e conectar suas contas.
+
+A extensão não se atualiza sozinha: para uma versão nova, baixe e instale o arquivo do release mais recente.
 
 ## Documentação
 
 | Guia | Conteúdo |
 |---|---|
+| [Instalação](docs/instalacao.md) | Baixar, conferir e instalar a extensão, o aviso de extensão não verificada e como atualizar |
 | [Configuração](docs/configuracao.md) | Criar o projeto no Google Cloud, a conta de serviço e conectar o Google Ads passo a passo |
 | [Uso](docs/uso.md) | O que pedir ao Claude, como funcionam prévia, confirmação, desfazer e histórico |
 | [Limites](docs/limites.md) | Cotas diárias da API, recursos indisponíveis e permissões |

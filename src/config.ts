@@ -15,17 +15,21 @@ export function normalizeCustomerId(raw: string): string | undefined {
 	return /^\d{10}$/.test(digits) ? digits : undefined;
 }
 
+const UNRESOLVED_PLACEHOLDER = /^\$\{user_config\.[A-Za-z0-9_]+\}$/;
+
+const providedValue = z
+	.string()
+	.trim()
+	.transform((value) => (UNRESOLVED_PLACEHOLDER.test(value) ? "" : value));
+
 const envSchema = z.object({
-	[KEY_FILE_ENV]: z.string().trim().min(1).optional(),
-	[LOGIN_CUSTOMER_ID_ENV]: z.string().trim().optional(),
+	[KEY_FILE_ENV]: providedValue.optional(),
+	[LOGIN_CUSTOMER_ID_ENV]: providedValue.optional(),
 });
 
 export function loadConfig(env: Record<string, string | undefined>): ConfigResult {
-	const parsed = envSchema.safeParse(env);
-	if (!parsed.success) {
-		return { ok: false, message: "Não foi possível ler a configuração da extensão." };
-	}
-	const keyFile = parsed.data[KEY_FILE_ENV];
+	const parsed = envSchema.parse(env);
+	const keyFile = parsed[KEY_FILE_ENV];
 	if (!keyFile) {
 		return {
 			ok: false,
@@ -33,7 +37,7 @@ export function loadConfig(env: Record<string, string | undefined>): ConfigResul
 				"O arquivo de chave da conta de serviço não foi informado. Selecione o arquivo JSON nas configurações da extensão (passo 6 do guia de configuração).",
 		};
 	}
-	const rawLogin = parsed.data[LOGIN_CUSTOMER_ID_ENV];
+	const rawLogin = parsed[LOGIN_CUSTOMER_ID_ENV];
 	if (!rawLogin) {
 		return { ok: true, config: { keyFile } };
 	}

@@ -56,7 +56,7 @@ Anote o **ID da conta**: o número de 10 dígitos exibido no canto superior do G
 
 ## 6. Configurar a extensão
 
-1. No Claude Desktop, abra **Configurações > Extensões > AdSmart**.
+1. Instale a extensão, se ainda não instalou ([guia de instalação](instalacao.md)), e abra **Configurações > Extensões > AdSmart** no Claude Desktop.
 2. Selecione o arquivo de chave JSON do passo 4.
 3. Informe o ID da conta de administrador (MCC) sem traços, se você usar uma. Caso contrário, deixe em branco.
 
