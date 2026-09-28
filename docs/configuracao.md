@@ -13,8 +13,9 @@ Este guia conecta o AdSmart à sua conta do Google Ads. Leva cerca de 15 minutos
 
 ### Se usar o Cowork
 
-- Use o modo **Manually approve** (aprovar cada ação). A própria Anthropic recomenda esse modo quando a tarefa envolve contas, arquivos ou sites sensíveis ([Use Claude Cowork safely](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)). Não use o modo **Skip all approvals**.
-- Não conecte ao Cowork a pasta onde a chave vai ficar nem a pasta de downloads. O Cowork só enxerga as pastas que você conectar.
+- Use o modo **Automatically approve**: o Claude revisa cada ação e bloqueia o que parecer inseguro, sem pedir sua aprovação a cada clique. **Não use Skip all approvals**, em que nada é checado. Se preferir aprovar cada ação, o modo **Manually approve** é o que a Anthropic recomenda para contas e sites sensíveis ([Use Claude Cowork safely](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)).
+- Use um navegador logado na sua conta Google. Com o Claude in Chrome ligado, o Cowork usa o seu Chrome; no navegador próprio do Cowork, ele abre a página de login e espera você entrar.
+- Não conecte ao Cowork a pasta onde a chave vai ficar nem a pasta de downloads. O Cowork só enxerga as pastas que você conectar, e é isso que impede que ele abra a chave.
 - No chat, o Claude não tem como abrir o arquivo de chave. No Cowork, a proteção depende dessas escolhas e das regras do texto pronto. Se preferir não correr esse risco, use o caminho manual.
 
 ## Antes de começar
@@ -44,7 +45,7 @@ Não vincule uma conta de faturamento ao projeto e não ative o período de aval
 Projetos novos só acessam contas de teste. Para gerenciar suas contas reais:
 
 1. Acesse a [visão geral da Google Ads API](https://console.cloud.google.com/google/ads-apis/overview).
-2. Confira que o nível atual é **Teste** (*Test*, na interface em inglês), abra a seção de upgrade do nível de acesso (*Upgrade access level*) e envie o pedido do nível **Explorer**. Se o formulário pedir aceite de termos, o aceite é seu.
+2. Confira que o nível atual é **Teste** (*Test*, na interface em inglês), abra a seção **Fazer upgrade do nível de acesso** (*Upgrade access level*, em inglês) e envie o pedido do nível **Explorer** (**Exploração**, no console em português). Se o formulário pedir aceite de termos, o aceite é seu.
 
 O Google pode aprovar na hora ou depois; quando aprovado, a página mostra o nível Explorer. Se o pedido for recusado, o único caminho oficial é passar o projeto para o nível pago do Google Cloud, o que exige cartão. Veja [pedido de Explorer recusado](solucao-de-problemas.md#pedido-de-explorer-ou-basic-recusado).
 
@@ -52,7 +53,7 @@ O Google pode aprovar na hora ou depois; quando aprovado, a página mostra o ní
 
 A conta de serviço é a identidade que o AdSmart usa para acessar o Google Ads.
 
-1. Acesse [Contas de serviço](https://console.cloud.google.com/iam-admin/serviceaccounts) e clique em **Criar conta de serviço**.
+1. Acesse [Contas de serviço](https://console.cloud.google.com/iam-admin/serviceaccounts), escolha o projeto `adsmart` se o console pedir, e clique em **Criar conta de serviço**.
 2. Dê o nome `adsmart` e conclua. Não é necessário atribuir papéis.
 3. Abra a conta criada e copie o **e-mail** dela (termina em `.iam.gserviceaccount.com`).
 4. Na aba **Chaves**, clique em **Adicionar chave > Criar nova chave > JSON**. O arquivo será baixado com um nome parecido com `adsmart-123456-a1b2c3d4e5f6.json`.
@@ -62,7 +63,7 @@ O arquivo só pode ser baixado uma vez. Se ele se perder, crie outra chave na ab
 
 ## 5. Dar acesso à conta do Google Ads
 
-1. No [Google Ads](https://ads.google.com), abra a conta que deseja gerenciar. Se você usa uma MCC, abra a MCC para dar acesso a todas as contas vinculadas.
+1. Abra a [seleção de contas do Google Ads](https://ads.google.com/nav/selectaccount) e escolha a conta que deseja gerenciar. Se você usa uma MCC, escolha a MCC para dar acesso a todas as contas vinculadas. Se cair na página de divulgação do Google Ads, clique em **Acesse sua conta**.
 2. Vá em **Administrador > Acesso e segurança**.
 3. Clique em **+** na aba **Usuários**, cole o e-mail da conta de serviço e escolha o nível **Padrão**.
 4. Clique em **Adicionar conta**.

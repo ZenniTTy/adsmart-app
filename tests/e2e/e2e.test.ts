@@ -329,7 +329,7 @@ describe("GUI guia_configuracao", () => {
 			modos: Record<string, string>;
 		};
 		expect(Object.keys(out.modos).sort()).toEqual(["cowork", "manual", "navegador"]);
-		expect(out.prompt_cowork).toContain("Manually approve");
+		expect(out.prompt_cowork).toContain("Automatically approve");
 		expect(out.prompt_cowork).toContain("Passo 7 — Testar");
 	});
 
