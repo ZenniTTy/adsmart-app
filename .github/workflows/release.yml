@@ -57,6 +57,7 @@ jobs:
         with:
           subject-path: |
             dist/adsmart-*.mcpb
+            dist/adsmart.mcpb
 
       - name: Release em rascunho
         env:

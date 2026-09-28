@@ -79,7 +79,7 @@ export function paginaDeDoc(nomeArquivo: string, markdown: string): Pagina {
 
 export function versaoLancada(changelog: string): string | null {
 	const cabecalhos = [...changelog.matchAll(/^## \[([^\]]+)\]/gm)].map((m) => m[1] ?? "");
-	return cabecalhos.find((cabecalho) => /^\d+\.\d+\.\d+/.test(cabecalho)) ?? null;
+	return cabecalhos.find((cabecalho) => /^\d+\.\d+\.\d+$/.test(cabecalho)) ?? null;
 }
 
 export function paginaDeChangelog(changelog: string): Pagina {

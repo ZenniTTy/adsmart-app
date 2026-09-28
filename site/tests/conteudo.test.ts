@@ -62,6 +62,10 @@ describe("SITE-04 versão e changelog", () => {
 		expect(versaoLancada("# Changelog\n\n## [Não lançado]\n\n- item")).toBeNull();
 	});
 
+	test("pré-lançamento não conta como versão lançada", () => {
+		expect(versaoLancada("# Changelog\n\n## [0.1.0-rc.2] - 2026-10-01\n")).toBeNull();
+	});
+
 	test("a primeira versão numerada é a lançada", () => {
 		expect(
 			versaoLancada(
