@@ -2,7 +2,7 @@
 
 Depois de [configurado](configuracao.md), basta conversar com o Claude no Claude Desktop.
 
-Ainda não configurou? Peça **"Me ajude a configurar o AdSmart"**: o Claude usa o guia de configuração da extensão e conduz os passos com você, um por vez.
+Ainda não configurou? Peça **"Me ajude a configurar a AdSmart"**: o Claude usa o guia de configuração da extensão e conduz os passos com você, um por vez.
 
 ## Consultas e análises
 
@@ -23,7 +23,7 @@ Toda alteração segue três etapas:
 2. **Confirmação.** Você confirma no chat, por exemplo *"pode aplicar"*.
 3. **Aplicação.** A alteração é aplicada de uma vez só (ou tudo, ou nada) e registrada no seu computador.
 
-Você pode pedir várias alterações juntas (até 100 por vez, na mesma conta): uma prévia e uma confirmação valem para o lote. A prévia vale por 15 minutos; se algo mudar na conta nesse meio tempo, o AdSmart não aplica e pede uma nova prévia.
+Você pode pedir várias alterações juntas (até 100 por vez, na mesma conta): uma prévia e uma confirmação valem para o lote. A prévia vale por 15 minutos; se algo mudar na conta nesse meio tempo, a AdSmart não aplica e pede uma nova prévia.
 
 Se você escolher **Sempre permitir** para a ferramenta *aplicar* no Claude Desktop, o Claude aplica as alterações assim que você confirmar no chat, sem abrir outra janela. Tudo fica no histórico e pode ser desfeito.
 
@@ -45,9 +45,9 @@ Alterações podem ser revertidas pelo chat:
 - *"Desfaz a última alteração."*
 - *"Mostra as alterações feitas hoje e desfaz a do orçamento."*
 
-Desfazer também mostra uma prévia e espera sua confirmação. Se alguém mudou o item depois do AdSmart (por exemplo, na interface do Google Ads), o AdSmart não desfaz automaticamente, para não apagar a decisão de outra pessoa.
+Desfazer também mostra uma prévia e espera sua confirmação. Se alguém mudou o item depois da AdSmart (por exemplo, na interface do Google Ads), a AdSmart não desfaz automaticamente, para não apagar a decisão de outra pessoa.
 
-Remoções definitivas não podem ser desfeitas. Por isso, o AdSmart prefere pausar em vez de remover. Uma palavra-chave adicionada pelo AdSmart é desfeita por remoção; se você quiser recriá-la depois, ela ganha um novo ID e começa sem histórico.
+Remoções definitivas não podem ser desfeitas. Por isso, a AdSmart prefere pausar em vez de remover. Uma palavra-chave adicionada pela AdSmart é desfeita por remoção; se você quiser recriá-la depois, ela ganha um novo ID e começa sem histórico.
 
 ## Histórico
 

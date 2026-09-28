@@ -105,7 +105,7 @@ export function registerDiagnostico(server: McpServer, context: ToolContext): vo
 	server.registerTool(
 		"diagnostico",
 		{
-			title: "Diagnóstico do AdSmart",
+			title: "Verificar a conexão da AdSmart",
 			description:
 				"Verifica, em ordem, a configuração da extensão, o arquivo de chave, a autenticação com o Google, as contas acessíveis e a MCC. Use primeiro quando algo não funcionar.",
 			outputSchema,

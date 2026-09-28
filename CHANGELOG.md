@@ -18,6 +18,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ### Alterado
 
+- Títulos das ferramentas em forma de ação (por exemplo, "Configurar a AdSmart" e "Verificar a conexão da AdSmart"), e a AdSmart passa a ser tratada no feminino em todos os textos.
 - Guia de configuração: link oficial de ativação da API, pedido do nível Explorer, passkey criada antes de começar e bloqueio de chave em contas Workspace.
 - Guia de configuração: como encontrar o ID da conta, nome do arquivo de chave baixado e aviso sobre a exigência de chave de acesso (passkey) para adicionar usuários.
 - Solução de problemas: nova seção `CUSTOMER_NOT_FOUND` e bloqueio de chaves em organizações Workspace criadas a partir de maio de 2024.

@@ -1,6 +1,6 @@
 # Solução de problemas
 
-Comece sempre pedindo ao Claude: **"Rode o diagnóstico do AdSmart"**. Ele identifica a maioria dos problemas abaixo automaticamente.
+Comece sempre pedindo ao Claude: **"Rode o diagnóstico da AdSmart"**. Ele identifica a maioria dos problemas abaixo automaticamente.
 
 ## `CLOUD_PROJECT_NOT_APPROVED_FOR_PRODUCTION`
 

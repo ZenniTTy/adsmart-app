@@ -55,7 +55,7 @@ export function registerAlteracoes(
 	server.registerTool(
 		"preparar_alteracao",
 		{
-			title: "Preparar alteração (prévia)",
+			title: "Ver prévia de uma alteração",
 			description:
 				"Monta a prévia de uma ou mais alterações numa conta do Google Ads: lê os valores atuais, valida com o Google sem aplicar nada e devolve antes → depois, destaques e um id_plano válido por 15 minutos. Nada é alterado.",
 			inputSchema: z.object({
@@ -87,7 +87,7 @@ export function registerAlteracoes(
 	server.registerTool(
 		"aplicar",
 		{
-			title: "Aplicar alteração",
+			title: "Aplicar alteração aprovada",
 			description:
 				"Aplica um plano gerado por preparar_alteracao, depois que o usuário confirmou a prévia no chat. Recusa plano expirado, já usado ou com valores que mudaram desde a prévia.",
 			inputSchema: z.object({
@@ -121,7 +121,7 @@ export function registerAlteracoes(
 	server.registerTool(
 		"desfazer",
 		{
-			title: "Preparar desfazer",
+			title: "Ver prévia para desfazer uma alteração",
 			description:
 				"Monta a prévia para desfazer uma alteração do histórico. Não aplica nada: o resultado traz um id_plano para aplicar depois da confirmação do usuário.",
 			inputSchema: z.object({
@@ -146,9 +146,9 @@ export function registerAlteracoes(
 	server.registerTool(
 		"historico",
 		{
-			title: "Histórico de alterações",
+			title: "Ver histórico de alterações",
 			description:
-				"Lista as alterações feitas pelo AdSmart neste computador, mais recentes primeiro.",
+				"Lista as alterações feitas pela AdSmart neste computador, mais recentes primeiro.",
 			inputSchema: z.object({
 				conta: z.string().optional().describe("Filtrar por conta (opcional)."),
 				limite: z

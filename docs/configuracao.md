@@ -1,9 +1,9 @@
 # Configuração
 
-Este guia conecta o AdSmart à sua conta do Google Ads. Leva cerca de 15 minutos e é feito uma única vez.
+Este guia conecta a AdSmart à sua conta do Google Ads. Leva cerca de 15 minutos e é feito uma única vez.
 
 > [!TIP]
-> Com a extensão instalada, peça no chat: **"Me ajude a configurar o AdSmart"**. Depois de conferir os pré-requisitos, o Claude oferece três caminhos:
+> Com a extensão instalada, peça no chat: **"Me ajude a configurar a AdSmart"**. Depois de conferir os pré-requisitos, o Claude oferece três caminhos:
 >
 > - **Claude Cowork** (planos pagos): o Claude entrega um texto pronto para você colar numa tarefa do [Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork). O Cowork conduz o navegador e para em toda ação que é sua. Depois você volta ao chat para escolher o arquivo de chave e rodar o diagnóstico.
 > - **Claude in Chrome no chat** (planos pagos, navegador Chrome): com o [Claude in Chrome](https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome) ligado na conversa, o Claude abre as páginas e faz os cliques que são dele.
@@ -51,7 +51,7 @@ O Google pode aprovar na hora ou depois; quando aprovado, a página mostra o ní
 
 ## 4. Criar a conta de serviço
 
-A conta de serviço é a identidade que o AdSmart usa para acessar o Google Ads.
+A conta de serviço é a identidade que a AdSmart usa para acessar o Google Ads.
 
 1. Acesse [Contas de serviço](https://console.cloud.google.com/iam-admin/serviceaccounts), escolha o projeto `adsmart` se o console pedir, e clique em **Criar conta de serviço**.
 2. Dê o nome `adsmart` e conclua. Não é necessário atribuir papéis.
@@ -80,6 +80,6 @@ Anote o **ID da conta**: o número de 10 dígitos exibido no canto superior do G
 
 ## 7. Testar
 
-No chat, peça: **"Rode o diagnóstico do AdSmart"**. O Claude verifica cada etapa e confirma quais contas estão acessíveis. Se algo falhar, ele indica exatamente o passo a corrigir.
+No chat, peça: **"Rode o diagnóstico da AdSmart"**. O Claude verifica cada etapa e confirma quais contas estão acessíveis. Se algo falhar, ele indica exatamente o passo a corrigir.
 
 Veja também a [solução de problemas](solucao-de-problemas.md).

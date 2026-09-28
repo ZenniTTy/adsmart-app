@@ -34,7 +34,7 @@ export type SetupGuide = {
 export const USER_ACTION_LABEL = "Eu faço (pare e espere eu avisar que concluí):";
 export const CLAUDE_ACTION_LABEL = "Você faz:";
 export const CHAT_STEP_NOTE =
-	"Este passo acontece depois, no chat do AdSmart, e não é tarefa sua. Só me lembre dele no fim:";
+	"Este passo acontece depois, no chat da AdSmart, e não é tarefa sua. Só me lembre dele no fim:";
 
 const NUMERO: Record<StepKey, number> = {
 	projeto: 1,
@@ -189,7 +189,7 @@ const PASSOS: SetupStep[] = [
 		acoes: [
 			{
 				quem: "claude",
-				texto: "Rodar o diagnóstico do AdSmart e mostrar o resultado de cada etapa.",
+				texto: "Rodar o diagnóstico da AdSmart e mostrar o resultado de cada etapa.",
 			},
 		],
 		como_saber: "Todas as etapas do diagnóstico aparecem como OK.",
@@ -224,7 +224,7 @@ export const SETUP_GUIDE: SetupGuide = {
 		"Não abra, não leia, não mova, não copie e não liste o arquivo de chave JSON.",
 		"Na criação da chave, pare antes do botão Criar: eu clico, baixo e guardo o arquivo.",
 		"Nunca digite senhas, códigos de verificação nem passkeys; quando o Google pedir, pare e espere eu fazer.",
-		"No fim, não configure a extensão: diga para eu voltar ao chat do AdSmart, escolher o arquivo de chave nas configurações e pedir o diagnóstico.",
+		"No fim, não configure a extensão: diga para eu voltar ao chat da AdSmart, escolher o arquivo de chave nas configurações e pedir o diagnóstico.",
 	],
 	modos: {
 		cowork:
@@ -235,7 +235,7 @@ export const SETUP_GUIDE: SetupGuide = {
 			"Sem o Claude in Chrome, a pessoa abre cada link e faz todas as ações; o Claude explica um passo por vez e espera a pessoa avisar que concluiu.",
 	},
 	depois:
-		"Quando terminar, peça ao Claude para rodar o diagnóstico do AdSmart: cada etapa em FALHA indica o passo a refazer.",
+		"Quando terminar, peça ao Claude para rodar o diagnóstico da AdSmart: cada etapa em FALHA indica o passo a refazer.",
 };
 
 export function guideStep(key: StepKey): string {
@@ -268,7 +268,7 @@ function promptStep(passo: SetupStep): string {
 
 export function coworkPrompt(guide: SetupGuide): string {
 	return [
-		"Você vai me ajudar a configurar o AdSmart, uma extensão do Claude Desktop que conecta o Claude à minha conta do Google Ads. Siga o roteiro abaixo, um passo por vez, e respeite todas as regras. No roteiro, quando aparecer a pessoa, sou eu.",
+		"Você vai me ajudar a configurar a AdSmart, uma extensão do Claude Desktop que conecta o Claude à minha conta do Google Ads. Siga o roteiro abaixo, um passo por vez, e respeite todas as regras. No roteiro, quando aparecer a pessoa, sou eu.",
 		`Regras do Cowork:\n${bulletList(guide.regras_cowork)}`,
 		`Regras gerais:\n${bulletList(guide.regras)}`,
 		`Antes de começar (confirme comigo):\n${bulletList(guide.antes_de_comecar.map((item) => item.texto))}`,

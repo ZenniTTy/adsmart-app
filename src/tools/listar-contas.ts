@@ -47,7 +47,7 @@ export function registerListarContas(server: McpServer, context: ToolContext): v
 	server.registerTool(
 		"listar_contas",
 		{
-			title: "Listar contas do Google Ads",
+			title: "Ver minhas contas do Google Ads",
 			description:
 				"Lista as contas do Google Ads que a conta de serviço acessa, diretamente ou pela MCC configurada, com ID, nome, moeda, status e se é administradora.",
 			outputSchema,

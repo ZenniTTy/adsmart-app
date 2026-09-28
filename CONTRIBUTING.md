@@ -1,4 +1,4 @@
-# Contribuindo com o AdSmart
+# Contribuindo com a AdSmart
 
 Obrigado pelo interesse em contribuir. Este guia explica como preparar o ambiente e enviar mudanças.
 

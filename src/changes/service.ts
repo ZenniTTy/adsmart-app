@@ -88,7 +88,7 @@ export function createChangeService(deps: ChangeServiceDeps) {
 				const changedAt = Date.parse(recent.data.changeEvent.changeDateTime.replace(" ", "T"));
 				const days = Math.max(0, Math.floor((deps.now() - changedAt) / DAY_MS));
 				warnings.push(
-					`A campanha ${campaignId} foi alterada há ${days === 0 ? "menos de 1 dia" : `${days} dia(s)`}, inclusive por fora do AdSmart.`,
+					`A campanha ${campaignId} foi alterada há ${days === 0 ? "menos de 1 dia" : `${days} dia(s)`}, inclusive por fora da AdSmart.`,
 				);
 			}
 		}
@@ -115,7 +115,7 @@ export function createChangeService(deps: ChangeServiceDeps) {
 			if (expectation && !expectation(current.value)) {
 				throw new AdsError(
 					"UNDO_DRIFT",
-					"O valor atual não é mais o que o AdSmart deixou (alguém alterou depois). Não é seguro desfazer automaticamente.",
+					"O valor atual não é mais o que a AdSmart deixou (alguém alterou depois). Não é seguro desfazer automaticamente.",
 				);
 			}
 			const change = buildChange(item, customerId, current, currencyCode);

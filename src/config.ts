@@ -34,7 +34,7 @@ export function loadConfig(env: Record<string, string | undefined>): ConfigResul
 	if (!keyFile) {
 		return {
 			ok: false,
-			message: `O arquivo de chave da conta de serviço não foi informado. Se você ainda não tem a chave, peça ao Claude "Me ajude a configurar o AdSmart" (ferramenta guia_configuracao). Se já tem, selecione o arquivo JSON nas configurações da extensão (${guideStep("extensao")}).`,
+			message: `O arquivo de chave da conta de serviço não foi informado. Se você ainda não tem a chave, peça ao Claude "Me ajude a configurar a AdSmart" (ferramenta guia_configuracao). Se já tem, selecione o arquivo JSON nas configurações da extensão (${guideStep("extensao")}).`,
 		};
 	}
 	const rawLogin = parsed[LOGIN_CUSTOMER_ID_ENV];

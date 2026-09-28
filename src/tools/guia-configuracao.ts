@@ -30,9 +30,9 @@ export function registerGuiaConfiguracao(server: McpServer): void {
 	server.registerTool(
 		"guia_configuracao",
 		{
-			title: "Guia de configuração do AdSmart",
+			title: "Configurar a AdSmart",
 			description:
-				"Devolve o roteiro para configurar o AdSmart do zero: pré-requisitos, os 7 passos no Google Cloud e no Google Ads, quem faz cada ação e as regras que o Claude segue. Use quando a pessoa quiser configurar o AdSmart ou quando o diagnóstico indicar que falta a chave. Depois dos pré-requisitos (antes_de_comecar), ofereça três caminhos e deixe a pessoa escolher: Claude Cowork (entregue o prompt_cowork para ela colar numa tarefa do Cowork; plano pago), Claude in Chrome nesta conversa (plano pago) ou manual. Conduza um passo por vez; nas ações marcadas como `voce`, pare e espere a pessoa avisar que concluiu. Siga sempre as regras devolvidas.",
+				"Devolve o roteiro para configurar a AdSmart do zero: pré-requisitos, os 7 passos no Google Cloud e no Google Ads, quem faz cada ação e as regras que o Claude segue. Use quando a pessoa quiser configurar a AdSmart ou quando o diagnóstico indicar que falta a chave. Depois dos pré-requisitos (antes_de_comecar), ofereça três caminhos e deixe a pessoa escolher: Claude Cowork (entregue o prompt_cowork para ela colar numa tarefa do Cowork; plano pago), Claude in Chrome nesta conversa (plano pago) ou manual. Conduza um passo por vez; nas ações marcadas como `voce`, pare e espere a pessoa avisar que concluiu. Siga sempre as regras devolvidas.",
 			inputSchema: z.object({}),
 			outputSchema,
 			annotations: { readOnlyHint: true, openWorldHint: false },

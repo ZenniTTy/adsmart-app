@@ -85,5 +85,5 @@ export function toUserMessage(error: unknown): string {
 	if (error instanceof AdsError) {
 		return error.message;
 	}
-	return "Ocorreu um erro inesperado no AdSmart. Rode o diagnóstico para identificar a causa.";
+	return "Ocorreu um erro inesperado na AdSmart. Rode o diagnóstico para identificar a causa.";
 }

@@ -420,12 +420,12 @@ describe("UND desfazer e HIS histórico", () => {
 		expect(historyLines()[1]?.desfaz).toBe(changeId);
 	});
 
-	test("UND-02: recusa se o valor mudou depois do AdSmart e recusa desfazer remoção", async () => {
+	test("UND-02: recusa se o valor mudou depois da AdSmart e recusa desfazer remoção", async () => {
 		const { client } = await connect();
 		const budgetChange = await applyPlan(client, [budgetTo(90)]);
 		state.budget = "50000000";
 		expect(text(await call(client, "desfazer", { id_alteracao: budgetChange }))).toContain(
-			"não é mais o que o AdSmart deixou",
+			"não é mais o que a AdSmart deixou",
 		);
 		const removal = await applyPlan(client, [
 			{ tipo: "remover_palavra_chave", grupo_id: GROUP, criterio_id: "444" },
