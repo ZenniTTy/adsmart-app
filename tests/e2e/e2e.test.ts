@@ -318,6 +318,21 @@ describe("GUI guia_configuracao", () => {
 		expect(google.requests).toHaveLength(0);
 	});
 
+	test("GUI-09 e GUI-11: devolve o prompt do Cowork e orienta a oferecer três caminhos", async () => {
+		const { client } = await connect({});
+		const { tools } = await client.listTools();
+		const description = tools.find((t) => t.name === "guia_configuracao")?.description ?? "";
+		expect(description).toContain("três caminhos");
+		expect(description).toContain("Cowork");
+		const out = (await call(client, "guia_configuracao")).structuredContent as {
+			prompt_cowork: string;
+			modos: Record<string, string>;
+		};
+		expect(Object.keys(out.modos).sort()).toEqual(["cowork", "manual", "navegador"]);
+		expect(out.prompt_cowork).toContain("Manually approve");
+		expect(out.prompt_cowork).toContain("Passo 7 — Testar");
+	});
+
 	test("GUI-03: o diagnóstico sem chave indica o guia_configuracao", async () => {
 		const { client } = await connect({});
 		expect(text(await call(client, "diagnostico"))).toContain("guia_configuracao");

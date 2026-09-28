@@ -2,7 +2,13 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { loadConfig } from "../../src/config.js";
-import { guideStep, SETUP_GUIDE, type StepKey } from "../../src/setup/roteiro.js";
+import {
+	coworkPrompt,
+	guideStep,
+	SETUP_GUIDE,
+	type StepKey,
+	USER_ACTION_LABEL,
+} from "../../src/setup/roteiro.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const GUIDE = readFileSync(join(ROOT, "docs", "configuracao.md"), "utf8");
@@ -97,7 +103,7 @@ describe("GUI-05 passagem de bastão e modos", () => {
 
 	test("modos navegador e manual descritos", () => {
 		expect(SETUP_GUIDE.modos.navegador).toContain("Claude in Chrome");
-		expect(SETUP_GUIDE.modos.manual).toContain("você");
+		expect(SETUP_GUIDE.modos.manual).toContain("a pessoa");
 	});
 });
 
@@ -137,11 +143,84 @@ describe("GUI-08 roteiro em pt-BR", () => {
 		...SETUP_GUIDE.regras,
 		SETUP_GUIDE.modos.navegador,
 		SETUP_GUIDE.modos.manual,
+		SETUP_GUIDE.modos.cowork,
+		...SETUP_GUIDE.regras_cowork,
 		SETUP_GUIDE.depois,
+		...coworkPrompt(SETUP_GUIDE).split("\n"),
 	];
 	const englishMarkers = /\b(the|your|with|and|for|this|file|account|key|click|open)\b/i;
 
-	test.each(texts)("%p não tem marcadores de inglês", (text) => {
+	test.each(texts.filter((text) => text.trim()))("%p não tem marcadores de inglês", (text) => {
 		expect(text).not.toMatch(englishMarkers);
+	});
+});
+
+describe("GUI-09 prompt do Cowork gerado do roteiro", () => {
+	const prompt = coworkPrompt(SETUP_GUIDE);
+
+	test("cada passo entra com número, título, link e todas as ações", () => {
+		for (const passo of SETUP_GUIDE.passos) {
+			expect(prompt).toContain(`Passo ${passo.numero} — ${passo.titulo}`);
+			if (passo.link) {
+				expect(prompt).toContain(passo.link);
+			}
+			for (const acao of passo.acoes) {
+				expect(prompt).toContain(acao.texto);
+			}
+		}
+	});
+
+	test("pré-requisitos, regras gerais e regras do Cowork entram inteiros", () => {
+		for (const text of [
+			...SETUP_GUIDE.antes_de_comecar.map((item) => item.texto),
+			...SETUP_GUIDE.regras,
+			...SETUP_GUIDE.regras_cowork,
+		]) {
+			expect(prompt).toContain(text);
+		}
+	});
+
+	test("toda ação da pessoa manda parar e esperar", () => {
+		const userActions = SETUP_GUIDE.passos.flatMap((passo) =>
+			passo.acoes.filter((acao) => acao.quem === "voce"),
+		);
+		for (const acao of userActions) {
+			expect(prompt).toContain(`${USER_ACTION_LABEL} ${acao.texto}`);
+		}
+	});
+
+	test("mudar um passo numa cópia do roteiro muda o prompt", () => {
+		const changed = {
+			...SETUP_GUIDE,
+			passos: SETUP_GUIDE.passos.map((passo) =>
+				passo.chave === "api" ? { ...passo, titulo: "Título alterado no teste" } : passo,
+			),
+		};
+		expect(coworkPrompt(changed)).toContain("Passo 2 — Título alterado no teste");
+		expect(coworkPrompt(changed)).not.toContain("Passo 2 — Ativar a Google Ads API");
+	});
+});
+
+describe("GUI-10 regras próprias do Cowork", () => {
+	const rules = SETUP_GUIDE.regras_cowork.join(" ");
+
+	test.each([
+		"Manually approve",
+		"Skip all approvals",
+		"pasta de downloads",
+		"não mova",
+		"Criar",
+		"senhas",
+		"voltar ao chat do AdSmart",
+	])("cita %p", (fragment) => {
+		expect(rules).toContain(fragment);
+	});
+});
+
+describe("GUI-11 três caminhos", () => {
+	test("modos cowork, navegador e manual, com plano pago nos dois primeiros", () => {
+		expect(Object.keys(SETUP_GUIDE.modos).sort()).toEqual(["cowork", "manual", "navegador"]);
+		expect(SETUP_GUIDE.modos.cowork).toContain("planos pagos");
+		expect(SETUP_GUIDE.modos.navegador).toContain("planos pagos");
 	});
 });
