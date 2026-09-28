@@ -36,6 +36,7 @@ It is a local, free alternative to cloud-based Google Ads automation tools: no m
 
 | Tool | What it does |
 |---|---|
+| `guia_configuracao` | Walks you through setup from scratch, step by step, saying what is yours to do and what Claude does; offers a ready-made prompt for Claude Cowork |
 | `diagnostico` | Checks configuration, key file, authentication, reachable accounts and MCC, and says what to fix |
 | `listar_contas` | Lists the Google Ads accounts the service account can reach, including through an MCC |
 | `consultar` | Runs read-only GAQL (Google Ads Query Language) queries: metrics, search terms, disapproved ads, change history and more |
@@ -77,6 +78,8 @@ Once the first version is released:
 The extension does not update itself: for a new version, download and install the file from the latest release.
 
 ## Documentation
+
+The documentation is also on [adsmart.digital](https://adsmart.digital) (Portuguese), with search.
 
 Guides are written in Portuguese: [installation](docs/instalacao.md), [setup](docs/configuracao.md), [usage](docs/uso.md), [limits](docs/limites.md) and [troubleshooting](docs/solucao-de-problemas.md).
 

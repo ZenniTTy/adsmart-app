@@ -4,12 +4,12 @@ import { AdsError } from "../google/errors.js";
 import type { HistoryEntry, HistoryStore } from "./history.js";
 import type { Item } from "./items.js";
 import { buildChange, type Change, inverseItem, readCurrent } from "./kinds.js";
+import { RECENT_CHANGE_DAYS } from "./limites.js";
 import type { PlanStore } from "./plan-store.js";
 
 export const ALWAYS_ALLOW_NOTE =
 	'Se você escolher "Sempre permitir" para a ferramenta aplicar, o Claude aplica as alterações assim que você confirmar no chat, sem abrir outra janela. Tudo fica no histórico e pode ser desfeito.';
 
-const RECENT_CHANGE_DAYS = 14;
 const DAY_MS = 86_400_000;
 
 export type ChangeServiceDeps = {

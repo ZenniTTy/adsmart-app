@@ -1,0 +1,15 @@
+{
+	"name": "adsmart-site",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"gerar": "bun scripts/gerar-conteudo.ts",
+		"dev": "bun run gerar && astro dev",
+		"build": "bun run gerar && astro build",
+		"test": "bun test"
+	},
+	"dependencies": {
+		"@astrojs/starlight": "0.42.4",
+		"astro": "7.3.5"
+	}
+}
