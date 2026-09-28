@@ -2,7 +2,7 @@
 
 ## Onde funciona
 
-A AdSmart funciona no **Claude Desktop** no macOS. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. Ele não está disponível no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
+A AdSmart funciona no **Claude Desktop** no macOS. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. Ela não está disponível no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
 
 ## Cota diária da API
 
