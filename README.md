@@ -63,7 +63,7 @@ A prévia vale por 15 minutos. Se alguém alterar o item nesse meio tempo, inclu
 
 ## Requisitos
 
-- [Claude Desktop](https://claude.ai/download) (macOS ou Windows). O AdSmart não funciona no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
+- [Claude Desktop](https://claude.ai/download) no macOS. O suporte a Windows virá numa versão futura. O AdSmart não funciona no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
 - Uma conta Google com acesso de **administrador** à conta do Google Ads (ou à MCC).
 - Um projeto no Google Cloud com a Google Ads API ativada no nível Explorer (gratuito, sem cartão de crédito).
 

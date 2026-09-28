@@ -62,7 +62,7 @@ A preview is valid for 15 minutes. If someone changes the item in the meantime, 
 
 ## Requirements
 
-- [Claude Desktop](https://claude.ai/download) (macOS or Windows). AdSmart does not run on claude.ai in the browser or on mobile apps, because it runs on your computer.
+- [Claude Desktop](https://claude.ai/download) on macOS. Windows support will come in a future version. AdSmart does not run on claude.ai in the browser or on mobile apps, because it runs on your computer.
 - A Google account with **admin** access to the Google Ads account (or MCC).
 - A Google Cloud project with the Google Ads API enabled at the Explorer access level (free, no credit card required).
 
