@@ -3,7 +3,19 @@
 Este guia conecta o AdSmart à sua conta do Google Ads. Leva cerca de 15 minutos e é feito uma única vez.
 
 > [!TIP]
-> Com a extensão instalada, peça no chat: **"Me ajude a configurar o AdSmart"**. O Claude conduz estes passos com você, um por vez, e para sempre que uma ação for sua. Se o [Claude in Chrome](https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome) estiver ligado na conversa (planos pagos, navegador Chrome), o Claude também abre as páginas e faz os cliques que são dele. Você também pode seguir os passos abaixo sozinho.
+> Com a extensão instalada, peça no chat: **"Me ajude a configurar o AdSmart"**. Depois de conferir os pré-requisitos, o Claude oferece três caminhos:
+>
+> - **Claude Cowork** (planos pagos): o Claude entrega um texto pronto para você colar numa tarefa do [Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork). O Cowork conduz o navegador e para em toda ação que é sua. Depois você volta ao chat para escolher o arquivo de chave e rodar o diagnóstico.
+> - **Claude in Chrome no chat** (planos pagos, navegador Chrome): com o [Claude in Chrome](https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome) ligado na conversa, o Claude abre as páginas e faz os cliques que são dele.
+> - **Manual**: o Claude explica um passo por vez, e você faz tudo.
+>
+> Você também pode seguir os passos abaixo sozinho.
+
+### Se usar o Cowork
+
+- Use o modo **Manually approve** (aprovar cada ação). A própria Anthropic recomenda esse modo quando a tarefa envolve contas, arquivos ou sites sensíveis ([Use Claude Cowork safely](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)). Não use o modo **Skip all approvals**.
+- Não conecte ao Cowork a pasta onde a chave vai ficar nem a pasta de downloads. O Cowork só enxerga as pastas que você conectar.
+- No chat, o Claude não tem como abrir o arquivo de chave. No Cowork, a proteção depende dessas escolhas e das regras do texto pronto. Se preferir não correr esse risco, use o caminho manual.
 
 ## Antes de começar
 

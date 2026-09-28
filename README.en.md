@@ -72,7 +72,7 @@ Once the first version is released:
 
 1. Download `adsmart-<version>.mcpb` from the [latest release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
 2. Double-click the file or drag it into the Claude Desktop window. Claude Desktop warns that the extension is not verified by Anthropic: this is expected, see the [installation guide](docs/instalacao.md) (Portuguese).
-3. Ask in the chat: **"Me ajude a configurar o AdSmart"** ("Help me set up AdSmart"). Claude walks you through the [setup guide](docs/configuracao.md) (Portuguese) one step at a time and stops whenever an action is yours.
+3. Ask in the chat: **"Me ajude a configurar o AdSmart"** ("Help me set up AdSmart"). Claude walks you through the [setup guide](docs/configuracao.md) (Portuguese) one step at a time and stops whenever an action is yours. On paid plans, it can also hand you a ready-made prompt so Claude Cowork does the browser work.
 
 The extension does not update itself: for a new version, download and install the file from the latest release.
 
