@@ -32,7 +32,7 @@ Não vincule uma conta de faturamento ao projeto e não ative o período de aval
 Projetos novos só acessam contas de teste. Para gerenciar suas contas reais:
 
 1. Acesse a [visão geral da Google Ads API](https://console.cloud.google.com/google/ads-apis/overview).
-2. Confira que o nível atual é **Test**, expanda **Upgrade access level** e envie o pedido do nível **Explorer**. Se o formulário pedir aceite de termos, o aceite é seu.
+2. Confira que o nível atual é **Teste** (*Test*, na interface em inglês), abra a seção de upgrade do nível de acesso (*Upgrade access level*) e envie o pedido do nível **Explorer**. Se o formulário pedir aceite de termos, o aceite é seu.
 
 O Google pode aprovar na hora ou depois; quando aprovado, a página mostra o nível Explorer. Se o pedido for recusado, o único caminho oficial é passar o projeto para o nível pago do Google Cloud, o que exige cartão. Veja [pedido de Explorer recusado](solucao-de-problemas.md#pedido-de-explorer-ou-basic-recusado).
 
