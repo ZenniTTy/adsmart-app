@@ -57,6 +57,8 @@ Contas Google Workspace de empresas podem bloquear a criação de chaves por pol
 
 - Atualize o Claude Desktop para a versão mais recente.
 - Reinstale o arquivo `.mcpb` em **Configurações > Extensões**.
+- Se você usa o Claude Code no app desktop ou o Cowork, instale o Node.js 22 ou mais recente: nesses modos a extensão usa o Node.js do computador. Veja [onde funciona](instalacao.md#onde-funciona).
+- Outros casos em [problemas na instalação](instalacao.md#problemas-na-instalação).
 
 ## Ainda com problemas?
 

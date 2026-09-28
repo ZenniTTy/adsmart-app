@@ -70,13 +70,15 @@ A preview is valid for 15 minutes. If someone changes the item in the meantime, 
 
 Once the first version is released:
 
-1. Download `adsmart.mcpb` from the [latest release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
-2. In Claude Desktop, open **Settings > Extensions** and drag the file into the window.
+1. Download `adsmart-<version>.mcpb` from the [latest release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
+2. Double-click the file or drag it into the Claude Desktop window. Claude Desktop warns that the extension is not verified by Anthropic: this is expected, see the [installation guide](docs/instalacao.md) (Portuguese).
 3. Follow the [setup guide](docs/configuracao.md) (Portuguese) to create the service account and connect your accounts.
+
+The extension does not update itself: for a new version, download and install the file from the latest release.
 
 ## Documentation
 
-Guides are written in Portuguese: [setup](docs/configuracao.md), [usage](docs/uso.md), [limits](docs/limites.md) and [troubleshooting](docs/solucao-de-problemas.md).
+Guides are written in Portuguese: [installation](docs/instalacao.md), [setup](docs/configuracao.md), [usage](docs/uso.md), [limits](docs/limites.md) and [troubleshooting](docs/solucao-de-problemas.md).
 
 ## FAQ
 

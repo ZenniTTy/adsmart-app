@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Versão da tag igual à do package.json e do manifest.json
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          for file in package.json manifest.json; do
+            version="$(jq -r .version "$file")"
+            if [ "$version" != "$tag" ]; then
+              echo "::error::A tag $GITHUB_REF_NAME não bate com a versão $version de $file."
+              exit 1
+            fi
+          done
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run check
+
+      - name: SHA-256 do pacote
+        working-directory: dist
+        run: sha256sum "adsmart-${GITHUB_REF_NAME#v}.mcpb" > "adsmart-${GITHUB_REF_NAME#v}.mcpb.sha256"
+
+      - uses: actions/attest@v4
+        with:
+          subject-path: dist/adsmart-*.mcpb
+
+      - name: Release em rascunho
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          prerelease=""
+          case "$version" in *-*) prerelease="--prerelease" ;; esac
+          gh release create "$GITHUB_REF_NAME" \
+            "dist/adsmart-$version.mcpb" \
+            "dist/adsmart-$version.mcpb.sha256" \
+            --verify-tag --draft --generate-notes $prerelease

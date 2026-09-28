@@ -1,0 +1,83 @@
+{
+	"manifest_version": "0.3",
+	"name": "adsmart",
+	"display_name": "AdSmart",
+	"version": "0.1.0",
+	"description": "Gerencie suas campanhas do Google Ads conversando com o Claude. Roda só no seu computador.",
+	"long_description": "O AdSmart conecta o Claude à sua conta do Google Ads usando a sua própria conta de serviço do Google Cloud. Você consulta resultados e pede alterações pelo chat: toda alteração mostra uma prévia validada pelo Google, só é aplicada depois da sua confirmação e pode ser desfeita. Nada passa por servidores do projeto: a extensão fala apenas com o Google.",
+	"author": {
+		"name": "Eduardo Rodrigues",
+		"url": "https://github.com/ZenniTTy"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ZenniTTy/adsmart-app.git"
+	},
+	"homepage": "https://github.com/ZenniTTy/adsmart-app#readme",
+	"documentation": "https://github.com/ZenniTTy/adsmart-app/tree/main/docs",
+	"support": "https://github.com/ZenniTTy/adsmart-app/issues",
+	"icon": "icon.png",
+	"server": {
+		"type": "node",
+		"entry_point": "server/main.js",
+		"mcp_config": {
+			"command": "node",
+			"args": ["${__dirname}/server/main.js"],
+			"env": {
+				"ADSMART_KEY_FILE": "${user_config.arquivo_chave}",
+				"ADSMART_LOGIN_CUSTOMER_ID": "${user_config.mcc}"
+			}
+		}
+	},
+	"tools": [
+		{
+			"name": "diagnostico",
+			"description": "Confere a configuração e o acesso à conta, passo a passo."
+		},
+		{
+			"name": "listar_contas",
+			"description": "Lista as contas do Google Ads que você pode acessar."
+		},
+		{
+			"name": "consultar",
+			"description": "Consulta dados das campanhas com a linguagem de consultas do Google Ads."
+		},
+		{
+			"name": "preparar_alteracao",
+			"description": "Mostra a prévia de uma alteração, validada pelo Google, sem aplicar nada."
+		},
+		{ "name": "aplicar", "description": "Aplica uma alteração depois que você confirma a prévia." },
+		{
+			"name": "desfazer",
+			"description": "Prepara a prévia para desfazer uma alteração feita pelo AdSmart."
+		},
+		{
+			"name": "historico",
+			"description": "Lista as alterações feitas pelo AdSmart neste computador."
+		}
+	],
+	"tools_generated": false,
+	"keywords": ["google-ads", "anuncios", "campanhas", "marketing"],
+	"license": "MIT",
+	"privacy_policies": ["https://policies.google.com/privacy"],
+	"compatibility": {
+		"platforms": ["darwin", "win32"],
+		"runtimes": {
+			"node": ">=22.0.0"
+		}
+	},
+	"user_config": {
+		"arquivo_chave": {
+			"type": "file",
+			"title": "Arquivo de chave da conta de serviço",
+			"description": "O arquivo JSON baixado no Google Cloud (passo 6 do guia de configuração).",
+			"required": true
+		},
+		"mcc": {
+			"type": "string",
+			"title": "ID da conta de administrador (MCC)",
+			"description": "Opcional. Preencha só se você acessa as contas por uma conta de administrador. Exemplo: 123-456-7890.",
+			"required": false
+		}
+	}
+}

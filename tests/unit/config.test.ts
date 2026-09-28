@@ -59,3 +59,34 @@ describe("CFG-02 ID de conta", () => {
 		expect(normalizeCustomerId(value)).toBeUndefined();
 	});
 });
+
+describe("PKG-03 valores do user_config do Claude Desktop", () => {
+	test("MCC vazia é tratada como ausente", () => {
+		expect(loadConfig({ [KEY_FILE_ENV]: "/tmp/chave.json", [LOGIN_CUSTOMER_ID_ENV]: "" })).toEqual({
+			ok: true,
+			config: { keyFile: "/tmp/chave.json" },
+		});
+	});
+
+	test("MCC com o marcador não substituído é tratada como ausente", () => {
+		expect(
+			loadConfig({
+				[KEY_FILE_ENV]: "/tmp/chave.json",
+				[LOGIN_CUSTOMER_ID_ENV]: "${user_config.mcc}",
+			}),
+		).toEqual({ ok: true, config: { keyFile: "/tmp/chave.json" } });
+	});
+
+	test("arquivo de chave com o marcador não substituído conta como não informado", () => {
+		const result = loadConfig({ [KEY_FILE_ENV]: "${user_config.arquivo_chave}" });
+		expect(result.ok).toBe(false);
+		if (!result.ok) {
+			expect(result.message).toContain("não foi informado");
+		}
+	});
+
+	test("caminho do Windows com espaços é preservado", () => {
+		const keyFile = "C:\\Users\\Maria Silva\\Downloads\\chave do projeto.json";
+		expect(loadConfig({ [KEY_FILE_ENV]: keyFile })).toEqual({ ok: true, config: { keyFile } });
+	});
+});
