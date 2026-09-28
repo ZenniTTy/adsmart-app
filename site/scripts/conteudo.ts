@@ -3,6 +3,21 @@ export const DOWNLOAD_URL = `${REPOSITORIO}/releases/latest/download/adsmart.mcp
 
 export const ORDEM_DOCS = ["instalacao", "configuracao", "uso", "limites", "solucao-de-problemas"];
 
+export const DESCRICOES: Record<string, string> = {
+	instalacao:
+		"Como instalar a AdSmart no Claude Desktop para macOS: baixe o arquivo .mcpb, abra com dois cliques e confira a impressão digital.",
+	configuracao:
+		"Conecte a AdSmart ao Google Ads em cerca de 15 minutos: projeto no Google Cloud, Google Ads API, acesso Explorer, conta de serviço e acesso à conta.",
+	uso: "Exemplos de perguntas e alterações no Google Ads pelo chat do Claude, com prévia validada pelo Google, confirmação, desfazer e histórico.",
+	limites:
+		"Limites da AdSmart: onde funciona, cota diária da Google Ads API, recursos indisponíveis no nível Explorer e permissões da conta de serviço.",
+	"solucao-de-problemas":
+		"Resolva erros comuns da AdSmart: acesso à Google Ads API, permissões da conta de serviço, chave JSON, cota diária e diagnóstico automático.",
+};
+
+export const DESCRICAO_NOVIDADES =
+	"Histórico de versões da AdSmart: novidades, correções e mudanças de cada lançamento da extensão para o Claude Desktop.";
+
 const TIPOS_DE_AVISO: Record<string, string> = {
 	NOTE: "note",
 	TIP: "tip",
@@ -56,7 +71,9 @@ export function paginaDeDoc(nomeArquivo: string, markdown: string): Pagina {
 	const { titulo, corpo } = extrairTitulo(markdown);
 	const ordem = ORDEM_DOCS.indexOf(slug);
 	const menu = ordem >= 0 ? `sidebar:\n  order: ${ordem + 1}\n` : "";
-	const cabecalho = `---\ntitle: ${JSON.stringify(titulo)}\n${menu}---\n`;
+	const descricao = DESCRICOES[slug];
+	const linhaDescricao = descricao ? `description: ${JSON.stringify(descricao)}\n` : "";
+	const cabecalho = `---\ntitle: ${JSON.stringify(titulo)}\n${linhaDescricao}${menu}---\n`;
 	return { slug, conteudo: `${cabecalho}\n${converterLinks(converterAvisos(corpo))}\n` };
 }
 
@@ -69,6 +86,6 @@ export function paginaDeChangelog(changelog: string): Pagina {
 	const { corpo } = extrairTitulo(changelog);
 	return {
 		slug: "novidades",
-		conteudo: `---\ntitle: "Versões e novidades"\n---\n\n${corpo}\n`,
+		conteudo: `---\ntitle: "Versões e novidades"\ndescription: ${JSON.stringify(DESCRICAO_NOVIDADES)}\n---\n\n${corpo}\n`,
 	};
 }

@@ -155,3 +155,69 @@ describe("SITE-05 sem coleta de dados nem recursos externos", () => {
 		}
 	});
 });
+
+describe("SEO-01 metadados por página", () => {
+	test("cada página tem descrição própria, canonical no domínio sem www e imagem social", () => {
+		const descricoes = new Set<string>();
+		for (const pagina of paginasHtml(ANTES).filter((p) => !p.endsWith("404.html"))) {
+			const html = readFileSync(pagina, "utf8");
+			const descricao = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
+			expect(descricao).toBeDefined();
+			descricoes.add(descricao ?? "");
+			expect(html).toMatch(/<link rel="canonical" href="https:\/\/adsmart\.digital\//);
+			expect(html).toContain('property="og:image" content="https://adsmart.digital/og.png"');
+		}
+		expect(descricoes.size).toBe(paginasHtml(ANTES).length - 1);
+	});
+
+	test("a landing tem título próprio, sem repetir o nome", () => {
+		const html = readFileSync(join(ANTES, "index.html"), "utf8");
+		expect(html).toContain("<title>AdSmart · Google Ads pelo chat do Claude</title>");
+	});
+});
+
+describe("SEO-02 rastreamento", () => {
+	test("robots.txt libera tudo e aponta o sitemap", () => {
+		const robots = readFileSync(join(ANTES, "robots.txt"), "utf8");
+		expect(robots).toContain("Allow: /");
+		expect(robots).toContain("Sitemap: https://adsmart.digital/sitemap-index.xml");
+	});
+
+	test("sitemap só com endereços do domínio oficial", () => {
+		const sitemap = readFileSync(join(ANTES, "sitemap-0.xml"), "utf8");
+		const enderecos = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] ?? "");
+		expect(enderecos.length).toBeGreaterThanOrEqual(7);
+		expect(enderecos.every((e) => e.startsWith("https://adsmart.digital/"))).toBe(true);
+	});
+});
+
+describe("SEO-03 dados estruturados", () => {
+	function dados(dir: string): { "@graph": Record<string, unknown>[] } {
+		const html = readFileSync(join(dir, "index.html"), "utf8");
+		const json = html.match(/<script type="application\/ld\+json">(.+?)<\/script>/)?.[1];
+		return JSON.parse(json ?? "{}");
+	}
+
+	test("app gratuito para macOS, sem avaliações inventadas", () => {
+		const app = dados(ANTES)["@graph"].find((item) => item["@type"] === "SoftwareApplication");
+		expect(app?.operatingSystem).toBe("macOS");
+		expect(app?.offers).toEqual({ "@type": "Offer", price: "0", priceCurrency: "BRL" });
+		expect(app).not.toHaveProperty("aggregateRating");
+		expect(app).not.toHaveProperty("softwareVersion");
+	});
+
+	test("depois do lançamento: versão e link de download", () => {
+		const app = dados(DEPOIS)["@graph"].find((item) => item["@type"] === "SoftwareApplication");
+		expect(app?.softwareVersion).toBe("0.1.0");
+		expect(app?.downloadUrl).toBe(DOWNLOAD_URL);
+	});
+});
+
+describe("SITE-08 Windows em breve", () => {
+	test("antes e depois do lançamento, Windows aparece desativado", () => {
+		for (const dir of [ANTES, DEPOIS]) {
+			const html = readFileSync(join(dir, "index.html"), "utf8");
+			expect(html).toMatch(/aria-disabled="true"[^>]*data-windows[^>]*>\s*Windows · em breve/);
+		}
+	});
+});

@@ -1,0 +1,158 @@
+---
+import { Image } from "astro:assets";
+import Default from "@astrojs/starlight/components/Footer.astro";
+import { REPOSITORIO } from "../../scripts/conteudo.ts";
+import logoClaro from "../assets/logo-claro.png";
+import logoEscuro from "../assets/logo-escuro.png";
+import lancamento from "../gerado/lancamento.json";
+
+const versao: string | null = lancamento.versao;
+const colunas = [
+	{
+		titulo: "Produto",
+		links: [
+			{ texto: "Baixar", href: "/#baixar" },
+			{ texto: "Versões e novidades", href: "/novidades/" },
+			{ texto: "Releases no GitHub", href: `${REPOSITORIO}/releases` },
+		],
+	},
+	{
+		titulo: "Documentação",
+		links: [
+			{ texto: "Instalação", href: "/docs/instalacao/" },
+			{ texto: "Configuração", href: "/docs/configuracao/" },
+			{ texto: "Uso", href: "/docs/uso/" },
+			{ texto: "Limites", href: "/docs/limites/" },
+			{ texto: "Solução de problemas", href: "/docs/solucao-de-problemas/" },
+		],
+	},
+	{
+		titulo: "Projeto",
+		links: [
+			{ texto: "GitHub", href: REPOSITORIO },
+			{ texto: "Segurança", href: `${REPOSITORIO}/blob/main/SECURITY.md` },
+			{ texto: "Como contribuir", href: `${REPOSITORIO}/blob/main/CONTRIBUTING.md` },
+			{ texto: "Código de conduta", href: `${REPOSITORIO}/blob/main/CODE_OF_CONDUCT.md` },
+		],
+	},
+];
+---
+
+{
+	Astro.locals.starlightRoute.entry.data.template !== "splash" && (
+		<Default>
+			<slot />
+		</Default>
+	)
+}
+<footer class="rodape">
+	<div class="marca">
+		<Image src={logoEscuro} alt="AdSmart" width={123} height={32} class="light:sl-hidden" />
+		<Image src={logoClaro} alt="AdSmart" width={123} height={32} class="dark:sl-hidden" />
+		<p>Google Ads pelo chat do Claude. Local, open source e sem custo.</p>
+		{versao && <p class="versao">v{versao}</p>}
+	</div>
+	<nav class="colunas" aria-label="Rodapé">
+		{
+			colunas.map((coluna) => (
+				<div>
+					<p class="titulo">{coluna.titulo}</p>
+					<ul>
+						{coluna.links.map((link) => (
+							<li>
+								<a href={link.href}>{link.texto}</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))
+		}
+	</nav>
+	<div class="base">
+		<span>Open source sob licença <a href={`${REPOSITORIO}/blob/main/LICENSE`}>MIT</a></span>
+		<span>Feito por Elovision Digital</span>
+	</div>
+</footer>
+
+<style>
+	.rodape {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 2.5rem;
+		margin-top: 5rem;
+		padding-top: 3rem;
+		border-top: 1px solid var(--sl-color-hairline);
+		font-size: var(--sl-text-sm);
+	}
+	@media (min-width: 50rem) {
+		.rodape {
+			grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+		}
+		.base {
+			grid-column: 1 / -1;
+		}
+	}
+	.marca {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		color: var(--sl-color-gray-3);
+	}
+	.marca :global(img) {
+		align-self: flex-start;
+		width: auto;
+		height: 2rem;
+	}
+	.marca p {
+		margin: 0;
+		max-width: 18rem;
+	}
+	.versao {
+		width: fit-content;
+		padding: 0.15rem 0.6rem;
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 999px;
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+	}
+	.colunas {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+		gap: 2rem;
+	}
+	.titulo {
+		margin: 0 0 0.75rem;
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--sl-color-gray-3);
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li + li {
+		margin-top: 0.5rem;
+	}
+	a {
+		color: var(--sl-color-gray-2);
+		text-decoration: none;
+	}
+	a:hover {
+		color: var(--sl-color-white);
+	}
+	.base {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem 2rem;
+		padding-block: 1.5rem;
+		border-top: 1px solid var(--sl-color-hairline);
+		color: var(--sl-color-gray-3);
+	}
+	.base a {
+		text-decoration: underline;
+	}
+</style>

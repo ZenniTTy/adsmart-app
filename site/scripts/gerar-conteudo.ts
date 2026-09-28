@@ -25,5 +25,4 @@ writeFileSync(
 	`${JSON.stringify({ versao: versaoLancada(changelog) })}\n`,
 );
 
-copyFileSync(join(RAIZ, "icon.png"), join(GERADO, "logo.png"));
 copyFileSync(join(RAIZ, "icon.png"), join(SITE, "public", "favicon.png"));

@@ -48,7 +48,9 @@ describe("SITE-03 conversão de docs/", () => {
 		);
 		for (const arquivo of arquivos) {
 			const pagina = paginaDeDoc(arquivo, readFileSync(join(RAIZ, "docs", arquivo), "utf8"));
-			expect(pagina.conteudo).toMatch(/^---\ntitle: ".+"\nsidebar:\n {2}order: \d\n---\n/);
+			expect(pagina.conteudo).toMatch(
+				/^---\ntitle: ".+"\ndescription: ".{80,170}"\nsidebar:\n {2}order: \d\n---\n/,
+			);
 			expect(pagina.conteudo).not.toContain("[!TIP]");
 			expect(pagina.conteudo).not.toMatch(/\]\([a-z0-9-]+\.md/);
 		}
