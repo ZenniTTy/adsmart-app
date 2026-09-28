@@ -4,7 +4,7 @@ O AdSmart é uma extensão do Claude Desktop (arquivo `.mcpb`). Ele roda no seu 
 
 ## Onde funciona
 
-- **Chat do Claude Desktop, no macOS e no Windows.** É o uso suportado. O Claude Desktop já traz o Node.js que a extensão precisa: você não instala nada além dela.
+- **Chat do Claude Desktop no macOS.** É o uso suportado. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. O Claude Desktop já traz o Node.js que a extensão precisa: você não instala nada além dela.
 - **Claude Code no app desktop e Cowork:** nesses modos, o Claude Desktop usa o Node.js instalado no seu computador, e não o que vem com o app. Sem Node.js 22 ou mais recente instalado, a extensão não inicia.
 - **claude.ai no navegador e apps de celular:** não funciona, porque a extensão precisa rodar no seu computador.
 
@@ -17,8 +17,7 @@ O AdSmart é uma extensão do Claude Desktop (arquivo `.mcpb`). Ele roda no seu 
 
 Cada release traz o arquivo `.mcpb.sha256` com a impressão digital do pacote. Para conferir se o arquivo que você baixou é exatamente o publicado:
 
-- macOS: `shasum -a 256 adsmart-<versão>.mcpb`
-- Windows (PowerShell): `Get-FileHash adsmart-<versão>.mcpb -Algorithm SHA256`
+No Terminal: `shasum -a 256 adsmart-<versão>.mcpb`
 
 O código mostrado deve ser igual ao do arquivo `.sha256`. Quem usa o GitHub CLI também pode confirmar que o pacote foi gerado pelo build deste repositório:
 
