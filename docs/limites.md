@@ -2,7 +2,7 @@
 
 ## Onde funciona
 
-O AdSmart funciona no **Claude Desktop** no macOS. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. Ele não está disponível no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
+A AdSmart funciona no **Claude Desktop** no macOS. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. Ela não está disponível no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
 
 ## Cota diária da API
 
@@ -32,7 +32,7 @@ Para usar o Planejador de palavras-chave, solicite o nível **Basic** na [visão
 
 ## Permissões da conta de serviço
 
-Com o nível **Padrão** no Google Ads, o AdSmart gerencia campanhas, grupos de anúncios, anúncios, palavras-chave, orçamentos, lances e segmentação. Algumas operações exigem nível **Administrador**, que precisa ser concedido manualmente em **Administrador > Acesso e segurança**.
+Com o nível **Padrão** no Google Ads, a AdSmart gerencia campanhas, grupos de anúncios, anúncios, palavras-chave, orçamentos, lances e segmentação. Algumas operações exigem nível **Administrador**, que precisa ser concedido manualmente em **Administrador > Acesso e segurança**.
 
 ## O que continua sendo feito no Google Ads
 

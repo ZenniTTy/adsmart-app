@@ -27,12 +27,12 @@ body:
     id: diagnostico
     attributes:
       label: Resultado do diagnóstico
-      description: Peça "Rode o diagnóstico do AdSmart" e cole o resultado, removendo IDs de conta se preferir.
+      description: Peça "Rode o diagnóstico da AdSmart" e cole o resultado, removendo IDs de conta se preferir.
       render: text
   - type: input
     id: versao
     attributes:
-      label: Versão do AdSmart
+      label: Versão da AdSmart
       placeholder: "0.1.0"
     validations:
       required: true

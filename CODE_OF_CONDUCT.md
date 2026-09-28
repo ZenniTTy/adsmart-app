@@ -4,7 +4,7 @@ Este projeto adota o [Contributor Covenant, versão 2.1](https://www.contributor
 
 ## Nosso compromisso
 
-Queremos que a participação na comunidade do AdSmart seja livre de assédio para todas as pessoas, independentemente de idade, corpo, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, escolaridade, condição socioeconômica, nacionalidade, aparência, raça, religião ou orientação sexual.
+Queremos que a participação na comunidade da AdSmart seja livre de assédio para todas as pessoas, independentemente de idade, corpo, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, escolaridade, condição socioeconômica, nacionalidade, aparência, raça, religião ou orientação sexual.
 
 ## Comportamentos esperados
 

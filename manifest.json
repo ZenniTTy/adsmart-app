@@ -4,7 +4,7 @@
 	"display_name": "AdSmart",
 	"version": "0.1.0",
 	"description": "Gerencie suas campanhas do Google Ads conversando com o Claude. Roda só no seu computador.",
-	"long_description": "O AdSmart conecta o Claude à sua conta do Google Ads usando a sua própria conta de serviço do Google Cloud. Você consulta resultados e pede alterações pelo chat: toda alteração mostra uma prévia validada pelo Google, só é aplicada depois da sua confirmação e pode ser desfeita. Nada passa por servidores do projeto: a extensão fala apenas com o Google.",
+	"long_description": "A AdSmart conecta o Claude à sua conta do Google Ads usando a sua própria conta de serviço do Google Cloud. Você consulta resultados e pede alterações pelo chat: toda alteração mostra uma prévia validada pelo Google, só é aplicada depois da sua confirmação e pode ser desfeita. Nada passa por servidores do projeto: a extensão fala apenas com o Google.",
 	"author": {
 		"name": "Eduardo Rodrigues",
 		"url": "https://github.com/ZenniTTy"
@@ -32,7 +32,7 @@
 	"tools": [
 		{
 			"name": "guia_configuracao",
-			"description": "Mostra o roteiro para configurar o AdSmart do zero, com quem faz cada passo."
+			"description": "Mostra o roteiro para configurar a AdSmart do zero, com quem faz cada passo."
 		},
 		{
 			"name": "diagnostico",
@@ -53,11 +53,11 @@
 		{ "name": "aplicar", "description": "Aplica uma alteração depois que você confirma a prévia." },
 		{
 			"name": "desfazer",
-			"description": "Prepara a prévia para desfazer uma alteração feita pelo AdSmart."
+			"description": "Prepara a prévia para desfazer uma alteração feita pela AdSmart."
 		},
 		{
 			"name": "historico",
-			"description": "Lista as alterações feitas pelo AdSmart neste computador."
+			"description": "Lista as alterações feitas pela AdSmart neste computador."
 		}
 	],
 	"tools_generated": false,
@@ -74,7 +74,7 @@
 		"arquivo_chave": {
 			"type": "file",
 			"title": "Arquivo de chave da conta de serviço",
-			"description": "O arquivo JSON baixado no Google Cloud. Ainda não tem? Instale assim mesmo e peça ao Claude: \"Me ajude a configurar o AdSmart\".",
+			"description": "O arquivo JSON baixado no Google Cloud. Ainda não tem? Instale assim mesmo e peça ao Claude: \"Me ajude a configurar a AdSmart\".",
 			"required": false
 		},
 		"mcc": {

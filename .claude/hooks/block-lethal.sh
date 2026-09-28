@@ -28,7 +28,7 @@ printf '%s' "$CMD" | grep -qE '[a-z][a-z0-9-]{4,28}[a-z0-9]-[0-9a-f]{12}\.json' 
 printf '%s' "$CMD" | grep -qE '[[:alnum:]_.]+-key\.json' \
   && deny "acesso a chave JSON"
 printf '%s' "$CMD" | grep -qE '\.adsmart(/|[[:space:]"'"'"']|$)' \
-  && deny "acesso ao diretorio local de dados do AdSmart"
+  && deny "acesso ao diretorio local de dados da AdSmart"
 printf '%s' "$CMD" | grep -E '(^|[[:space:]/"'"'"'=<>])\.env(\.[[:alnum:]_-]+)?([[:space:]"'"'"';|&)]|$)' | grep -qvE '\.env\.(example|sample)([^[:alnum:]]|$)' \
   && deny "acesso a arquivo de ambiente"
 exit 0

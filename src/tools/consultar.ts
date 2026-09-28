@@ -11,7 +11,7 @@ const inputSchema = z.object({
 	gaql: z
 		.string({ error: "Informe a consulta GAQL como texto." })
 		.describe(
-			`Consulta GAQL de leitura (SELECT). Sem LIMIT, o AdSmart aplica LIMIT 100; o máximo é ${MAX_LIMIT}.`,
+			`Consulta GAQL de leitura (SELECT). Sem LIMIT, a AdSmart aplica LIMIT 100; o máximo é ${MAX_LIMIT}.`,
 		),
 });
 
@@ -27,7 +27,7 @@ export function registerConsultar(server: McpServer, context: ToolContext): void
 	server.registerTool(
 		"consultar",
 		{
-			title: "Consultar dados do Google Ads",
+			title: "Consultar campanhas e resultados",
 			description:
 				"Executa uma consulta GAQL somente leitura em uma conta do Google Ads e devolve até 1000 linhas.",
 			inputSchema,

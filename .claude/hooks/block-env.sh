@@ -10,7 +10,7 @@ deny() {
   {
     echo "BLOQUEADO: $FILE"
     echo "Motivo: $1"
-    echo "Credenciais do AdSmart nunca passam pelo agente. Use fixtures sinteticas em tests/."
+    echo "Credenciais da AdSmart nunca passam pelo agente. Use fixtures sinteticas em tests/."
   } >&2
   exit 2
 }
@@ -29,7 +29,7 @@ case "$BASE" in
 esac
 
 case "$FILE" in
-  *.adsmart/*|*.adsmart) deny "diretorio local de dados do AdSmart" ;;
+  *.adsmart/*|*.adsmart) deny "diretorio local de dados da AdSmart" ;;
   */node_modules/*|node_modules/*|*/dist/*|dist/*) deny "artefato de build ou dependencia; edite a fonte" ;;
 esac
 exit 0

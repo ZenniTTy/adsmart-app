@@ -1,9 +1,9 @@
 # Política de Segurança
 
-## Como o AdSmart protege seus dados
+## Como a AdSmart protege seus dados
 
-- **Tudo roda no seu computador.** O AdSmart se comunica apenas com os servidores do Google (`googleads.googleapis.com` e `oauth2.googleapis.com`). Não há servidores intermediários nem coleta de dados.
-- **Credenciais protegidas.** O arquivo de chave da conta de serviço fica em uma pasta do seu computador e é lido apenas pelo AdSmart. A chave nunca é registrada em logs nem enviada ao Claude.
+- **Tudo roda no seu computador.** A AdSmart se comunica apenas com os servidores do Google (`googleads.googleapis.com` e `oauth2.googleapis.com`). Não há servidores intermediários nem coleta de dados.
+- **Credenciais protegidas.** O arquivo de chave da conta de serviço fica em uma pasta do seu computador e é lido apenas pela AdSmart. A chave nunca é registrada em logs nem enviada ao Claude.
 - **Nenhuma alteração sem aprovação.** Toda alteração é validada pelo Google e exibida para você antes de ser aplicada.
 - **Acesso revogável a qualquer momento.** Remova o e-mail da conta de serviço em **Administrador > Acesso e segurança** no Google Ads, ou exclua a chave no Google Cloud.
 

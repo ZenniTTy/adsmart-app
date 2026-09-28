@@ -227,7 +227,7 @@ describe("GUI-10 regras próprias do Cowork", () => {
 		"não mova",
 		"Criar",
 		"senhas",
-		"voltar ao chat do AdSmart",
+		"voltar ao chat da AdSmart",
 	])("cita %p", (fragment) => {
 		expect(rules).toContain(fragment);
 	});
