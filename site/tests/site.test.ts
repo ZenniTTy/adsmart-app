@@ -83,6 +83,18 @@ describe("SITE-02 landing e download", () => {
 		expect(html).toContain("macOS");
 		expect(html).toContain("não foi verificada pela Anthropic");
 	});
+
+	test("header traz links principais na landing e nas docs", () => {
+		for (const html of [
+			readFileSync(join(DEPOIS, "index.html"), "utf8"),
+			readFileSync(join(DEPOIS, "docs", "instalacao", "index.html"), "utf8"),
+		]) {
+			expect(html).toContain('aria-label="Principal"');
+			expect(html).toContain('href="/docs/configuracao/"');
+			expect(html).toContain('href="/novidades/"');
+			expect(html).toContain('href="/#baixar"');
+		}
+	});
 });
 
 describe("SITE-03 documentação navegável e buscável", () => {

@@ -38,6 +38,8 @@ export default defineConfig({
 			],
 			components: {
 				Hero: "./src/components/Hero.astro",
+				Header: "./src/components/Cabecalho.astro",
+				MobileMenuFooter: "./src/components/MenuMobileRodape.astro",
 				Footer: "./src/components/Rodape.astro",
 				PageFrame: "./src/components/PageFrame.astro",
 			},
