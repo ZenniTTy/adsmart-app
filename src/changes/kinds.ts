@@ -371,7 +371,7 @@ export async function readCurrent(item: Item, read: Reader): Promise<Current> {
 			);
 			const existing = await optional(
 				read,
-				`SELECT campaign.id, campaign_criterion.resource_name FROM campaign_criterion WHERE campaign.id = ${item.campanha_id} AND campaign_criterion.keyword.text = '${item.texto}' AND campaign_criterion.keyword.match_type = '${MATCH_TO_API[item.correspondencia]}' AND campaign_criterion.negative = TRUE`,
+				`SELECT campaign.id, campaign_criterion.resource_name FROM campaign_criterion WHERE campaign.id = ${item.campanha_id} AND campaign_criterion.keyword.text = '${item.texto}' AND campaign_criterion.keyword.match_type = '${MATCH_TO_API[item.correspondencia]}' AND campaign_criterion.negative = TRUE AND campaign_criterion.status != 'REMOVED'`,
 				campaignCriterionRow,
 			);
 			return {

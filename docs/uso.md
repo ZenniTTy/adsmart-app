@@ -34,9 +34,9 @@ Exemplos:
 - *"Pausa a campanha Institucional."*
 - *"Adiciona 'grátis' e 'curso online' como palavras-chave negativas na campanha Pesquisa."*
 - *"Sobe em 20% o orçamento das campanhas com CPA abaixo de R$ 30."*
-- *"Cria um anúncio responsivo no grupo X com estes títulos: ..."*
+- *"Troca os títulos do anúncio responsivo do grupo X por estes: ..."*
 
-Por segurança, campanhas, grupos e anúncios novos são criados **pausados**. Peça ao Claude para ativá-los depois de revisar.
+A AdSmart não cria campanhas, grupos nem anúncios. Ela altera o que já existe (incluindo os textos de um anúncio responsivo) e pode adicionar ou remover palavras-chave e negativas.
 
 ## Desfazer
 

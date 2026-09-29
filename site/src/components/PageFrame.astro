@@ -4,4 +4,8 @@ import GtmCorpo from "./GtmCorpo.astro";
 ---
 
 <GtmCorpo />
-<Default {...Astro.props}><slot /></Default>
+<Default {...Astro.props}>
+	<slot />
+	<slot name="header" slot="header" />
+	<slot name="sidebar" slot="sidebar" />
+</Default>

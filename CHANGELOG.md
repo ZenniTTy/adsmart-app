@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ## [Não lançado]
 
+### Corrigido
+
+- Páginas de documentação voltam a mostrar logo, busca e menu. A consulta de negativa de campanha ignora critérios já removidos. O guia de uso deixa de prometer criação de campanha, grupo ou anúncio.
+
 ## [0.1.0] - 2026-09-29
 
 ### Adicionado

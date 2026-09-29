@@ -536,6 +536,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 			},
 		);
 		expect(queries[1]).toContain("campaign_criterion.keyword.match_type = 'EXACT'");
+		expect(queries[1]).toContain("campaign_criterion.status != 'REMOVED'");
 		expect(result).toEqual({ value: null, campaignId: "111", names: {} });
 	});
 
