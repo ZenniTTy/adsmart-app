@@ -97,12 +97,16 @@ h1#_top,
 	padding-inline: 1.25rem;
 }
 
-.header {
+header.header {
+	backdrop-filter: blur(12px);
+	background: color-mix(in srgb, var(--sl-color-bg-nav) 80%, transparent);
+}
+
+header.header > .header {
 	width: min(100%, 76rem);
 	margin-inline: auto;
 	padding-inline: 1.25rem;
-	backdrop-filter: blur(12px);
-	background: color-mix(in srgb, var(--sl-color-bg-nav) 80%, transparent);
+	box-sizing: border-box;
 }
 
 .header .title-wrapper {

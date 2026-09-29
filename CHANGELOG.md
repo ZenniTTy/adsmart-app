@@ -9,6 +9,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 ### Corrigido
 
 - Páginas de documentação voltam a mostrar logo, busca e menu. A consulta de negativa de campanha ignora critérios já removidos. O guia de uso deixa de prometer criação de campanha, grupo ou anúncio.
+- O rodapé do site aponta para o GitHub pessoal, e a barra do topo limita só a linha interna.
 
 ## [0.1.0] - 2026-09-29
 
