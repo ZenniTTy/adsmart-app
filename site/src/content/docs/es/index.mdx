@@ -1,0 +1,57 @@
+---
+title: AdSmart
+description: Gestiona tus campañas de Google Ads conversando con Claude. Extensión open source para Claude Desktop, 100% local.
+template: splash
+head:
+  - tag: title
+    content: AdSmart · Google Ads en el chat de Claude
+hero:
+  title: Google Ads en el chat de Claude
+  tagline: AdSmart es una extensión open source para Claude Desktop. Consulta resultados y cambia campañas conversando, con vista previa, confirmación y deshacer. Corre en tu computadora y solo habla con Google.
+  actions:
+    - text: Descargar para macOS
+      link: "#baixar"
+      icon: right-arrow
+    - text: GitHub
+      link: https://github.com/ZenniTTy/adsmart-app
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, Steps } from "@astrojs/starlight/components";
+import Download from "../../../components/Download.astro";
+
+## Qué hace AdSmart
+
+<CardGrid>
+	<Card title="Consultas" icon="magnifier">
+		Pregunta por campañas, gasto y resultados. Claude obtiene los datos de tu cuenta de Google Ads en el chat.
+	</Card>
+	<Card title="Cambios seguros" icon="pencil">
+		Presupuestos, estado, pujas, palabras clave y anuncios. Cada cambio muestra una vista previa validada por Google antes de aplicarse.
+	</Card>
+	<Card title="Deshacer e historial" icon="document">
+		Cada cambio queda registrado en tu computadora y se puede deshacer, también con vista previa.
+	</Card>
+	<Card title="Local y sin costo" icon="laptop">
+		Usa tu propia cuenta de servicio de Google Cloud. Nada pasa por servidores del proyecto.
+	</Card>
+</CardGrid>
+
+## Cómo funciona
+
+<Steps>
+
+1. **Instala** el archivo `.mcpb` en Claude Desktop con dos clics.
+2. **Configura** pidiendo en el chat: "Me ajude a configurar a AdSmart" (la guía asistida está en portugués). Claude te acompaña en Google Cloud y Google Ads.
+3. **Conversa.** Pide informes o cambios. Para cambiar algo, Claude muestra la vista previa y solo aplica después de tu confirmación.
+
+</Steps>
+
+## Descargar
+
+Disponible para Claude Desktop en macOS. El soporte para Windows llegará en una versión futura.
+
+<Download />
+
+Al instalar, Claude Desktop avisa que la extensión no fue verificada por Anthropic. Es normal; consulta la [guía de instalación](/es/docs/instalacao/) (en portugués).

@@ -10,8 +10,12 @@ A AdSmart é uma extensão do Claude Desktop (arquivo `.mcpb`). Ela roda no seu 
 
 ## Baixar
 
+No site [adsmart.digital](https://adsmart.digital), use o botão **Baixar para macOS** ou o comando do Terminal. O arquivo baixa como `adsmart-<versão>.mcpb` (por exemplo, `adsmart-0.1.0.mcpb`).
+
+Pelo GitHub:
+
 1. Abra o [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
-2. Baixe `adsmart.mcpb` (o mesmo pacote, com nome fixo) ou `adsmart-<versão>.mcpb`.
+2. Baixe `adsmart-<versão>.mcpb` ou `adsmart.mcpb` (mesmo conteúdo; o nome fixo serve para scripts e links estáveis).
 
 ### Conferir o arquivo (opcional)
 

@@ -1,10 +1,15 @@
 ---
 import { LinkButton } from "@astrojs/starlight/components";
-import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import { REPOSITORIO, urlDownload } from "../../scripts/conteudo.ts";
+import { localeFromStarlight } from "../../scripts/locale.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
 import lancamento from "../gerado/lancamento.json";
 
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, actions = [] } = data.hero ?? {};
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
+const selo = traducoes(locale).heroSelo;
+const langTag = locale === "root" ? "pt-BR" : locale;
 const versao: string | null = lancamento.versao;
 const site = "https://adsmart.digital/";
 const dadosEstruturados = {
@@ -15,7 +20,7 @@ const dadosEstruturados = {
 			"@id": `${site}#site`,
 			url: site,
 			name: "AdSmart",
-			inLanguage: "pt-BR",
+			inLanguage: langTag,
 		},
 		{
 			"@type": "SoftwareApplication",
@@ -24,7 +29,7 @@ const dadosEstruturados = {
 			description: data.description,
 			applicationCategory: "BusinessApplication",
 			operatingSystem: "macOS",
-			inLanguage: "pt-BR",
+			inLanguage: langTag,
 			license: `${REPOSITORIO}/blob/main/LICENSE`,
 			sameAs: [REPOSITORIO],
 			image: `${site}og.png`,
@@ -34,7 +39,7 @@ const dadosEstruturados = {
 				name: "ZenniTTy",
 				url: "https://github.com/ZenniTTy",
 			},
-			...(versao ? { softwareVersion: versao, downloadUrl: DOWNLOAD_URL } : {}),
+			...(versao ? { softwareVersion: versao, downloadUrl: urlDownload(versao) } : {}),
 		},
 	],
 };
@@ -44,7 +49,7 @@ const dadosEstruturados = {
 
 <div class="hero">
 	<div class="brilho" aria-hidden="true"></div>
-	<p class="selo">Extensão open source para o Claude Desktop</p>
+	<p class="selo">{selo}</p>
 	<h1 id="_top" data-page-title set:html={title} />
 	{tagline && <p class="tagline" set:html={tagline} />}
 	{

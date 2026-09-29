@@ -1,0 +1,56 @@
+---
+import Default from "@astrojs/starlight/components/MobileMenuFooter.astro";
+import { localeFromStarlight } from "../../scripts/locale.ts";
+import { linkAtivo, linksCabecalho } from "../../scripts/navegacao.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
+
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
+const pathname = Astro.url.pathname;
+const nav = linksCabecalho(locale);
+const t = traducoes(locale);
+---
+
+<nav class="links-mobile md:sl-hidden" aria-label={t.navAria}>
+	<ul>
+		{
+			nav.map((link) => (
+				<li>
+					<a
+						href={link.href}
+						class:list={{ ativo: linkAtivo(link.href, pathname, locale) }}
+						aria-current={linkAtivo(link.href, pathname, locale) ? "page" : undefined}
+					>
+						{link.texto}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
+<Default />
+
+<style>
+	.links-mobile {
+		border-bottom: 1px solid var(--sl-color-gray-6);
+		padding-block: 0.75rem 1rem;
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+	a {
+		display: block;
+		padding: 0.35rem 0;
+		color: var(--sl-color-gray-2);
+		text-decoration: none;
+		font-size: var(--sl-text-sm);
+	}
+	a.ativo {
+		color: var(--sl-color-white);
+		font-weight: 600;
+	}
+</style>

@@ -4,4 +4,8 @@ dist/
 src/gerado/
 src/content/docs/docs/
 src/content/docs/novidades.md
+src/content/docs/en/docs/
+src/content/docs/en/novidades.md
+src/content/docs/es/docs/
+src/content/docs/es/novidades.md
 public/favicon.png

@@ -1,11 +1,23 @@
 ---
 import { Code } from "@astrojs/starlight/components";
-import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import { nomePacote, REPOSITORIO, urlDownload } from "../../scripts/conteudo.ts";
+import { localeFromStarlight } from "../../scripts/locale.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
 import lancamento from "../gerado/lancamento.json";
 
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
+const t = traducoes(locale).download;
 const versao: string | null = lancamento.versao;
-const comando = `curl -fL -o ~/Downloads/adsmart.mcpb ${DOWNLOAD_URL} && open ~/Downloads/adsmart.mcpb`;
-const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasum -a 256 -c adsmart.mcpb.sha256`;
+const arquivo = versao ? nomePacote(versao) : null;
+const downloadUrl = versao ? urlDownload(versao) : null;
+const comando =
+	arquivo && downloadUrl
+		? `curl -fL -o ~/Downloads/${arquivo} ${downloadUrl} && open ~/Downloads/${arquivo}`
+		: "";
+const conferencia =
+	arquivo && downloadUrl
+		? `cd ~/Downloads && curl -fLO ${downloadUrl}.sha256 && shasum -a 256 -c ${arquivo}.sha256`
+		: "";
 ---
 
 <section class="download" id="baixar">
@@ -13,31 +25,31 @@ const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasu
 		versao ? (
 			<>
 				<div class="botoes">
-					<a class="botao" href={DOWNLOAD_URL} data-download>
-						Baixar para macOS · v{versao}
+					<a class="botao" href={downloadUrl} download={arquivo} data-download>
+						{t.botao} · v{versao}
 					</a>
 					<span class="botao desativado" aria-disabled="true" data-windows>
-						Windows · em breve
+						{t.windows}
 					</span>
 				</div>
-				<p>Ou pelo Terminal: o comando baixa o arquivo e abre o instalador do Claude Desktop.</p>
+				<p>{t.terminalIntro}</p>
 				<Code code={comando} lang="sh" />
 				<details>
-					<summary>Conferir a impressão digital (opcional)</summary>
+					<summary>{t.conferenciaTitulo}</summary>
 					<Code code={conferencia} lang="sh" />
 				</details>
 			</>
 		) : (
 			<>
 				<p class="em-breve" data-em-breve>
-					Lançamento em breve. Acompanhe no GitHub.
+					{t.emBreve}
 				</p>
 				<div class="botoes">
 					<a class="botao" href={REPOSITORIO}>
-						Ver no GitHub
+						{t.github}
 					</a>
 					<span class="botao desativado" aria-disabled="true" data-windows>
-						Windows · em breve
+						{t.windows}
 					</span>
 				</div>
 			</>
