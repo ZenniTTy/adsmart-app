@@ -3,10 +3,10 @@ import { pathComLocale } from "../scripts/locale.ts";
 import { linkAtivo } from "../scripts/navegacao.ts";
 
 describe("navegação do header", () => {
-	test("início e baixar só na landing", () => {
+	test("início só na landing e âncoras nunca ativas", () => {
 		expect(linkAtivo("/", "/", "root")).toBe(true);
 		expect(linkAtivo("/", "/docs/uso/", "root")).toBe(false);
-		expect(linkAtivo("/#baixar", "/", "root")).toBe(true);
+		expect(linkAtivo("/#baixar", "/", "root")).toBe(false);
 		expect(linkAtivo("/#baixar", "/docs/instalacao/", "root")).toBe(false);
 	});
 

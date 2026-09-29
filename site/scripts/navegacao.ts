@@ -6,10 +6,8 @@ export type { LinkNav };
 
 export function linkAtivo(href: string, pathname: string, locale: LocaleId): boolean {
 	const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
-	if (href.startsWith("/#")) {
-		const inicio = pathComLocale(locale, "/");
-		const inicioNorm = inicio.endsWith("/") ? inicio : `${inicio}/`;
-		return path === inicioNorm;
+	if (href.includes("#")) {
+		return false;
 	}
 	const alvo = href.endsWith("/") ? href : `${href}/`;
 	const inicio = pathComLocale(locale, "/");
