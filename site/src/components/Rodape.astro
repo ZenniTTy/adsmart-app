@@ -2,37 +2,41 @@
 import { Image } from "astro:assets";
 import Default from "@astrojs/starlight/components/Footer.astro";
 import { REPOSITORIO } from "../../scripts/conteudo.ts";
+import { localeFromStarlight, pathComLocale } from "../../scripts/locale.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
 import logoClaro from "../assets/logo-claro.png";
 import logoEscuro from "../assets/logo-escuro.png";
 import lancamento from "../gerado/lancamento.json";
 
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
+const t = traducoes(locale).rodape;
 const versao: string | null = lancamento.versao;
 const colunas = [
 	{
-		titulo: "Produto",
+		titulo: t.produto,
 		links: [
-			{ texto: "Baixar", href: "/#baixar" },
-			{ texto: "Versões e novidades", href: "/novidades/" },
-			{ texto: "Releases no GitHub", href: `${REPOSITORIO}/releases` },
+			{ texto: t.baixar, href: pathComLocale(locale, "/#baixar") },
+			{ texto: t.novidades, href: pathComLocale(locale, "/novidades/") },
+			{ texto: t.releases, href: `${REPOSITORIO}/releases` },
 		],
 	},
 	{
-		titulo: "Documentação",
+		titulo: t.documentacao,
 		links: [
-			{ texto: "Instalação", href: "/docs/instalacao/" },
-			{ texto: "Configuração", href: "/docs/configuracao/" },
-			{ texto: "Uso", href: "/docs/uso/" },
-			{ texto: "Limites", href: "/docs/limites/" },
-			{ texto: "Solução de problemas", href: "/docs/solucao-de-problemas/" },
+			{ texto: t.instalacao, href: pathComLocale(locale, "/docs/instalacao/") },
+			{ texto: t.configuracao, href: pathComLocale(locale, "/docs/configuracao/") },
+			{ texto: t.uso, href: pathComLocale(locale, "/docs/uso/") },
+			{ texto: t.limites, href: pathComLocale(locale, "/docs/limites/") },
+			{ texto: t.solucao, href: pathComLocale(locale, "/docs/solucao-de-problemas/") },
 		],
 	},
 	{
-		titulo: "Projeto",
+		titulo: t.projeto,
 		links: [
-			{ texto: "GitHub", href: REPOSITORIO },
-			{ texto: "Segurança", href: `${REPOSITORIO}/blob/main/SECURITY.md` },
-			{ texto: "Como contribuir", href: `${REPOSITORIO}/blob/main/CONTRIBUTING.md` },
-			{ texto: "Código de conduta", href: `${REPOSITORIO}/blob/main/CODE_OF_CONDUCT.md` },
+			{ texto: t.github, href: REPOSITORIO },
+			{ texto: t.seguranca, href: `${REPOSITORIO}/blob/main/SECURITY.md` },
+			{ texto: t.contribuir, href: `${REPOSITORIO}/blob/main/CONTRIBUTING.md` },
+			{ texto: t.conduta, href: `${REPOSITORIO}/blob/main/CODE_OF_CONDUCT.md` },
 		],
 	},
 ];
@@ -49,7 +53,7 @@ const colunas = [
 	<div class="marca">
 		<Image src={logoEscuro} alt="AdSmart" width={123} height={32} class="light:sl-hidden" />
 		<Image src={logoClaro} alt="AdSmart" width={123} height={32} class="dark:sl-hidden" />
-		<p>Google Ads pelo chat do Claude. Local, open source e sem custo.</p>
+		<p>{t.tagline}</p>
 		{versao && <p class="versao">v{versao}</p>}
 	</div>
 	<nav class="colunas" aria-label="Rodapé">
@@ -69,8 +73,8 @@ const colunas = [
 		}
 	</nav>
 	<div class="base">
-		<span>Open source sob licença <a href={`${REPOSITORIO}/blob/main/LICENSE`}>MIT</a></span>
-		<span>Feito por <a href="https://github.com/ZenniTTy">ZenniTTy</a></span>
+		<span>{t.licenca} <a href={`${REPOSITORIO}/blob/main/LICENSE`}>MIT</a></span>
+		<span>{t.feitoPor} <a href="https://github.com/ZenniTTy">ZenniTTy</a></span>
 	</div>
 </footer>
 

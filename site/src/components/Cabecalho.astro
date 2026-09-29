@@ -1,0 +1,177 @@
+---
+import LanguageSelect from "virtual:starlight/components/LanguageSelect";
+import Search from "virtual:starlight/components/Search";
+import SiteTitle from "virtual:starlight/components/SiteTitle";
+import SocialIcons from "virtual:starlight/components/SocialIcons";
+import ThemeSelect from "virtual:starlight/components/ThemeSelect";
+import config from "virtual:starlight/user-config";
+import { localeFromStarlight } from "../../scripts/locale.ts";
+import { linkAtivo, linksCabecalho } from "../../scripts/navegacao.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
+
+const shouldRenderSearch =
+	config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
+const pathname = Astro.url.pathname;
+const nav = linksCabecalho(locale);
+const t = traducoes(locale);
+---
+
+<div class="header">
+	<div class="title-wrapper sl-flex">
+		<SiteTitle />
+	</div>
+	<nav class="nav-principal print:hidden" aria-label={t.navAria}>
+		{
+			nav.map((link) => (
+				<a
+					href={link.href}
+					class:list={{ ativo: linkAtivo(link.href, pathname, locale) }}
+					aria-current={linkAtivo(link.href, pathname, locale) ? "page" : undefined}
+				>
+					{link.texto}
+				</a>
+			))
+		}
+	</nav>
+	<div class="sl-flex print:hidden meio-busca">
+		{shouldRenderSearch && <Search />}
+	</div>
+	<div class="sl-flex print:hidden seletor-idioma">
+		<LanguageSelect />
+	</div>
+	<div class="sl-hidden md:sl-flex print:hidden right-group">
+		<div class="sl-flex social-icons">
+			<SocialIcons />
+		</div>
+		<ThemeSelect />
+		<LanguageSelect />
+	</div>
+</div>
+
+<style>
+	@layer starlight.core {
+		.header {
+			display: flex;
+			gap: var(--sl-nav-gap);
+			justify-content: space-between;
+			align-items: center;
+			height: 100%;
+		}
+
+		.title-wrapper {
+			overflow: clip;
+			padding: 0.25rem;
+			margin: -0.25rem;
+			min-width: 0;
+		}
+
+		.nav-principal {
+			display: none;
+			flex: 1 1 auto;
+			min-width: 0;
+			align-items: center;
+			gap: 1.25rem;
+			overflow-x: auto;
+			scrollbar-width: none;
+			font-size: var(--sl-text-sm);
+		}
+
+		.nav-principal::-webkit-scrollbar {
+			display: none;
+		}
+
+		.nav-principal a {
+			flex-shrink: 0;
+			color: var(--sl-color-gray-3);
+			text-decoration: none;
+			white-space: nowrap;
+		}
+
+		.nav-principal a:hover {
+			color: var(--sl-color-white);
+		}
+
+		.nav-principal a.ativo {
+			color: var(--sl-color-white);
+			font-weight: 600;
+		}
+
+		.meio-busca {
+			flex-shrink: 0;
+		}
+
+		.seletor-idioma {
+			flex-shrink: 0;
+			align-items: center;
+		}
+
+		@media (min-width: 50rem) {
+			.seletor-idioma {
+				display: none;
+			}
+		}
+
+		.right-group,
+		.social-icons {
+			gap: 1rem;
+			align-items: center;
+		}
+		.social-icons::after {
+			content: "";
+			height: 2rem;
+			border-inline-end: 1px solid var(--sl-color-gray-5);
+		}
+
+		@media (min-width: 50rem) {
+			.nav-principal {
+				display: flex;
+			}
+
+			:global(:root[data-has-sidebar]) {
+				--__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+			}
+			:global(:root:not([data-has-toc])) {
+				--__toc-width: 0rem;
+			}
+			.header {
+				--__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
+				--__main-column-fr: calc(
+					(
+							100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
+								(2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
+								var(--sl-content-width)
+						) / 2
+				);
+				display: grid;
+				grid-template-columns:
+					minmax(
+						calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
+						auto
+					)
+					minmax(0, 1fr)
+					minmax(0, 1fr)
+					auto;
+				align-content: center;
+			}
+
+			.nav-principal {
+				grid-column: 2;
+			}
+
+			.meio-busca {
+				grid-column: 3;
+				justify-content: flex-end;
+			}
+
+			.seletor-idioma {
+				display: none;
+			}
+
+			.right-group {
+				grid-column: 4;
+			}
+		}
+	}
+</style>

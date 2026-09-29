@@ -8,6 +8,9 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ### Corrigido
 
+- O botão de download do site aponta para `adsmart-<versão>.mcpb`, e o comando do Terminal grava o arquivo com o mesmo nome.
+- O header do site traz links principais (início, baixar, documentação e novidades).
+- Site em português, inglês e espanhol (Starlight i18n), com seletor de idioma no header.
 - Páginas de documentação voltam a mostrar logo, busca e menu. A consulta de negativa de campanha ignora critérios já removidos. O guia de uso deixa de prometer criação de campanha, grupo ou anúncio.
 - O rodapé do site aponta para o GitHub pessoal, e a barra do topo limita só a linha interna.
 - O autor nos dados estruturados da landing é a mesma pessoa do rodapé.
@@ -21,7 +24,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 - Mensagens de erro do Google Ads em português, com o passo de correção e o código da requisição.
 - Alterações seguras com as ferramentas `preparar_alteracao`, `aplicar`, `desfazer` e `historico`: orçamento, status, lances, palavras-chave, negativas e textos de anúncios responsivos, com prévia validada pelo Google, confirmação no chat, aplicação tudo ou nada, histórico local e desfazer.
 - Configuração assistida: a ferramenta `guia_configuracao` conduz o setup no chat, passo a passo, indicando o que é seu e o que o Claude faz, e oferece três caminhos: um texto pronto para o Claude Cowork (com aprovação automática do Cowork, navegador logado no Google e regras para proteger a chave), o Claude in Chrome no próprio chat ou o passo a passo manual. A extensão pode ser instalada antes de a chave existir.
-- Pacote `.mcpb` para o Claude Desktop no macOS, gerado com `bun run pack`, e releases em rascunho com impressão digital SHA-256 e atestação de origem do GitHub. Além do pacote com a versão no nome, o release publica `adsmart.mcpb` com o mesmo conteúdo, para o link estável do site e do terminal.
+- Pacote `.mcpb` para o Claude Desktop no macOS, gerado com `bun run pack`, e releases em rascunho com impressão digital SHA-256 e atestação de origem do GitHub. Além do pacote com a versão no nome, o release publica `adsmart.mcpb` com o mesmo conteúdo, para links estáveis e scripts.
 - Guia de instalação: formas de instalar, aviso de extensão não verificada, conferência do arquivo e atualização manual.
 - A prévia, o histórico e o desfazer mostram o nome da campanha e do grupo e o texto da palavra-chave, junto com o ID.
 

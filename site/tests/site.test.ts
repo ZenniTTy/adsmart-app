@@ -11,7 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { DOWNLOAD_URL } from "../scripts/conteudo.ts";
+import { urlDownload } from "../scripts/conteudo.ts";
 import { GTM_ID } from "../scripts/gtm.ts";
 
 const SITE = join(import.meta.dir, "..");
@@ -63,16 +63,17 @@ describe("SITE-02 landing e download", () => {
 	test("antes do lançamento: em breve, sem link de download", () => {
 		const html = readFileSync(join(ANTES, "index.html"), "utf8");
 		expect(html).toContain("data-em-breve");
-		expect(html).not.toContain(DOWNLOAD_URL);
+		expect(html).not.toContain("releases/latest/download/adsmart-");
 	});
 
 	test("depois do lançamento: botão, comando que só baixa e abre, e conferência", () => {
 		const html = readFileSync(join(DEPOIS, "index.html"), "utf8");
 		expect(html).not.toContain("data-em-breve");
-		expect(html).toContain(`href="${DOWNLOAD_URL}"`);
+		const url = urlDownload("0.1.0");
+		expect(html).toContain(`href="${url}"`);
 		expect(html).toContain("v0.1.0");
-		expect(html).toContain("open ~/Downloads/adsmart.mcpb");
-		expect(html).toContain("shasum -a 256 -c");
+		expect(html).toContain("open ~/Downloads/adsmart-0.1.0.mcpb");
+		expect(html).toContain("shasum -a 256 -c adsmart-0.1.0.mcpb.sha256");
 		expect(html).not.toMatch(/\|\s*(sh|bash|zsh)\b/);
 	});
 
@@ -81,6 +82,33 @@ describe("SITE-02 landing e download", () => {
 		expect(html).toContain("https://github.com/ZenniTTy/adsmart-app");
 		expect(html).toContain("macOS");
 		expect(html).toContain("não foi verificada pela Anthropic");
+	});
+
+	test("header traz links principais na landing e nas docs", () => {
+		for (const html of [
+			readFileSync(join(DEPOIS, "index.html"), "utf8"),
+			readFileSync(join(DEPOIS, "docs", "instalacao", "index.html"), "utf8"),
+		]) {
+			expect(html).toContain('aria-label="Principal"');
+			expect(html).toContain('href="/docs/configuracao/"');
+			expect(html).toContain('href="/novidades/"');
+			expect(html).toContain('href="/#baixar"');
+		}
+	});
+
+	test("landing sem CTA de documentação no hero", () => {
+		const html = readFileSync(join(DEPOIS, "index.html"), "utf8");
+		expect(html).not.toMatch(/>\s*Documentação\s*<\/a>/);
+	});
+
+	test("inglês e espanhol na landing", () => {
+		expect(readFileSync(join(DEPOIS, "en", "index.html"), "utf8")).toContain("Download for macOS");
+		expect(readFileSync(join(DEPOIS, "es", "index.html"), "utf8")).toContain(
+			"Descargar para macOS",
+		);
+		expect(readFileSync(join(DEPOIS, "index.html"), "utf8")).toMatch(
+			/Language|Português|English|Español/,
+		);
 	});
 });
 
@@ -156,8 +184,9 @@ describe("SITE-05 site estático e Tag Manager", () => {
 					/<(script|link|img|iframe)\b[^>]*?(?:src|href)="(https?:\/\/[^"]+)"[^>]*>/g,
 				),
 			]
-				.filter(([tag]) => !/rel="(canonical|me|sitemap)"/.test(tag))
-				.map(([, , url]) => url),
+				.filter(([tag]) => !/rel="(canonical|alternate|me|sitemap)"/.test(tag))
+				.map(([, , url]) => url)
+				.filter((url) => !url.startsWith("https://adsmart.digital")),
 		);
 		expect(new Set(externos)).toEqual(new Set([GTM_NS]));
 	});
@@ -187,7 +216,10 @@ describe("SITE-05 site estático e Tag Manager", () => {
 describe("SEO-01 metadados por página", () => {
 	test("cada página tem descrição própria, canonical no domínio sem www e imagem social", () => {
 		const descricoes = new Set<string>();
-		for (const pagina of paginasHtml(ANTES).filter((p) => !p.endsWith("404.html"))) {
+		const paginasRaiz = paginasHtml(ANTES).filter(
+			(p) => !p.endsWith("404.html") && !p.includes(`${ANTES}/en/`) && !p.includes(`${ANTES}/es/`),
+		);
+		for (const pagina of paginasRaiz) {
 			const html = readFileSync(pagina, "utf8");
 			const descricao = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
 			expect(descricao).toBeDefined();
@@ -195,7 +227,7 @@ describe("SEO-01 metadados por página", () => {
 			expect(html).toMatch(/<link rel="canonical" href="https:\/\/adsmart\.digital\//);
 			expect(html).toContain('property="og:image" content="https://adsmart.digital/og.png"');
 		}
-		expect(descricoes.size).toBe(paginasHtml(ANTES).length - 1);
+		expect(descricoes.size).toBe(paginasRaiz.length);
 	});
 
 	test("a landing tem título próprio, sem repetir o nome", () => {
@@ -242,7 +274,7 @@ describe("SEO-03 dados estruturados", () => {
 	test("depois do lançamento: versão e link de download", () => {
 		const app = dados(DEPOIS)["@graph"].find((item) => item["@type"] === "SoftwareApplication");
 		expect(app?.softwareVersion).toBe("0.1.0");
-		expect(app?.downloadUrl).toBe(DOWNLOAD_URL);
+		expect(app?.downloadUrl).toBe(urlDownload("0.1.0"));
 	});
 });
 
