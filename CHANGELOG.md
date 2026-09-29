@@ -6,9 +6,11 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ## [Não lançado]
 
+## [0.1.0] - 2026-09-29
+
 ### Adicionado
 
-- Site em [adsmart.digital](https://adsmart.digital), com a apresentação da AdSmart, o download, a documentação e as novidades de cada versão. O site é estático e não coleta dados.
+- Site em [adsmart.digital](https://adsmart.digital), com a apresentação da AdSmart, o download, a documentação e as novidades de cada versão. O site é estático; a extensão continua 100% local e o site usa Google Tag Manager (`GTM-PC9SG6BB`) só para métricas de visita.
 - Servidor MCP somente leitura com as ferramentas `diagnostico`, `listar_contas` e `consultar`, com suporte a conta de administrador (MCC).
 - Mensagens de erro do Google Ads em português, com o passo de correção e o código da requisição.
 - Alterações seguras com as ferramentas `preparar_alteracao`, `aplicar`, `desfazer` e `historico`: orçamento, status, lances, palavras-chave, negativas e textos de anúncios responsivos, com prévia validada pelo Google, confirmação no chat, aplicação tudo ou nada, histórico local e desfazer.
@@ -23,3 +25,5 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 - Guia de configuração: link oficial de ativação da API, pedido do nível Explorer, passkey criada antes de começar e bloqueio de chave em contas Workspace.
 - Guia de configuração: como encontrar o ID da conta, nome do arquivo de chave baixado e aviso sobre a exigência de chave de acesso (passkey) para adicionar usuários.
 - Solução de problemas: nova seção `CUSTOMER_NOT_FOUND` e bloqueio de chaves em organizações Workspace criadas a partir de maio de 2024.
+
+[0.1.0]: https://github.com/ZenniTTy/adsmart-app/releases/tag/v0.1.0

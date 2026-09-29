@@ -1,5 +1,6 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import { GTM_SCRIPT } from "./scripts/gtm.ts";
 
 export default defineConfig({
 	site: "https://adsmart.digital",
@@ -16,6 +17,7 @@ export default defineConfig({
 			},
 			favicon: "/favicon.png",
 			head: [
+				{ tag: "script", content: GTM_SCRIPT },
 				{ tag: "meta", attrs: { property: "og:image", content: "https://adsmart.digital/og.png" } },
 				{ tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
 				{ tag: "meta", attrs: { property: "og:image:height", content: "630" } },
@@ -37,6 +39,7 @@ export default defineConfig({
 			components: {
 				Hero: "./src/components/Hero.astro",
 				Footer: "./src/components/Rodape.astro",
+				PageFrame: "./src/components/PageFrame.astro",
 			},
 			customCss: [
 				"@fontsource-variable/archivo/wdth.css",

@@ -8,7 +8,7 @@
 English · [Português](README.md)
 
 > [!NOTE]
-> Under active development. The first public version (v0.1.0) has not been released yet. Follow the [releases](https://github.com/ZenniTTy/adsmart-app/releases).
+> Open-source extension to manage Google Ads from Claude Desktop on macOS. **v0.1.0** is on [GitHub Releases](https://github.com/ZenniTTy/adsmart-app/releases/latest); the site is [adsmart.digital](https://adsmart.digital).
 
 ## What is AdSmart
 
@@ -68,8 +68,6 @@ A preview is valid for 15 minutes. If someone changes the item in the meantime, 
 - A Google Cloud project with the Google Ads API enabled at the Explorer access level (free, no credit card required).
 
 ## Installation
-
-Once the first version is released:
 
 1. Download `adsmart.mcpb` from the [latest release](https://github.com/ZenniTTy/adsmart-app/releases/latest). The same package is also published as `adsmart-<version>.mcpb`.
 2. Double-click the file or drag it into the Claude Desktop window. Claude Desktop warns that the extension is not verified by Anthropic: this is expected, see the [installation guide](docs/instalacao.md) (Portuguese).
