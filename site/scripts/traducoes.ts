@@ -5,6 +5,7 @@ export type LinkNav = { texto: string; href: string };
 
 type Bloco = {
 	navAria: string;
+	menuAria: string;
 	nav: {
 		inicio: string;
 		baixar: string;
@@ -46,6 +47,7 @@ type Bloco = {
 
 const PT: Bloco = {
 	navAria: "Principal",
+	menuAria: "Menu",
 	nav: {
 		inicio: "Início",
 		baixar: "Baixar",
@@ -88,6 +90,7 @@ const PT: Bloco = {
 
 const EN: Bloco = {
 	navAria: "Main",
+	menuAria: "Menu",
 	nav: {
 		inicio: "Home",
 		baixar: "Download",
@@ -130,6 +133,7 @@ const EN: Bloco = {
 
 const ES: Bloco = {
 	navAria: "Principal",
+	menuAria: "Menú",
 	nav: {
 		inicio: "Inicio",
 		baixar: "Descargar",
