@@ -1,0 +1,118 @@
+---
+import { LinkButton } from "@astrojs/starlight/components";
+import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import lancamento from "../gerado/lancamento.json";
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, actions = [] } = data.hero ?? {};
+const versao: string | null = lancamento.versao;
+const site = "https://adsmart.digital/";
+const dadosEstruturados = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebSite",
+			"@id": `${site}#site`,
+			url: site,
+			name: "AdSmart",
+			inLanguage: "pt-BR",
+		},
+		{
+			"@type": "SoftwareApplication",
+			name: "AdSmart",
+			url: site,
+			description: data.description,
+			applicationCategory: "BusinessApplication",
+			operatingSystem: "macOS",
+			inLanguage: "pt-BR",
+			license: `${REPOSITORIO}/blob/main/LICENSE`,
+			sameAs: [REPOSITORIO],
+			image: `${site}og.png`,
+			offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
+			author: { "@type": "Organization", name: "Elovision Digital" },
+			...(versao ? { softwareVersion: versao, downloadUrl: DOWNLOAD_URL } : {}),
+		},
+	],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
+
+<div class="hero">
+	<div class="brilho" aria-hidden="true"></div>
+	<p class="selo">Extensão open source para o Claude Desktop</p>
+	<h1 id="_top" data-page-title set:html={title} />
+	{tagline && <p class="tagline" set:html={tagline} />}
+	{
+		actions.length > 0 && (
+			<div class="acoes">
+				{actions.map(({ icon, link: href, text, variant }) => (
+					<LinkButton {href} {variant} icon={icon?.name}>
+						{text}
+						{icon?.html && <Fragment set:html={icon.html} />}
+					</LinkButton>
+				))}
+			</div>
+		)
+	}
+</div>
+
+<style>
+	.hero {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		padding-block: 4rem 3rem;
+		text-align: center;
+		isolation: isolate;
+	}
+	.brilho {
+		position: absolute;
+		inset: -6rem 0 auto;
+		height: 34rem;
+		z-index: -1;
+		background: radial-gradient(
+			ellipse 50% 60% at 50% 0%,
+			var(--adsmart-brilho),
+			transparent 70%
+		);
+		pointer-events: none;
+	}
+	.selo {
+		margin: 0;
+		padding: 0.35rem 0.9rem;
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 999px;
+		background: var(--sl-color-bg-nav);
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-2);
+	}
+	h1 {
+		max-width: 16ch;
+		margin: 0;
+		font-family: var(--adsmart-fonte-titulo);
+		font-size: clamp(2.5rem, 7vw, 4.75rem);
+		font-weight: 800;
+		font-stretch: 112%;
+		line-height: 1;
+		letter-spacing: -0.035em;
+		color: var(--sl-color-white);
+	}
+	.tagline {
+		max-width: 40rem;
+		margin: 0;
+		font-size: clamp(1rem, 2vw, 1.2rem);
+		line-height: 1.6;
+		color: var(--sl-color-gray-2);
+	}
+	.acoes {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem 1.25rem;
+		margin-top: 0.5rem;
+	}
+</style>

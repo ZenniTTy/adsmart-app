@@ -1,0 +1,108 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import lancamento from "../gerado/lancamento.json";
+
+const versao: string | null = lancamento.versao;
+const comando = `curl -fL -o ~/Downloads/adsmart.mcpb ${DOWNLOAD_URL} && open ~/Downloads/adsmart.mcpb`;
+const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasum -a 256 -c adsmart.mcpb.sha256`;
+---
+
+<section class="download" id="baixar">
+	{
+		versao ? (
+			<>
+				<div class="botoes">
+					<a class="botao" href={DOWNLOAD_URL} data-download>
+						Baixar para macOS · v{versao}
+					</a>
+					<span class="botao desativado" aria-disabled="true" data-windows>
+						Windows · em breve
+					</span>
+				</div>
+				<p>Ou pelo Terminal: o comando baixa o arquivo e abre o instalador do Claude Desktop.</p>
+				<Code code={comando} lang="sh" />
+				<details>
+					<summary>Conferir a impressão digital (opcional)</summary>
+					<Code code={conferencia} lang="sh" />
+				</details>
+			</>
+		) : (
+			<>
+				<p class="em-breve" data-em-breve>
+					Lançamento em breve. Acompanhe no GitHub.
+				</p>
+				<div class="botoes">
+					<a class="botao" href={REPOSITORIO}>
+						Ver no GitHub
+					</a>
+					<span class="botao desativado" aria-disabled="true" data-windows>
+						Windows · em breve
+					</span>
+				</div>
+			</>
+		)
+	}
+</section>
+
+<style>
+	.download {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+		margin-block: 2rem;
+		padding: clamp(1.5rem, 4vw, 2.5rem);
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 1rem;
+		background:
+			radial-gradient(ellipse 70% 80% at 50% 0%, var(--adsmart-brilho), transparent 70%),
+			var(--sl-color-bg-nav);
+		text-align: center;
+	}
+	.download > p {
+		margin: 0;
+		color: var(--sl-color-gray-2);
+	}
+	.botao {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.85rem 1.75rem;
+		border-radius: 999px;
+		background: var(--sl-color-white);
+		color: var(--sl-color-black);
+		font-family: var(--adsmart-fonte-titulo);
+		font-weight: 700;
+		text-decoration: none;
+		transition: transform 0.15s ease;
+	}
+	.botoes {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+	.desativado {
+		border: 1px solid var(--sl-color-hairline-light);
+		background: transparent;
+		color: var(--sl-color-gray-3);
+		cursor: not-allowed;
+	}
+	.botao:not(.desativado):hover {
+		transform: translateY(-1px);
+	}
+	.em-breve {
+		font-size: var(--sl-text-lg);
+	}
+	.download :global(.expressive-code),
+	details {
+		width: 100%;
+		margin: 0;
+		text-align: left;
+	}
+	summary {
+		cursor: pointer;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+</style>

@@ -1,0 +1,103 @@
+:root {
+	--adsmart-fonte-titulo: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+	--sl-font-mono: "Martian Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+	--sl-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--adsmart-brilho: rgb(255 255 255 / 0.09);
+
+	--sl-color-accent-low: #1a1a1a;
+	--sl-color-accent: #e5e5e5;
+	--sl-color-accent-high: #ffffff;
+	--sl-color-white: #fafafa;
+	--sl-color-gray-1: #e5e5e5;
+	--sl-color-gray-2: #b4b4b4;
+	--sl-color-gray-3: #8a8a8a;
+	--sl-color-gray-4: #525252;
+	--sl-color-gray-5: #262626;
+	--sl-color-gray-6: #141414;
+	--sl-color-black: #0a0a0a;
+	--sl-color-bg-nav: #0f0f0f;
+	--sl-color-bg-sidebar: #0a0a0a;
+	--sl-color-hairline: #1f1f1f;
+	--sl-color-hairline-light: #2a2a2a;
+}
+
+:root[data-theme="light"] {
+	--adsmart-brilho: rgb(0 0 0 / 0.05);
+
+	--sl-color-accent-low: #ededed;
+	--sl-color-accent: #262626;
+	--sl-color-accent-high: #0a0a0a;
+	--sl-color-white: #0a0a0a;
+	--sl-color-gray-1: #262626;
+	--sl-color-gray-2: #404040;
+	--sl-color-gray-3: #6b6b6b;
+	--sl-color-gray-4: #a3a3a3;
+	--sl-color-gray-5: #e5e5e5;
+	--sl-color-gray-6: #f5f5f5;
+	--sl-color-gray-7: #fafafa;
+	--sl-color-black: #ffffff;
+	--sl-color-bg-nav: #ffffff;
+	--sl-color-bg-sidebar: #ffffff;
+	--sl-color-hairline: #ececec;
+	--sl-color-hairline-light: #f2f2f2;
+}
+
+.sl-markdown-content :is(h1, h2, h3, h4),
+h1#_top,
+.site-title,
+.card .title {
+	font-family: var(--adsmart-fonte-titulo);
+	font-stretch: 108%;
+	letter-spacing: -0.02em;
+}
+
+[data-has-hero] .sl-markdown-content h2 {
+	margin-top: 5rem;
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
+	font-weight: 750;
+	text-align: center;
+}
+
+.site-title img {
+	height: 1.75rem;
+	width: auto;
+}
+
+.card {
+	border: 1px solid var(--sl-color-hairline);
+	border-radius: 0.875rem;
+	background: var(--sl-color-bg-nav);
+	transition: border-color 0.2s ease;
+}
+
+.card:hover {
+	border-color: var(--sl-color-gray-5);
+}
+
+.card {
+	--sl-card-border: var(--sl-color-gray-4);
+	--sl-card-bg: var(--sl-color-gray-6);
+}
+
+.card .icon {
+	border-radius: 0.5rem;
+}
+
+.sl-link-button.primary {
+	border: none;
+	background: var(--sl-color-white);
+	color: var(--sl-color-black);
+	font-family: var(--adsmart-fonte-titulo);
+	font-weight: 700;
+}
+
+.sl-link-button.minimal {
+	border: 1px solid var(--sl-color-hairline-light);
+	border-radius: 999px;
+	padding-inline: 1.25rem;
+}
+
+.header {
+	backdrop-filter: blur(12px);
+	background: color-mix(in srgb, var(--sl-color-bg-nav) 80%, transparent);
+}
