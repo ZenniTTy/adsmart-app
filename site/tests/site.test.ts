@@ -12,6 +12,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DOWNLOAD_URL } from "../scripts/conteudo.ts";
+import { GTM_ID } from "../scripts/gtm.ts";
 
 const SITE = join(import.meta.dir, "..");
 const TEMPORARIO = mkdtempSync(join(tmpdir(), "adsmart-site-"));
@@ -84,6 +85,13 @@ describe("SITE-02 landing e download", () => {
 });
 
 describe("SITE-03 documentação navegável e buscável", () => {
+	test("docs mostram título, busca e menu", () => {
+		const html = readFileSync(join(ANTES, "docs", "instalacao", "index.html"), "utf8");
+		expect(html).toContain("site-title");
+		expect(html).toContain("sidebar");
+		expect(html).toMatch(/href="\/docs\//);
+	});
+
 	test("toda página de docs/ existe no site", () => {
 		for (const slug of ["instalacao", "configuracao", "uso", "limites", "solucao-de-problemas"]) {
 			expect(existsSync(join(ANTES, "docs", slug, "index.html"))).toBe(true);
@@ -134,8 +142,6 @@ describe("SITE-04 versão e changelog", () => {
 		expect(html).toContain("Não lançado");
 	});
 });
-
-import { GTM_ID } from "../scripts/gtm.ts";
 
 const GTM_NS = `https://www.googletagmanager.com/ns.html?id=${GTM_ID}`;
 
