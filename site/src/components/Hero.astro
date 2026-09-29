@@ -1,6 +1,6 @@
 ---
 import { LinkButton } from "@astrojs/starlight/components";
-import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import { REPOSITORIO, urlDownload } from "../../scripts/conteudo.ts";
 import lancamento from "../gerado/lancamento.json";
 
 const { data } = Astro.locals.starlightRoute.entry;
@@ -34,7 +34,7 @@ const dadosEstruturados = {
 				name: "ZenniTTy",
 				url: "https://github.com/ZenniTTy",
 			},
-			...(versao ? { softwareVersion: versao, downloadUrl: DOWNLOAD_URL } : {}),
+			...(versao ? { softwareVersion: versao, downloadUrl: urlDownload(versao) } : {}),
 		},
 	],
 };

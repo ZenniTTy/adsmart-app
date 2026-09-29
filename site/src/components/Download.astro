@@ -1,11 +1,19 @@
 ---
 import { Code } from "@astrojs/starlight/components";
-import { DOWNLOAD_URL, REPOSITORIO } from "../../scripts/conteudo.ts";
+import { nomePacote, REPOSITORIO, urlDownload } from "../../scripts/conteudo.ts";
 import lancamento from "../gerado/lancamento.json";
 
 const versao: string | null = lancamento.versao;
-const comando = `curl -fL -o ~/Downloads/adsmart.mcpb ${DOWNLOAD_URL} && open ~/Downloads/adsmart.mcpb`;
-const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasum -a 256 -c adsmart.mcpb.sha256`;
+const arquivo = versao ? nomePacote(versao) : null;
+const downloadUrl = versao ? urlDownload(versao) : null;
+const comando =
+	arquivo && downloadUrl
+		? `curl -fL -o ~/Downloads/${arquivo} ${downloadUrl} && open ~/Downloads/${arquivo}`
+		: "";
+const conferencia =
+	arquivo && downloadUrl
+		? `cd ~/Downloads && curl -fLO ${downloadUrl}.sha256 && shasum -a 256 -c ${arquivo}.sha256`
+		: "";
 ---
 
 <section class="download" id="baixar">
@@ -13,7 +21,7 @@ const conferencia = `cd ~/Downloads && curl -fLO ${DOWNLOAD_URL}.sha256 && shasu
 		versao ? (
 			<>
 				<div class="botoes">
-					<a class="botao" href={DOWNLOAD_URL} data-download>
+					<a class="botao" href={downloadUrl} download={arquivo} data-download>
 						Baixar para macOS · v{versao}
 					</a>
 					<span class="botao desativado" aria-disabled="true" data-windows>

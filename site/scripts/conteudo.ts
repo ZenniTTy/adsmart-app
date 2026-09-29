@@ -1,5 +1,12 @@
 export const REPOSITORIO = "https://github.com/ZenniTTy/adsmart-app";
-export const DOWNLOAD_URL = `${REPOSITORIO}/releases/latest/download/adsmart.mcpb`;
+
+export function nomePacote(versao: string): string {
+	return `adsmart-${versao}.mcpb`;
+}
+
+export function urlDownload(versao: string): string {
+	return `${REPOSITORIO}/releases/latest/download/${nomePacote(versao)}`;
+}
 
 export const ORDEM_DOCS = ["instalacao", "configuracao", "uso", "limites", "solucao-de-problemas"];
 

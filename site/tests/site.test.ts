@@ -11,7 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { DOWNLOAD_URL } from "../scripts/conteudo.ts";
+import { urlDownload } from "../scripts/conteudo.ts";
 import { GTM_ID } from "../scripts/gtm.ts";
 
 const SITE = join(import.meta.dir, "..");
@@ -63,16 +63,17 @@ describe("SITE-02 landing e download", () => {
 	test("antes do lançamento: em breve, sem link de download", () => {
 		const html = readFileSync(join(ANTES, "index.html"), "utf8");
 		expect(html).toContain("data-em-breve");
-		expect(html).not.toContain(DOWNLOAD_URL);
+		expect(html).not.toContain("releases/latest/download/adsmart-");
 	});
 
 	test("depois do lançamento: botão, comando que só baixa e abre, e conferência", () => {
 		const html = readFileSync(join(DEPOIS, "index.html"), "utf8");
 		expect(html).not.toContain("data-em-breve");
-		expect(html).toContain(`href="${DOWNLOAD_URL}"`);
+		const url = urlDownload("0.1.0");
+		expect(html).toContain(`href="${url}"`);
 		expect(html).toContain("v0.1.0");
-		expect(html).toContain("open ~/Downloads/adsmart.mcpb");
-		expect(html).toContain("shasum -a 256 -c");
+		expect(html).toContain("open ~/Downloads/adsmart-0.1.0.mcpb");
+		expect(html).toContain("shasum -a 256 -c adsmart-0.1.0.mcpb.sha256");
 		expect(html).not.toMatch(/\|\s*(sh|bash|zsh)\b/);
 	});
 
@@ -242,7 +243,7 @@ describe("SEO-03 dados estruturados", () => {
 	test("depois do lançamento: versão e link de download", () => {
 		const app = dados(DEPOIS)["@graph"].find((item) => item["@type"] === "SoftwareApplication");
 		expect(app?.softwareVersion).toBe("0.1.0");
-		expect(app?.downloadUrl).toBe(DOWNLOAD_URL);
+		expect(app?.downloadUrl).toBe(urlDownload("0.1.0"));
 	});
 });
 
