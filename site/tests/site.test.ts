@@ -42,7 +42,9 @@ function paginasHtml(dir: string): string[] {
 }
 
 beforeAll(() => {
-	construir(ANTES);
+	const preLancamento = join(TEMPORARIO, "CHANGELOG-pre.md");
+	writeFileSync(preLancamento, "# Changelog\n\n## [Não lançado]\n\n- Em desenvolvimento.\n");
+	construir(ANTES, preLancamento);
 	const fixture = join(TEMPORARIO, "CHANGELOG.md");
 	writeFileSync(
 		fixture,
@@ -133,8 +135,12 @@ describe("SITE-04 versão e changelog", () => {
 	});
 });
 
-describe("SITE-05 sem coleta de dados nem recursos externos", () => {
-	test("nenhum script, estilo, fonte ou preconnect de outro domínio", () => {
+import { GTM_ID } from "../scripts/gtm.ts";
+
+const GTM_NS = `https://www.googletagmanager.com/ns.html?id=${GTM_ID}`;
+
+describe("SITE-05 site estático e Tag Manager", () => {
+	test("só o Google Tag Manager como recurso externo de script ou iframe", () => {
 		const externos = paginasHtml(ANTES).flatMap((pagina) =>
 			[
 				...readFileSync(pagina, "utf8").matchAll(
@@ -144,14 +150,27 @@ describe("SITE-05 sem coleta de dados nem recursos externos", () => {
 				.filter(([tag]) => !/rel="(canonical|me|sitemap)"/.test(tag))
 				.map(([, , url]) => url),
 		);
-		expect(externos).toEqual([]);
+		expect(new Set(externos)).toEqual(new Set([GTM_NS]));
 	});
 
-	test("nenhum script de analytics", () => {
+	test("script inline carrega gtm.js do container oficial", () => {
+		const html = readFileSync(join(ANTES, "index.html"), "utf8");
+		expect(html).toContain("googletagmanager.com/gtm.js?id=");
+		expect(html).toContain(GTM_ID);
+	});
+
+	test("sem analytics da Vercel", () => {
 		for (const pagina of paginasHtml(ANTES)) {
-			expect(readFileSync(pagina, "utf8")).not.toMatch(
-				/vercel-insights|va\.vercel-scripts|googletagmanager|gtag\(/,
-			);
+			expect(readFileSync(pagina, "utf8")).not.toMatch(/vercel-insights|va\.vercel-scripts/);
+		}
+	});
+
+	test("Google Tag Manager em todas as páginas", () => {
+		for (const pagina of paginasHtml(ANTES)) {
+			const html = readFileSync(pagina, "utf8");
+			expect(html).toContain(GTM_ID);
+			expect(html).toContain("googletagmanager.com/gtm.js");
+			expect(html).toContain("googletagmanager.com/ns.html");
 		}
 	});
 });
