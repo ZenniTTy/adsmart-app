@@ -89,7 +89,10 @@ describe("SITE-03 documentação navegável e buscável", () => {
 		const html = readFileSync(join(ANTES, "docs", "instalacao", "index.html"), "utf8");
 		expect(html).toContain("site-title");
 		expect(html).toContain("site-search");
+		expect(html).toMatch(/<nav[^>]*class="[^"]*sidebar/);
 		expect(html).toContain('href="/docs/uso/"');
+		expect(html).toContain("Feito por");
+		expect(html).toContain('href="https://github.com/ZenniTTy"');
 	});
 
 	test("toda página de docs/ existe no site", () => {
@@ -229,6 +232,11 @@ describe("SEO-03 dados estruturados", () => {
 		expect(app?.offers).toEqual({ "@type": "Offer", price: "0", priceCurrency: "BRL" });
 		expect(app).not.toHaveProperty("aggregateRating");
 		expect(app).not.toHaveProperty("softwareVersion");
+		expect(app?.author).toEqual({
+			"@type": "Person",
+			name: "ZenniTTy",
+			url: "https://github.com/ZenniTTy",
+		});
 	});
 
 	test("depois do lançamento: versão e link de download", () => {

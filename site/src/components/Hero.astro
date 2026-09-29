@@ -29,7 +29,11 @@ const dadosEstruturados = {
 			sameAs: [REPOSITORIO],
 			image: `${site}og.png`,
 			offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
-			author: { "@type": "Organization", name: "Elovision Digital" },
+			author: {
+				"@type": "Person",
+				name: "ZenniTTy",
+				url: "https://github.com/ZenniTTy",
+			},
 			...(versao ? { softwareVersion: versao, downloadUrl: DOWNLOAD_URL } : {}),
 		},
 	],
