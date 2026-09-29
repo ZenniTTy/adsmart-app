@@ -11,18 +11,18 @@ A AdSmart é uma extensão do Claude Desktop (arquivo `.mcpb`). Ela roda no seu 
 ## Baixar
 
 1. Abra o [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
-2. Baixe o arquivo `adsmart-<versão>.mcpb`.
+2. Baixe `adsmart.mcpb` (o mesmo pacote, com nome fixo) ou `adsmart-<versão>.mcpb`.
 
 ### Conferir o arquivo (opcional)
 
-Cada release traz o arquivo `.mcpb.sha256` com a impressão digital do pacote. Para conferir se o arquivo que você baixou é exatamente o publicado:
+Cada release traz o arquivo `.sha256` com a impressão digital do pacote. Para conferir se o arquivo que você baixou é exatamente o publicado:
 
-No Terminal: `shasum -a 256 adsmart-<versão>.mcpb`
+No Terminal: `shasum -a 256 -c adsmart.mcpb.sha256`
 
-O código mostrado deve ser igual ao do arquivo `.sha256`. Quem usa o GitHub CLI também pode confirmar que o pacote foi gerado pelo build deste repositório:
+O comando vale para o arquivo de nome fixo. Para o pacote com a versão no nome, use `shasum -a 256 adsmart-<versão>.mcpb` e compare com o `.sha256` correspondente. Quem usa o GitHub CLI também pode confirmar que o pacote foi gerado pelo build deste repositório:
 
 ```bash
-gh attestation verify adsmart-<versão>.mcpb --repo ZenniTTy/adsmart-app
+gh attestation verify adsmart.mcpb --repo ZenniTTy/adsmart-app
 ```
 
 ## Instalar

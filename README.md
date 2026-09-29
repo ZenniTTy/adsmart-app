@@ -72,7 +72,7 @@ A prévia vale por 15 minutos. Se alguém alterar o item nesse meio tempo, inclu
 
 Quando a primeira versão for lançada:
 
-1. Baixe o arquivo `adsmart-<versão>.mcpb` do [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest).
+1. Baixe `adsmart.mcpb` do [último release](https://github.com/ZenniTTy/adsmart-app/releases/latest). O mesmo pacote também aparece como `adsmart-<versão>.mcpb`.
 2. Dê dois cliques no arquivo ou arraste-o para a janela do Claude Desktop. O Claude Desktop avisa que a extensão não foi verificada pela Anthropic: é esperado, veja o [guia de instalação](docs/instalacao.md).
 3. Peça no chat: **"Me ajude a configurar a AdSmart"**. O Claude conduz o [guia de configuração](docs/configuracao.md) com você, passo a passo, e para sempre que a ação for sua. Em planos pagos, ele também pode entregar um texto pronto para o Claude Cowork fazer o trabalho no navegador.
 
