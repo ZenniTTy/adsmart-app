@@ -88,8 +88,8 @@ describe("SITE-03 documentação navegável e buscável", () => {
 	test("docs mostram título, busca e menu", () => {
 		const html = readFileSync(join(ANTES, "docs", "instalacao", "index.html"), "utf8");
 		expect(html).toContain("site-title");
-		expect(html).toContain("sidebar");
-		expect(html).toMatch(/href="\/docs\//);
+		expect(html).toContain("site-search");
+		expect(html).toContain('href="/docs/uso/"');
 	});
 
 	test("toda página de docs/ existe no site", () => {

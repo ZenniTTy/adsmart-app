@@ -498,6 +498,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 		expect(queries[1]).toContain("ad_group_criterion.keyword.text = 'faxina'");
 		expect(queries[1]).toContain("ad_group_criterion.keyword.match_type = 'PHRASE'");
 		expect(queries[1]).toContain("ad_group_criterion.negative = FALSE");
+		expect(queries[1]).toContain("ad_group_criterion.status != 'REMOVED'");
 		expect(result).toEqual({ value: null, campaignId: "111", names: { adGroup: undefined } });
 	});
 
@@ -518,6 +519,7 @@ describe("leitura por tipo usa as consultas verificadas na V7", () => {
 			},
 		);
 		expect(queries[1]).toContain("ad_group_criterion.negative = TRUE");
+		expect(queries[1]).toContain("ad_group_criterion.status != 'REMOVED'");
 		expect(result.value).toBe("customers/1234567890/adGroupCriteria/222~8");
 	});
 
