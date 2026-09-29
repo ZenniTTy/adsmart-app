@@ -5,25 +5,30 @@ import SiteTitle from "virtual:starlight/components/SiteTitle";
 import SocialIcons from "virtual:starlight/components/SocialIcons";
 import ThemeSelect from "virtual:starlight/components/ThemeSelect";
 import config from "virtual:starlight/user-config";
-import { LINKS_CABECALHO, linkAtivo } from "../../scripts/navegacao.ts";
+import { localeFromStarlight } from "../../scripts/locale.ts";
+import { linkAtivo, linksCabecalho } from "../../scripts/navegacao.ts";
+import { traducoes } from "../../scripts/traducoes.ts";
 
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
 
+const locale = localeFromStarlight(Astro.locals.starlightRoute.locale);
 const pathname = Astro.url.pathname;
+const nav = linksCabecalho(locale);
+const t = traducoes(locale);
 ---
 
 <div class="header">
 	<div class="title-wrapper sl-flex">
 		<SiteTitle />
 	</div>
-	<nav class="nav-principal print:hidden" aria-label="Principal">
+	<nav class="nav-principal print:hidden" aria-label={t.navAria}>
 		{
-			LINKS_CABECALHO.map((link) => (
+			nav.map((link) => (
 				<a
 					href={link.href}
-					class:list={{ ativo: linkAtivo(link.href, pathname) }}
-					aria-current={linkAtivo(link.href, pathname) ? "page" : undefined}
+					class:list={{ ativo: linkAtivo(link.href, pathname, locale) }}
+					aria-current={linkAtivo(link.href, pathname, locale) ? "page" : undefined}
 				>
 					{link.texto}
 				</a>
@@ -32,6 +37,9 @@ const pathname = Astro.url.pathname;
 	</nav>
 	<div class="sl-flex print:hidden meio-busca">
 		{shouldRenderSearch && <Search />}
+	</div>
+	<div class="sl-flex print:hidden seletor-idioma">
+		<LanguageSelect />
 	</div>
 	<div class="sl-hidden md:sl-flex print:hidden right-group">
 		<div class="sl-flex social-icons">
@@ -94,6 +102,17 @@ const pathname = Astro.url.pathname;
 			flex-shrink: 0;
 		}
 
+		.seletor-idioma {
+			flex-shrink: 0;
+			align-items: center;
+		}
+
+		@media (min-width: 50rem) {
+			.seletor-idioma {
+				display: none;
+			}
+		}
+
 		.right-group,
 		.social-icons {
 			gap: 1rem;
@@ -144,6 +163,10 @@ const pathname = Astro.url.pathname;
 			.meio-busca {
 				grid-column: 3;
 				justify-content: flex-end;
+			}
+
+			.seletor-idioma {
+				display: none;
 			}
 
 			.right-group {

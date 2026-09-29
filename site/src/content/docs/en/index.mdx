@@ -1,0 +1,57 @@
+---
+title: AdSmart
+description: Manage your Google Ads campaigns by chatting with Claude. Open-source extension for Claude Desktop, 100% local.
+template: splash
+head:
+  - tag: title
+    content: AdSmart · Google Ads in Claude chat
+hero:
+  title: Google Ads in Claude chat
+  tagline: AdSmart is an open-source extension for Claude Desktop. Query performance and change campaigns in conversation, with preview, confirmation, and undo. It runs on your computer and only talks to Google.
+  actions:
+    - text: Download for macOS
+      link: "#baixar"
+      icon: right-arrow
+    - text: GitHub
+      link: https://github.com/ZenniTTy/adsmart-app
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, Steps } from "@astrojs/starlight/components";
+import Download from "../../../components/Download.astro";
+
+## What AdSmart does
+
+<CardGrid>
+	<Card title="Queries" icon="magnifier">
+		Ask about campaigns, spend, and results. Claude fetches data from your Google Ads account in chat.
+	</Card>
+	<Card title="Safe changes" icon="pencil">
+		Budgets, status, bids, keywords, and ads. Every change shows a preview validated by Google before it is applied.
+	</Card>
+	<Card title="Undo and history" icon="document">
+		Each change is stored on your computer and can be undone, also with a preview.
+	</Card>
+	<Card title="Local and free" icon="laptop">
+		Uses your own Google Cloud service account. Nothing goes through project servers.
+	</Card>
+</CardGrid>
+
+## How it works
+
+<Steps>
+
+1. **Install** the `.mcpb` file in Claude Desktop with a double-click.
+2. **Set up** by asking in chat: "Me ajude a configurar a AdSmart" (the guided setup is in Portuguese). Claude walks you through Google Cloud and Google Ads with you.
+3. **Chat.** Ask for reports or changes. To change anything, Claude shows a preview and applies only after you confirm.
+
+</Steps>
+
+## Download
+
+Available for Claude Desktop on macOS. Windows support will come in a future release.
+
+<Download />
+
+When you install, Claude Desktop warns that the extension was not verified by Anthropic. This is expected; see the [installation guide](/en/docs/instalacao/) (Portuguese).

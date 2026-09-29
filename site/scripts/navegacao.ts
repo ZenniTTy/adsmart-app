@@ -1,20 +1,23 @@
-export type LinkNav = { texto: string; href: string };
+import type { LocaleId } from "./locale.ts";
+import { pathComLocale } from "./locale.ts";
+import { type LinkNav, linksCabecalho } from "./traducoes.ts";
 
-export const LINKS_CABECALHO: LinkNav[] = [
-	{ texto: "Início", href: "/" },
-	{ texto: "Baixar", href: "/#baixar" },
-	{ texto: "Instalação", href: "/docs/instalacao/" },
-	{ texto: "Configuração", href: "/docs/configuracao/" },
-	{ texto: "Uso", href: "/docs/uso/" },
-	{ texto: "Novidades", href: "/novidades/" },
-];
+export type { LinkNav };
 
-export function linkAtivo(href: string, pathname: string): boolean {
-	if (href === "/") {
-		return pathname === "/" || pathname === "";
-	}
+export function linkAtivo(href: string, pathname: string, locale: LocaleId): boolean {
+	const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
 	if (href.startsWith("/#")) {
-		return pathname === "/";
+		const inicio = pathComLocale(locale, "/");
+		const inicioNorm = inicio.endsWith("/") ? inicio : `${inicio}/`;
+		return path === inicioNorm;
 	}
-	return pathname === href || pathname.startsWith(`${href.replace(/\/$/, "")}/`);
+	const alvo = href.endsWith("/") ? href : `${href}/`;
+	const inicio = pathComLocale(locale, "/");
+	const inicioNorm = inicio.endsWith("/") ? inicio : `${inicio}/`;
+	if (alvo === inicioNorm) {
+		return path === inicioNorm;
+	}
+	return path === alvo || path.startsWith(alvo);
 }
+
+export { linksCabecalho };

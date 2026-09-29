@@ -1,4 +1,7 @@
-# Changelog
+---
+title: "Versões e novidades"
+description: "Histórico de versões da AdSmart: novidades, correções e mudanças de cada lançamento da extensão para o Claude Desktop."
+---
 
 Todas as mudanças relevantes deste projeto são documentadas neste arquivo.
 

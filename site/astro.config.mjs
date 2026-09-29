@@ -32,7 +32,11 @@ export default defineConfig({
 				{ tag: "meta", attrs: { name: "theme-color", content: "#0a0a0a" } },
 				{ tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
 			],
-			locales: { root: { label: "Português", lang: "pt-BR" } },
+			locales: {
+				root: { label: "Português", lang: "pt-BR" },
+				en: { label: "English", lang: "en" },
+				es: { label: "Español", lang: "es" },
+			},
 			social: [
 				{ icon: "github", label: "GitHub", href: "https://github.com/ZenniTTy/adsmart-app" },
 			],
@@ -49,8 +53,16 @@ export default defineConfig({
 				"./src/estilo.css",
 			],
 			sidebar: [
-				{ label: "Documentação", items: [{ autogenerate: { directory: "docs" } }] },
-				{ label: "Versões e novidades", link: "/novidades/" },
+				{
+					label: "Documentação",
+					translations: { en: "Documentation", es: "Documentación" },
+					items: [{ autogenerate: { directory: "docs" } }],
+				},
+				{
+					label: "Versões e novidades",
+					translations: { en: "Release notes", es: "Novedades" },
+					link: "/novidades/",
+				},
 			],
 		}),
 	],
