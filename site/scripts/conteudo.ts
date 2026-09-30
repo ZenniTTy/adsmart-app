@@ -5,7 +5,7 @@ export function nomePacote(versao: string): string {
 }
 
 export function urlDownload(versao: string): string {
-	return `${REPOSITORIO}/releases/latest/download/${nomePacote(versao)}`;
+	return `${REPOSITORIO}/releases/download/v${versao}/${nomePacote(versao)}`;
 }
 
 export const ORDEM_DOCS = ["instalacao", "configuracao", "uso", "limites", "solucao-de-problemas"];
@@ -71,6 +71,10 @@ export function converterLinks(markdown: string): string {
 		/\]\(([a-z0-9-]+)\.md(#[^)]*)?\)/g,
 		(_, arquivo: string, ancora?: string) => `](/docs/${arquivo}/${ancora ?? ""})`,
 	);
+}
+
+export function linksComIdioma(conteudo: string, idioma: string): string {
+	return conteudo.replace(/\]\(\/(docs|novidades)\//g, `](/${idioma}/$1/`);
 }
 
 export function paginaDeDoc(nomeArquivo: string, markdown: string): Pagina {
