@@ -53,8 +53,9 @@ bun run e2e        # builds the server and runs the end-to-end tests over stdio
 - Never read or print service account key files or the user's `~/.adsmart/` directory.
 - Small, thematic commits following Conventional Commits (`feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `style`, `ci`).
 - Branch from `develop` and open pull requests against `develop`. `main` only receives releases.
-- Update `CHANGELOG.md` under `[Não lançado]` for user-visible changes.
+- Update `CHANGELOG.md` under `[Não lançado]` only for changes a user of the extension would notice. Website tweaks, refactors, tooling and documentation wording stay out of it.
 - Keep the repository user-focused: no internal planning notes, decision logs or scratch files.
+- Commit messages and pull request descriptions say what changes and why, briefly. Leave out development history, process notes and test counts.
 
 ## Acceptance criteria
 

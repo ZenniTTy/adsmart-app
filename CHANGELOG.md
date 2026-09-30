@@ -1,52 +1,30 @@
 # Changelog
 
-Todas as mudanças relevantes deste projeto são documentadas neste arquivo.
-
-O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+Mudanças da AdSmart que afetam quem usa a extensão. O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
-
-### Corrigido
-
-- O botão e o comando de download do site apontam para o release da própria versão, em vez do "último release".
-- As páginas de documentação em inglês e espanhol mantêm o idioma nos links internos.
-- O menu do site fecha ao escolher um item, e a documentação volta a mostrar os links principais em telas médias.
-- Os guias indicam os caminhos do Windows para a pasta `.adsmart` e para os registros do Claude Desktop.
 
 ## [0.1.1] - 2026-09-30
 
 ### Adicionado
 
-- Suporte ao Claude Desktop no Windows: o pacote `.mcpb` passa a instalar no macOS e no Windows. O site, o guia de instalação e os limites deixam de tratar a AdSmart como exclusiva do macOS.
+- Suporte ao Claude Desktop no Windows: o mesmo pacote `.mcpb` instala no macOS e no Windows.
 
 ### Corrigido
 
-- O botão de download do site aponta para `adsmart-<versão>.mcpb`, e o comando do Terminal grava o arquivo com o mesmo nome.
-- O header do site traz links principais (início, baixar, documentação e novidades).
-- Site em português, inglês e espanhol (Starlight i18n), com seletor de idioma no header.
-- Páginas de documentação voltam a mostrar logo, busca e menu. A consulta de negativa de campanha ignora critérios já removidos. O guia de uso deixa de prometer criação de campanha, grupo ou anúncio.
-- O rodapé do site aponta para o GitHub pessoal, e a barra do topo limita só a linha interna.
-- O autor nos dados estruturados da landing é a mesma pessoa do rodapé.
+- A consulta de palavras-chave negativas de campanha ignora as que já foram removidas.
 
 ## [0.1.0] - 2026-09-29
 
 ### Adicionado
 
-- Site em [adsmart.digital](https://adsmart.digital), com a apresentação da AdSmart, o download, a documentação e as novidades de cada versão. O site é estático; a extensão continua 100% local e o site usa Google Tag Manager (`GTM-PC9SG6BB`) só para métricas de visita.
-- Servidor MCP somente leitura com as ferramentas `diagnostico`, `listar_contas` e `consultar`, com suporte a conta de administrador (MCC).
-- Mensagens de erro do Google Ads em português, com o passo de correção e o código da requisição.
-- Alterações seguras com as ferramentas `preparar_alteracao`, `aplicar`, `desfazer` e `historico`: orçamento, status, lances, palavras-chave, negativas e textos de anúncios responsivos, com prévia validada pelo Google, confirmação no chat, aplicação tudo ou nada, histórico local e desfazer.
-- Configuração assistida: a ferramenta `guia_configuracao` conduz o setup no chat, passo a passo, indicando o que é seu e o que o Claude faz, e oferece três caminhos: um texto pronto para o Claude Cowork (com aprovação automática do Cowork, navegador logado no Google e regras para proteger a chave), o Claude in Chrome no próprio chat ou o passo a passo manual. A extensão pode ser instalada antes de a chave existir.
-- Pacote `.mcpb` para o Claude Desktop no macOS, gerado com `bun run pack`, e releases em rascunho com impressão digital SHA-256 e atestação de origem do GitHub. Além do pacote com a versão no nome, o release publica `adsmart.mcpb` com o mesmo conteúdo, para links estáveis e scripts.
-- Guia de instalação: formas de instalar, aviso de extensão não verificada, conferência do arquivo e atualização manual.
+- Consultas somente leitura com as ferramentas `diagnostico`, `listar_contas` e `consultar`, com suporte a conta de administrador (MCC).
+- Alterações seguras com `preparar_alteracao`, `aplicar`, `desfazer` e `historico`: orçamento, status, lances, palavras-chave, negativas e textos de anúncios responsivos. Toda alteração tem prévia validada pelo Google, confirmação no chat, aplicação tudo ou nada, histórico local e desfazer.
 - A prévia, o histórico e o desfazer mostram o nome da campanha e do grupo e o texto da palavra-chave, junto com o ID.
-
-### Alterado
-
-- Títulos das ferramentas em forma de ação (por exemplo, "Configurar a AdSmart" e "Verificar a conexão da AdSmart"), e a AdSmart passa a ser tratada no feminino em todos os textos.
-- Guia de configuração: link oficial de ativação da API, pedido do nível Explorer, passkey criada antes de começar e bloqueio de chave em contas Workspace.
-- Guia de configuração: como encontrar o ID da conta, nome do arquivo de chave baixado e aviso sobre a exigência de chave de acesso (passkey) para adicionar usuários.
-- Solução de problemas: nova seção `CUSTOMER_NOT_FOUND` e bloqueio de chaves em organizações Workspace criadas a partir de maio de 2024.
+- Configuração assistida: a ferramenta `guia_configuracao` conduz o passo a passo no chat e oferece três caminhos (Claude Cowork, Claude in Chrome ou manual). A extensão pode ser instalada antes de a chave existir.
+- Mensagens de erro do Google Ads em português, com o passo de correção e o código da requisição.
+- Pacote `.mcpb` para o Claude Desktop no macOS, publicado com impressão digital SHA-256 e atestação de origem do GitHub.
+- Site e documentação em [adsmart.digital](https://adsmart.digital). A extensão continua 100% local; o site usa o Google Tag Manager só para métricas de visita.
 
 [0.1.1]: https://github.com/ZenniTTy/adsmart-app/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ZenniTTy/adsmart-app/releases/tag/v0.1.0
