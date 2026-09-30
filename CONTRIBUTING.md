@@ -61,14 +61,15 @@ A branch `main` recebe apenas versões lançadas.
 
 ## Assistentes de código
 
-As instruções para assistentes de código ficam em [AGENTS.md](AGENTS.md); o `CLAUDE.md` apenas o importa. A pasta `.claude/` traz hooks que impedem a leitura de arquivos de chave, a gravação de segredos e comandos destrutivos. Não os desative.
+As instruções para assistentes de código ficam em [AGENTS.md](AGENTS.md); o `CLAUDE.md` apenas o importa. A pasta `.claude/` traz hooks que impedem a leitura de arquivos de chave, a gravação de segredos e comandos destrutivos, e que formatam com o Biome o TypeScript editado. Não os desative.
 
 ## Padrões de código
 
 - TypeScript estrito, sem `any`. Entradas externas são validadas com zod.
 - Código sem comentários: nomes claros de funções e variáveis explicam a intenção.
-- Toda funcionalidade que altera contas deve passar pelo fluxo de prévia e aprovação.
-- Campanhas, grupos e anúncios novos nascem pausados. Prefira pausar a remover; remoções são sinalizadas como irreversíveis.
+- Toda funcionalidade que altera contas passa pelo fluxo completo: prévia, confirmação no chat, aplicação e registro no histórico, com desfazer.
+- Hoje a extensão não cria campanhas, grupos nem anúncios. Uma funcionalidade que passe a criá-los deve criá-los pausados.
+- Prefira pausar a remover; remoções são sinalizadas como irreversíveis.
 - IDs de conta são enviados sem hifens.
 - Testes nunca chamam a Google Ads API real: o HTTP é simulado na fronteira.
 - Credenciais e tokens nunca podem aparecer em logs, mensagens de erro ou respostas ao Claude.
