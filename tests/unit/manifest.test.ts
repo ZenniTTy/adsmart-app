@@ -58,7 +58,7 @@ describe("PKG-01 manifest no formato 0.3", () => {
 	});
 
 	test("compatibilidade, privacidade e ferramentas estáticas", () => {
-		expect(manifest.compatibility.platforms).toEqual(["darwin"]);
+		expect(manifest.compatibility.platforms).toEqual(["darwin", "win32"]);
 		expect(manifest.compatibility.runtimes.node).toBe(">=22.0.0");
 		expect(manifest.privacy_policies).toEqual(["https://policies.google.com/privacy"]);
 		expect(manifest.tools_generated).toBe(false);

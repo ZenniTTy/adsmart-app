@@ -6,6 +6,12 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ## [Não lançado]
 
+## [0.1.1] - 2026-09-30
+
+### Adicionado
+
+- Suporte ao Claude Desktop no Windows: o pacote `.mcpb` passa a instalar no macOS e no Windows. O site, o guia de instalação e os limites deixam de tratar a AdSmart como exclusiva do macOS.
+
 ### Corrigido
 
 - O botão de download do site aponta para `adsmart-<versão>.mcpb`, e o comando do Terminal grava o arquivo com o mesmo nome.
@@ -35,4 +41,5 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 - Guia de configuração: como encontrar o ID da conta, nome do arquivo de chave baixado e aviso sobre a exigência de chave de acesso (passkey) para adicionar usuários.
 - Solução de problemas: nova seção `CUSTOMER_NOT_FOUND` e bloqueio de chaves em organizações Workspace criadas a partir de maio de 2024.
 
+[0.1.1]: https://github.com/ZenniTTy/adsmart-app/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ZenniTTy/adsmart-app/releases/tag/v0.1.0

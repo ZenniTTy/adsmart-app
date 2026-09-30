@@ -2,7 +2,7 @@
 	"manifest_version": "0.3",
 	"name": "adsmart",
 	"display_name": "AdSmart",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Gerencie suas campanhas do Google Ads conversando com o Claude. Roda só no seu computador.",
 	"long_description": "A AdSmart conecta o Claude à sua conta do Google Ads usando a sua própria conta de serviço do Google Cloud. Você consulta resultados e pede alterações pelo chat: toda alteração mostra uma prévia validada pelo Google, só é aplicada depois da sua confirmação e pode ser desfeita. Nada passa por servidores do projeto: a extensão fala apenas com o Google.",
 	"author": {
@@ -65,7 +65,7 @@
 	"license": "MIT",
 	"privacy_policies": ["https://policies.google.com/privacy"],
 	"compatibility": {
-		"platforms": ["darwin"],
+		"platforms": ["darwin", "win32"],
 		"runtimes": {
 			"node": ">=22.0.0"
 		}
