@@ -28,10 +28,8 @@ const conferencia =
 					<a class="botao" href={downloadUrl} download={arquivo} data-download>
 						{t.botao} · v{versao}
 					</a>
-					<span class="botao desativado" aria-disabled="true" data-windows>
-						{t.windows}
-					</span>
 				</div>
+				<p class="plataformas" data-plataformas>{t.plataformas}</p>
 				<p>{t.terminalIntro}</p>
 				<Code code={comando} lang="sh" />
 				<details>
@@ -48,10 +46,8 @@ const conferencia =
 					<a class="botao" href={REPOSITORIO}>
 						{t.github}
 					</a>
-					<span class="botao desativado" aria-disabled="true" data-windows>
-						{t.windows}
-					</span>
 				</div>
+				<p class="plataformas" data-plataformas>{t.plataformas}</p>
 			</>
 		)
 	}
@@ -94,13 +90,12 @@ const conferencia =
 		justify-content: center;
 		gap: 0.75rem;
 	}
-	.desativado {
-		border: 1px solid var(--sl-color-hairline-light);
-		background: transparent;
+	.download > .plataformas {
+		margin-top: -0.5rem;
+		font-size: var(--sl-text-sm);
 		color: var(--sl-color-gray-3);
-		cursor: not-allowed;
 	}
-	.botao:not(.desativado):hover {
+	.botao:hover {
 		transform: translateY(-1px);
 	}
 	.em-breve {

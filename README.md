@@ -8,7 +8,7 @@
 [English](README.en.md) · Português
 
 > [!NOTE]
-> Extensão open source para gerenciar Google Ads pelo Claude Desktop no macOS. A versão **v0.1.0** está nos [releases](https://github.com/ZenniTTy/adsmart-app/releases/latest); o site é [adsmart.digital](https://adsmart.digital).
+> Extensão open source para gerenciar Google Ads pelo Claude Desktop no macOS e no Windows. A versão **v0.1.1** está nos [releases](https://github.com/ZenniTTy/adsmart-app/releases/latest); o site é [adsmart.digital](https://adsmart.digital).
 
 ## O que é a AdSmart
 
@@ -64,7 +64,7 @@ A prévia vale por 15 minutos. Se alguém alterar o item nesse meio tempo, inclu
 
 ## Requisitos
 
-- [Claude Desktop](https://claude.ai/download) no macOS. O suporte a Windows virá numa versão futura. A AdSmart não funciona no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
+- [Claude Desktop](https://claude.ai/download) no macOS ou no Windows. A AdSmart não funciona no claude.ai pelo navegador nem nos apps de celular, porque roda no seu computador.
 - Uma conta Google com acesso de **administrador** à conta do Google Ads (ou à MCC).
 - Um projeto no Google Cloud com a Google Ads API ativada no nível Explorer (gratuito, sem cartão de crédito).
 

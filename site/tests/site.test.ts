@@ -77,10 +77,11 @@ describe("SITE-02 landing e download", () => {
 		expect(html).not.toMatch(/\|\s*(sh|bash|zsh)\b/);
 	});
 
-	test("landing tem GitHub, só macOS e o aviso de extensão não verificada", () => {
+	test("landing tem GitHub, macOS e Windows e o aviso de extensão não verificada", () => {
 		const html = readFileSync(join(ANTES, "index.html"), "utf8");
 		expect(html).toContain("https://github.com/ZenniTTy/adsmart-app");
-		expect(html).toContain("macOS");
+		expect(html).toContain("no macOS e no Windows");
+		expect(html).not.toContain("versão futura");
 		expect(html).toContain("não foi verificada pela Anthropic");
 	});
 
@@ -102,10 +103,10 @@ describe("SITE-02 landing e download", () => {
 	});
 
 	test("inglês e espanhol na landing", () => {
-		expect(readFileSync(join(DEPOIS, "en", "index.html"), "utf8")).toContain("Download for macOS");
-		expect(readFileSync(join(DEPOIS, "es", "index.html"), "utf8")).toContain(
-			"Descargar para macOS",
+		expect(readFileSync(join(DEPOIS, "en", "index.html"), "utf8")).toContain(
+			"on macOS and Windows",
 		);
+		expect(readFileSync(join(DEPOIS, "es", "index.html"), "utf8")).toContain("en macOS y Windows");
 		expect(readFileSync(join(DEPOIS, "index.html"), "utf8")).toMatch(
 			/Language|Português|English|Español/,
 		);
@@ -258,9 +259,9 @@ describe("SEO-03 dados estruturados", () => {
 		return JSON.parse(json ?? "{}");
 	}
 
-	test("app gratuito para macOS, sem avaliações inventadas", () => {
+	test("app gratuito para macOS e Windows, sem avaliações inventadas", () => {
 		const app = dados(ANTES)["@graph"].find((item) => item["@type"] === "SoftwareApplication");
-		expect(app?.operatingSystem).toBe("macOS");
+		expect(app?.operatingSystem).toBe("macOS, Windows");
 		expect(app?.offers).toEqual({ "@type": "Offer", price: "0", priceCurrency: "BRL" });
 		expect(app).not.toHaveProperty("aggregateRating");
 		expect(app).not.toHaveProperty("softwareVersion");
@@ -278,11 +279,10 @@ describe("SEO-03 dados estruturados", () => {
 	});
 });
 
-describe("SITE-08 Windows em breve", () => {
-	test("antes e depois do lançamento, Windows aparece desativado", () => {
-		for (const dir of [ANTES, DEPOIS]) {
-			const html = readFileSync(join(dir, "index.html"), "utf8");
-			expect(html).toMatch(/aria-disabled="true"[^>]*data-windows[^>]*>\s*Windows · em breve/);
-		}
+describe("SITE-08 Windows disponível", () => {
+	test("o download vale para macOS e Windows, sem botão desativado", () => {
+		const html = readFileSync(join(DEPOIS, "index.html"), "utf8");
+		expect(html).toMatch(/data-plataformas[^>]*>Para o Claude Desktop no macOS e no Windows/);
+		expect(html).not.toContain('aria-disabled="true"');
 	});
 });

@@ -4,13 +4,13 @@ A AdSmart é uma extensão do Claude Desktop (arquivo `.mcpb`). Ela roda no seu 
 
 ## Onde funciona
 
-- **Chat do Claude Desktop no macOS.** É o uso suportado. O suporte a Windows virá numa versão futura; até lá, o Claude Desktop no Windows recusa a instalação. O Claude Desktop já traz o Node.js que a extensão precisa: você não instala nada além dela.
+- **Chat do Claude Desktop no macOS e no Windows.** É o uso suportado. O suporte a Windows chegou na versão 0.1.1; se algo não funcionar nele, abra um [issue](https://github.com/ZenniTTy/adsmart-app/issues). O Claude Desktop já traz o Node.js que a extensão precisa: você não instala nada além dela.
 - **Claude Code no app desktop e Cowork:** nesses modos, o Claude Desktop usa o Node.js instalado no seu computador, e não o que vem com o app. Sem Node.js 22 ou mais recente instalado, a extensão não inicia.
 - **claude.ai no navegador e apps de celular:** não funciona, porque a extensão precisa rodar no seu computador.
 
 ## Baixar
 
-No site [adsmart.digital](https://adsmart.digital), use o botão **Baixar para macOS** ou o comando do Terminal. O arquivo baixa como `adsmart-<versão>.mcpb` (por exemplo, `adsmart-0.1.0.mcpb`).
+No site [adsmart.digital](https://adsmart.digital), use o botão **Baixar** ou, no macOS, o comando do Terminal. O arquivo baixa como `adsmart-<versão>.mcpb` (por exemplo, `adsmart-0.1.1.mcpb`).
 
 Pelo GitHub:
 
@@ -21,9 +21,11 @@ Pelo GitHub:
 
 Cada release traz o arquivo `.sha256` com a impressão digital do pacote. Para conferir se o arquivo que você baixou é exatamente o publicado:
 
-No Terminal: `shasum -a 256 -c adsmart.mcpb.sha256`
+No Terminal do macOS: `shasum -a 256 -c adsmart.mcpb.sha256`
 
-O comando vale para o arquivo de nome fixo. Para o pacote com a versão no nome, use `shasum -a 256 adsmart-<versão>.mcpb` e compare com o `.sha256` correspondente. Quem usa o GitHub CLI também pode confirmar que o pacote foi gerado pelo build deste repositório:
+No PowerShell do Windows: `Get-FileHash adsmart.mcpb -Algorithm SHA256` e compare o resultado com o conteúdo do arquivo `.sha256`.
+
+Os comandos valem para o arquivo de nome fixo. Para o pacote com a versão no nome, troque o nome do arquivo no comando e compare com o `.sha256` correspondente. Quem usa o GitHub CLI também pode confirmar que o pacote foi gerado pelo build deste repositório:
 
 ```bash
 gh attestation verify adsmart.mcpb --repo ZenniTTy/adsmart-app

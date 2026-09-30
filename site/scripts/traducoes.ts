@@ -17,7 +17,7 @@ type Bloco = {
 	heroSelo: string;
 	download: {
 		botao: string;
-		windows: string;
+		plataformas: string;
 		terminalIntro: string;
 		conferenciaTitulo: string;
 		emBreve: string;
@@ -58,10 +58,10 @@ const PT: Bloco = {
 	},
 	heroSelo: "Extensão open source para o Claude Desktop",
 	download: {
-		botao: "Baixar para macOS",
-		windows: "Windows · em breve",
+		botao: "Baixar",
+		plataformas: "Para o Claude Desktop no macOS e no Windows",
 		terminalIntro:
-			"Ou pelo Terminal: o comando baixa o arquivo e abre o instalador do Claude Desktop.",
+			"Ou pelo Terminal do macOS: o comando baixa o arquivo e abre o instalador do Claude Desktop.",
 		conferenciaTitulo: "Conferir a impressão digital (opcional)",
 		emBreve: "Lançamento em breve. Acompanhe no GitHub.",
 		github: "Ver no GitHub",
@@ -101,10 +101,10 @@ const EN: Bloco = {
 	},
 	heroSelo: "Open-source extension for Claude Desktop",
 	download: {
-		botao: "Download for macOS",
-		windows: "Windows · coming soon",
+		botao: "Download",
+		plataformas: "For Claude Desktop on macOS and Windows",
 		terminalIntro:
-			"Or in Terminal: the command downloads the file and opens the Claude Desktop installer.",
+			"Or in the macOS Terminal: the command downloads the file and opens the Claude Desktop installer.",
 		conferenciaTitulo: "Verify checksum (optional)",
 		emBreve: "Coming soon. Follow on GitHub.",
 		github: "View on GitHub",
@@ -144,10 +144,10 @@ const ES: Bloco = {
 	},
 	heroSelo: "Extensión open source para Claude Desktop",
 	download: {
-		botao: "Descargar para macOS",
-		windows: "Windows · próximamente",
+		botao: "Descargar",
+		plataformas: "Para Claude Desktop en macOS y Windows",
 		terminalIntro:
-			"O en la Terminal: el comando descarga el archivo y abre el instalador de Claude Desktop.",
+			"O en la Terminal de macOS: el comando descarga el archivo y abre el instalador de Claude Desktop.",
 		conferenciaTitulo: "Comprobar la huella digital (opcional)",
 		emBreve: "Próximamente. Sigue en GitHub.",
 		github: "Ver en GitHub",
