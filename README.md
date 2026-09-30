@@ -111,7 +111,7 @@ A AdSmart lida com credenciais que podem alterar gastos com anúncios. Leia a [p
 
 ## Contribuindo
 
-Contribuições são bem-vindas. Veja o [guia de contribuição](CONTRIBUTING.md) e o [código de conduta](CODE_OF_CONDUCT.md).
+Contribuições são bem-vindas. Veja o [guia de contribuição](CONTRIBUTING.md) e o [código de conduta](CODE_OF_CONDUCT.md). Quem usa assistentes de código encontra as instruções do projeto em [AGENTS.md](AGENTS.md).
 
 ## Licença
 

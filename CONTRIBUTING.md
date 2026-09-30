@@ -13,7 +13,7 @@ Antes de começar algo grande, abra uma issue para alinhar a proposta.
 
 ## Ambiente de desenvolvimento
 
-Requisitos: [Bun](https://bun.sh) na versão de `.bun-version`, Node.js 22+ (versão de `.nvmrc`).
+Requisitos: [Bun](https://bun.sh) na versão de `.bun-version`, Node.js 22+ (versão de `.nvmrc`). Os hooks de `.claude/` precisam do `jq`.
 
 ```bash
 git clone https://github.com/ZenniTTy/adsmart-app.git
@@ -58,6 +58,10 @@ O `bunx lefthook install` ativa os hooks de git uma vez por clone: antes de cada
 5. Abra um pull request para `develop` preenchendo o template. O merge é feito pelo mantenedor depois da revisão e do CI verde.
 
 A branch `main` recebe apenas versões lançadas.
+
+## Assistentes de código
+
+As instruções para assistentes de código ficam em [AGENTS.md](AGENTS.md); o `CLAUDE.md` apenas o importa. A pasta `.claude/` traz hooks que impedem a leitura de arquivos de chave, a gravação de segredos e comandos destrutivos. Não os desative.
 
 ## Padrões de código
 
