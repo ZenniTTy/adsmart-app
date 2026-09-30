@@ -47,8 +47,8 @@ const temSidebar = Astro.locals.starlightRoute.hasSidebar;
 		<LanguageSelect />
 	</div>
 	{
-		!temSidebar && (
-			<details class="menu-landing print:hidden">
+		(
+			<details class:list={["menu-landing print:hidden", { "com-sidebar": temSidebar }]}>
 				<summary aria-label={t.menuAria}>
 					<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 						<path d="M4 7h16M4 12h16M4 17h16" />
@@ -78,6 +78,16 @@ const temSidebar = Astro.locals.starlightRoute.hasSidebar;
 		)
 	}
 </div>
+
+<script>
+	for (const menu of document.querySelectorAll<HTMLDetailsElement>("details.menu-landing")) {
+		menu.addEventListener("click", (evento) => {
+			if (evento.target instanceof Element && evento.target.closest("nav a")) {
+				menu.open = false;
+			}
+		});
+	}
+</script>
 
 <style>
 	@layer starlight.core {
@@ -149,6 +159,10 @@ const temSidebar = Astro.locals.starlightRoute.hasSidebar;
 		.menu-landing {
 			position: relative;
 			flex-shrink: 0;
+		}
+
+		.menu-landing.com-sidebar {
+			display: none;
 		}
 
 		.menu-landing summary {
@@ -224,6 +238,10 @@ const temSidebar = Astro.locals.starlightRoute.hasSidebar;
 		}
 
 		@media (min-width: 50rem) and (max-width: 63.99rem) {
+			.menu-landing.com-sidebar {
+				display: block;
+			}
+
 			.painel-extras {
 				display: none;
 			}

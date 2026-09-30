@@ -1,5 +1,5 @@
 ---
-import { Code } from "@astrojs/starlight/components";
+import { Code, Icon } from "@astrojs/starlight/components";
 import { nomePacote, REPOSITORIO, urlDownload } from "../../scripts/conteudo.ts";
 import { localeFromStarlight } from "../../scripts/locale.ts";
 import { traducoes } from "../../scripts/traducoes.ts";
@@ -25,7 +25,8 @@ const conferencia =
 		versao ? (
 			<>
 				<div class="botoes">
-					<a class="botao" href={downloadUrl} download={arquivo} data-download>
+					<a class="botao" href={downloadUrl} data-download>
+						<Icon name="download" size="1.15em" />
 						{t.botao} · v{versao}
 					</a>
 				</div>
@@ -75,6 +76,7 @@ const conferencia =
 	.botao {
 		display: inline-flex;
 		align-items: center;
+		gap: 0.5rem;
 		padding: 0.85rem 1.75rem;
 		border-radius: 999px;
 		background: var(--sl-color-white);

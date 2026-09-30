@@ -63,7 +63,7 @@ describe("SITE-02 landing e download", () => {
 	test("antes do lançamento: em breve, sem link de download", () => {
 		const html = readFileSync(join(ANTES, "index.html"), "utf8");
 		expect(html).toContain("data-em-breve");
-		expect(html).not.toContain("releases/latest/download/adsmart-");
+		expect(html).not.toContain("/releases/download/v");
 	});
 
 	test("depois do lançamento: botão, comando que só baixa e abre, e conferência", () => {
@@ -75,6 +75,25 @@ describe("SITE-02 landing e download", () => {
 		expect(html).toContain("open ~/Downloads/adsmart-0.1.0.mcpb");
 		expect(html).toContain("shasum -a 256 -c adsmart-0.1.0.mcpb.sha256");
 		expect(html).not.toMatch(/\|\s*(sh|bash|zsh)\b/);
+	});
+
+	test("o link de download fixa a versão, para não quebrar no release seguinte", () => {
+		expect(urlDownload("0.1.0")).toBe(
+			"https://github.com/ZenniTTy/adsmart-app/releases/download/v0.1.0/adsmart-0.1.0.mcpb",
+		);
+	});
+
+	test("docs em inglês e espanhol mantêm o idioma nos links internos", () => {
+		for (const idioma of ["en", "es"]) {
+			const html = readFileSync(join(DEPOIS, idioma, "docs", "uso", "index.html"), "utf8");
+			expect(html).toContain(`href="/${idioma}/docs/configuracao/"`);
+			expect(html).not.toMatch(/<a href="\/docs\//);
+		}
+	});
+
+	test("docs têm o menu principal recolhido para telas médias", () => {
+		const html = readFileSync(join(DEPOIS, "docs", "uso", "index.html"), "utf8");
+		expect(html).toMatch(/<details class="[^"]*menu-landing[^"]*com-sidebar/);
 	});
 
 	test("landing tem GitHub, macOS e Windows e o aviso de extensão não verificada", () => {
