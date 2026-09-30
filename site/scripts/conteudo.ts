@@ -12,7 +12,7 @@ export const ORDEM_DOCS = ["instalacao", "configuracao", "uso", "limites", "solu
 
 export const DESCRICOES: Record<string, string> = {
 	instalacao:
-		"Como instalar a AdSmart no Claude Desktop para macOS: baixe o arquivo .mcpb, abra com dois cliques e confira a impressão digital.",
+		"Como instalar a AdSmart no Claude Desktop, no macOS e no Windows: baixe o arquivo .mcpb, abra com dois cliques e confira a impressão digital.",
 	configuracao:
 		"Conecte a AdSmart ao Google Ads em cerca de 15 minutos: projeto no Google Cloud, Google Ads API, acesso Explorer, conta de serviço e acesso à conta.",
 	uso: "Exemplos de perguntas e alterações no Google Ads pelo chat do Claude, com prévia validada pelo Google, confirmação, desfazer e histórico.",
