@@ -51,4 +51,4 @@ Remoções definitivas não podem ser desfeitas. Por isso, a AdSmart prefere pau
 
 ## Histórico
 
-Cada alteração aplicada fica registrada no seu computador, no arquivo `historico.jsonl` da pasta `.adsmart` da sua pasta pessoal, com data, conta, valores anteriores e novos. Peça *"mostra o histórico de alterações"* para ver as últimas. As alterações também aparecem no **Histórico de alterações** do Google Ads.
+Cada alteração aplicada fica registrada no seu computador, no arquivo `historico.jsonl` da pasta `.adsmart` da sua pasta pessoal (`~/.adsmart/` no macOS, `%USERPROFILE%\.adsmart\` no Windows), com data, conta, valores anteriores e novos. Peça *"mostra o histórico de alterações"* para ver as últimas. As alterações também aparecem no **Histórico de alterações** do Google Ads.
