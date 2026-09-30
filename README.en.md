@@ -101,7 +101,7 @@ AdSmart handles credentials that can change ad spend. Read the [security policy]
 
 ## Contributing
 
-Contributions are welcome, including with AI coding agents: agent instructions live in [AGENTS.md](AGENTS.md). See the [contributing guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
+Contributions are welcome. See the [contributing guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
 
 ## License
 

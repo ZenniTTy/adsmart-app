@@ -13,7 +13,7 @@ Antes de começar algo grande, abra uma issue para alinhar a proposta.
 
 ## Ambiente de desenvolvimento
 
-Requisitos: [Bun](https://bun.sh) na versão de `.bun-version`, Node.js 22+ (versão de `.nvmrc`) e `jq` (usado pelos hooks dos agentes de IA).
+Requisitos: [Bun](https://bun.sh) na versão de `.bun-version`, Node.js 22+ (versão de `.nvmrc`).
 
 ```bash
 git clone https://github.com/ZenniTTy/adsmart-app.git
@@ -59,15 +59,14 @@ O `bunx lefthook install` ativa os hooks de git uma vez por clone: antes de cada
 
 A branch `main` recebe apenas versões lançadas.
 
-## Contribuindo com agentes de IA
-
-As instruções para agentes (Claude Code, Codex, Cursor e outros) ficam em [AGENTS.md](AGENTS.md); o `CLAUDE.md` apenas o importa. O projeto versiona em `.claude/` hooks que impedem o agente de ler arquivos de chave, gravar segredos e rodar comandos destrutivos. Não os desative.
-
 ## Padrões de código
 
 - TypeScript estrito, sem `any`. Entradas externas são validadas com zod.
 - Código sem comentários: nomes claros de funções e variáveis explicam a intenção.
 - Toda funcionalidade que altera contas deve passar pelo fluxo de prévia e aprovação.
+- Campanhas, grupos e anúncios novos nascem pausados. Prefira pausar a remover; remoções são sinalizadas como irreversíveis.
+- IDs de conta são enviados sem hifens.
+- Testes nunca chamam a Google Ads API real: o HTTP é simulado na fronteira.
 - Credenciais e tokens nunca podem aparecer em logs, mensagens de erro ou respostas ao Claude.
 - O servidor nunca escreve no stdout, que é o canal do protocolo MCP.
 - A rede só acessa `googleads.googleapis.com` e `oauth2.googleapis.com`.
