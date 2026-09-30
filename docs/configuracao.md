@@ -57,7 +57,7 @@ A conta de serviço é a identidade que a AdSmart usa para acessar o Google Ads.
 2. Dê o nome `adsmart` e conclua. Não é necessário atribuir papéis.
 3. Abra a conta criada e copie o **e-mail** dela (termina em `.iam.gserviceaccount.com`).
 4. Na aba **Chaves**, clique em **Adicionar chave > Criar nova chave > JSON**. O arquivo será baixado com um nome parecido com `adsmart-123456-a1b2c3d4e5f6.json`.
-5. Mova o arquivo para uma pasta segura, por exemplo `~/.adsmart/`. **Não compartilhe este arquivo** com ninguém, nem o cole no chat.
+5. Mova o arquivo para uma pasta segura, por exemplo `~/.adsmart/` no macOS ou `%USERPROFILE%\.adsmart\` no Windows. **Não compartilhe este arquivo** com ninguém, nem o cole no chat.
 
 O arquivo só pode ser baixado uma vez. Se ele se perder, crie outra chave na aba **Chaves** e apague a antiga. Em contas de empresa (Google Workspace) criadas a partir de maio de 2024, o Google pode recusar a criação da chave; nesse caso, só o administrador da organização pode liberar (veja [não consigo criar a chave](solucao-de-problemas.md#não-consigo-criar-a-chave-da-conta-de-serviço)).
 

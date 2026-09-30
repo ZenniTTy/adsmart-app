@@ -5,6 +5,7 @@ import {
 	converterAvisos,
 	converterLinks,
 	extrairTitulo,
+	linksComIdioma,
 	ORDEM_DOCS,
 	paginaDeChangelog,
 	paginaDeDoc,
@@ -38,6 +39,15 @@ describe("SITE-03 conversão de docs/", () => {
 		expect(converterLinks("[guia](instalacao.md)")).toBe("[guia](/docs/instalacao/)");
 		expect(converterLinks("[site](https://exemplo.com/a.md)")).toBe(
 			"[site](https://exemplo.com/a.md)",
+		);
+	});
+
+	test("links internos ganham o prefixo do idioma", () => {
+		expect(linksComIdioma("[a](/docs/uso/#x) e [b](/novidades/)", "en")).toBe(
+			"[a](/en/docs/uso/#x) e [b](/en/novidades/)",
+		);
+		expect(linksComIdioma("[c](https://exemplo.com/docs/)", "es")).toBe(
+			"[c](https://exemplo.com/docs/)",
 		);
 	});
 

@@ -1,14 +1,6 @@
-import {
-	copyFileSync,
-	cpSync,
-	mkdirSync,
-	readdirSync,
-	readFileSync,
-	rmSync,
-	writeFileSync,
-} from "node:fs";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { paginaDeChangelog, paginaDeDoc, versaoLancada } from "./conteudo.ts";
+import { linksComIdioma, paginaDeChangelog, paginaDeDoc, versaoLancada } from "./conteudo.ts";
 
 const SITE = join(import.meta.dir, "..");
 const RAIZ = join(SITE, "..");
@@ -37,8 +29,11 @@ writeFileSync(
 for (const idioma of ["en", "es"] as const) {
 	const pasta = join(CONTENT_DOCS, idioma);
 	mkdirSync(join(pasta, "docs"), { recursive: true });
-	cpSync(DOCS_GERADOS, join(pasta, "docs"), { recursive: true });
-	writeFileSync(join(pasta, `${novidades.slug}.md`), novidades.conteudo);
+	for (const arquivo of readdirSync(DOCS_GERADOS)) {
+		const conteudo = readFileSync(join(DOCS_GERADOS, arquivo), "utf8");
+		writeFileSync(join(pasta, "docs", arquivo), linksComIdioma(conteudo, idioma));
+	}
+	writeFileSync(join(pasta, `${novidades.slug}.md`), linksComIdioma(novidades.conteudo, idioma));
 }
 
 copyFileSync(join(RAIZ, "icon.png"), join(SITE, "public", "favicon.png"));

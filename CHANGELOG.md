@@ -6,6 +6,13 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 ## [Não lançado]
 
+### Corrigido
+
+- O botão e o comando de download do site apontam para o release da própria versão, em vez do "último release".
+- As páginas de documentação em inglês e espanhol mantêm o idioma nos links internos.
+- O menu do site fecha ao escolher um item, e a documentação volta a mostrar os links principais em telas médias.
+- Os guias indicam os caminhos do Windows para a pasta `.adsmart` e para os registros do Claude Desktop.
+
 ## [0.1.1] - 2026-09-30
 
 ### Adicionado
